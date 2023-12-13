@@ -11,12 +11,15 @@ Set of tools to help you manage your GlotPress.
 [![WordPress Plugin: Required WP Version](https://img.shields.io/wordpress/plugin/wp-version/gp-toolbox?label=WordPress%20Required&logo=wordpress)](https://wordpress.org/plugins/gp-toolbox/)
 [![WordPress Plugin: Tested WP Version](https://img.shields.io/wordpress/plugin/tested/gp-toolbox.svg?label=WordPress%20Tested&logo=wordpress)](https://wordpress.org/plugins/gp-toolbox/)
 
+[![GlotPress Plugin: Required GP Version](https://img.shields.io/badge/GlotPress%20Required-v3.0-a597c9.svg)](https://wordpress.org/plugins/gp-toolbox/)
+[![GlotPress Plugin: Tested GP Version](https://img.shields.io/badge/GlotPress%20Tested-v4.0%20alpha-a597c9.svg)](https://wordpress.org/plugins/gp-toolbox/)
+
 [![Coding Standards](https://github.com/pedro-mendonca/GP-Toolbox/actions/workflows/coding-standards.yml/badge.svg)](https://github.com/pedro-mendonca/GP-Toolbox/actions/workflows/coding-standards.yml)
 [![Static Analysis](https://github.com/pedro-mendonca/GP-Toolbox/actions/workflows/static-analysis.yml/badge.svg)](https://github.com/pedro-mendonca/GP-Toolbox/actions/workflows/static-analysis.yml)
 
 ## Description
 
-This plugin for GlotPress adds tools to help for you to manage and debug your own install.
+This plugin for GlotPress adds tools to help you manage and debug your own install.
 
 ## Features
 
