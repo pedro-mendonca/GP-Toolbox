@@ -64,7 +64,7 @@ define( 'GP_TOOLBOX_FILE', plugin_basename( __FILE__ ) );
 
 
 // Include Composer autoload.
-// require_once GP_TOOLBOX_DIR_PATH . 'vendor/autoload.php'; // phpcs:ignore.
+require_once GP_TOOLBOX_DIR_PATH . 'vendor/autoload.php'; // phpcs:ignore.
 
 /**
  * Initialize the plugin.
