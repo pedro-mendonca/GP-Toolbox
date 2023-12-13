@@ -1,0 +1,6 @@
+# List of ideas and tasks
+
+* Stats to show ammout of unnecessary translations per set (old, rejected, etc).
+* Find strings with more than one 'current'.
+* Clean translation set (remove extra db data, remove history)
+* Delete translation (permanently)
