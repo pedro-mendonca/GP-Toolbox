@@ -50,14 +50,10 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 			// Register and enqueue plugin scripts.
 			add_action( 'wp_enqueue_scripts', array( self::class, 'register_plugin_scripts' ) );
 
-			/**
-			 * Load things before templates.
-			 */
+			// Load things before templates.
 			add_action( 'gp_pre_tmpl_load', array( self::class, 'pre_template_load' ), 10, 2 );
 
-			/**
-			 * Load things after templates.
-			 */
+			// Load things after templates.
 			add_action( 'gp_post_tmpl_load', array( self::class, 'post_template_load' ), 10, 2 );
 		}
 
@@ -135,8 +131,54 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 		 */
 		public static function post_template_load( $template, &$args ) {
 
+			// TODO: Enqueue based on template.
+
+			// Project template.
+			if ( $template === 'project' ) {
+				?>
+				<script type="text/javascript">
+					jQuery( document ).ready( function( $ ) {
+						var table = $( 'table.gp-table.translation-sets' );
+
+						// Add table header column.
+						$( table ).children( 'thead' ).children( 'tr' ).find( 'th.gp-column-waiting' ).after( '<th class="stats gp-toolbox"><?php echo esc_html( 'Info', 'gp-toolbox' ); ?></td>' );
+
+						// Customize rows.
+						$( table ).children( 'tbody' ).children( 'tr' ).each(
+							function() {
+								var gpUrlProject = '<?php echo gp_url_project(); ?>';
+
+								// Add row column.
+								$( this ).find( 'td.stats.waiting' ).after( '<td class="gp-toolbox"></td>' );
+
+								// Add attributes 'gp-toolbox-data-' to each row.
+								$( this ).children( 'td:first-child' ).find( 'a' ).each( function() {
+									var dataPrefix = 'gptoolbox-data-';
+									// Create a regular expression pattern with the variable
+									var regexPattern = new RegExp( '^' + gpUrlProject + '(.*).*/(.+)/(.+)/$' );
+
+									/**
+									 * Check for Locale and Slug in the link.
+									 * Example: ../glotpress/projects/plugins/hello-dolly/pt/default/
+									 */
+									var match = $( this ).attr( 'href' ).match( regexPattern );
+									var projectPath = match[1]; // 'path/project-slug'
+									var locale = match[2];      // 'pt'.
+									var slug = match[3];        // 'default'.
+
+									$( this ).closest( 'tr' ).attr( dataPrefix + 'project-path', projectPath );
+									$( this ).closest( 'tr' ).attr( dataPrefix + 'locale', locale );
+									$( this ).closest( 'tr' ).attr( dataPrefix + 'slug', slug );
+								} );
+							}
+						);
+					} );
+				</script>
+				<?php
+			}
+
 			// Unset unused variables.
-			unset( $template, $args );
+			unset( $args );
 		}
 
 
