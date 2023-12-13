@@ -27,7 +27,7 @@ This plugin for GlotPress adds tools to help you manage and debug your own insta
 
 ## Requirements
 
-* GlotPress v3.0 or v4.0-alpha.
+* GlotPress v3.0.
 
 ## Frequently Asked Questions
 
