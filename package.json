@@ -1,0 +1,42 @@
+{
+	"requires": true,
+	"lockfileVersion": 1,
+	"name": "gp-toolbox",
+	"version": "1.0.0",
+	"description": "Set of tools to help you manage your GlotPress.",
+	"author": "Pedro Mendonça",
+	"license": "GPL-2.0-or-later",
+	"keywords": [
+		"WordPress",
+		"GlotPress",
+		"translation",
+		"toolbox",
+		"i18n"
+	],
+	"homepage": "https://github.com/pedro-mendonca/GP-Toolbox#readme",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/pedro-mendonca/GP-Toolbox.git"
+	},
+	"bugs": {
+		"url": "https://github.com/pedro-mendonca/GP-Toolbox/issues"
+	},
+	"devDependencies": {
+		"@wordpress/scripts": "^26.17.0",
+		"node-sass": "^9.0.0",
+		"postcss-cli": "^11.0.0",
+		"uglify-js": "^3.17.4"
+	},
+	"scripts": {
+		"build": "npm run compile:js & npm run compile:css & npm run build:css",
+		"compile:css": "node-sass assets/css/ -o assets/css/ && stylelint assets/css/*.css --fix",
+		"build:css": "npm run build:css:style",
+		"build:css:style": "postcss assets/css/style.css > assets/css/style.min.css",
+		"compile:js": "npm run compile:js:scripts.js",
+		"compile:js:scripts.js": "uglifyjs assets/js/scripts.js --compress drop_console=true -o assets/js/scripts.min.js",
+		"lint:css": "wp-scripts lint-style",
+		"lint:js": "wp-scripts lint-js",
+		"lint:md:docs": "wp-scripts lint-md-docs",
+		"lint:pkg-json": "wp-scripts lint-pkg-json"
+	}
+}

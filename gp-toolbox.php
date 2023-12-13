@@ -1,0 +1,79 @@
+<?php
+/**
+ * Toolbox for GlotPress
+ *
+ * @package           GP_Toolbox
+ * @link              https://github.com/pedro-mendonca/GP_Toolbox
+ * @author            Pedro Mendonça
+ * @copyright         2023 Pedro Mendonça
+ * @license           GPL-2.0-or-later
+ *
+ * @wordpress-plugin
+ * Plugin Name:       Toolbox for GlotPress
+ * Plugin URI:        https://wordpress.org/plugins/gp-toolbox/
+ * GitHub Plugin URI: https://github.com/pedro-mendonca/GP-Toolbox
+ * Primary Branch:    main
+ * Description:       Set of tools to help you manage your GlotPress.
+ * Version:           1.0.0
+ * Requires at least: 5.3
+ * Tested up to:      6.4
+ * Requires PHP:      7.4
+ * Author:            Pedro Mendonça
+ * Author URI:        https://profiles.wordpress.org/pedromendonca/
+ * License:           GPL v2 or later
+ * License URI:       https://www.gnu.org/licenses/gpl-2.0.html
+ * Text Domain:       gp-toolbox
+ * Domain Path:       /languages
+ */
+
+namespace GP_Toolbox;
+
+// Exit if accessed directly.
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+
+// Check if get_plugin_data() function exists.
+if ( ! function_exists( 'get_plugin_data' ) ) {
+	require_once ABSPATH . 'wp-admin/includes/plugin.php';
+}
+
+// Get the plugin headers data.
+$gp_toolbox_data = get_plugin_data( __FILE__, false, false );
+
+
+// Set the plugin version.
+if ( ! defined( 'GP_TOOLBOX_VERSION' ) ) {
+	define( 'GP_TOOLBOX_VERSION', $gp_toolbox_data['Version'] );
+}
+
+// Set the plugin required PHP version. Needed for PHP compatibility check for WordPress < 5.1.
+if ( ! defined( 'GP_TOOLBOX_REQUIRED_PHP' ) ) {
+	define( 'GP_TOOLBOX_REQUIRED_PHP', $gp_toolbox_data['RequiresPHP'] );
+}
+
+// Set the plugin URL.
+define( 'GP_TOOLBOX_DIR_URL', plugin_dir_url( __FILE__ ) );
+
+// Set the plugin filesystem path.
+define( 'GP_TOOLBOX_DIR_PATH', plugin_dir_path( __FILE__ ) );
+
+// Set the plugin file path.
+define( 'GP_TOOLBOX_FILE', plugin_basename( __FILE__ ) );
+
+
+// Include Composer autoload.
+// require_once GP_TOOLBOX_DIR_PATH . 'vendor/autoload.php'; // phpcs:ignore.
+
+/**
+ * Initialize the plugin.
+ *
+ * @since 1.0.0
+ *
+ * @return void
+ */
+function gp_toolbox_init() {
+	Toolbox::init();
+}
+add_action( 'plugins_loaded', __NAMESPACE__ . '\gp_toolbox_init' );

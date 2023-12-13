@@ -1,0 +1,12 @@
+parameters:
+	level: 9
+	inferPrivatePropertyTypeFromConstructor: true
+	scanFiles:
+		# GlotPress Stubs
+		- %rootDir%/../../pedro-mendonca/glotpress-stubs/glotpress-stubs.php
+	paths:
+		- gp-toolbox.php
+		- includes/
+	bootstrapFiles:
+		# PHPStan bootstrap file.
+		- tests/phpstan/bootstrap.php
