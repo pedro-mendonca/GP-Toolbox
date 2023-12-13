@@ -1,4 +1,4 @@
-=== Toolbox for GlotPress ===
+=== GP Toolbox ===
 Contributors: pedromendonca
 Donate link: https://github.com/sponsors/pedro-mendonca
 Tags: glotpress, translation, toolbox, i18n

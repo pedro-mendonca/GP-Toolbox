@@ -9,7 +9,7 @@
  * @license           GPL-2.0-or-later
  *
  * @wordpress-plugin
- * Plugin Name:       Toolbox for GlotPress
+ * Plugin Name:       GP Toolbox
  * Plugin URI:        https://wordpress.org/plugins/gp-toolbox/
  * GitHub Plugin URI: https://github.com/pedro-mendonca/GP-Toolbox
  * Primary Branch:    main
