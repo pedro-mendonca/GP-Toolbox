@@ -1,4 +1,4 @@
-/* global document, gpToolboxProject, setTimeout, wp */
+/* global document, gpToolboxProject, wp */
 
 jQuery( document ).ready( function( $ ) {
 	// Get the Translation Sets table.
