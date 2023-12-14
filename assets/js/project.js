@@ -127,7 +127,7 @@ jQuery( document ).ready( function( $ ) {
 		} ).done( function( response, textStatus, jqXHR ) {
 			// Set translation set data.
 			var old = response.data.old;
-			var rejected = response.data.response;
+			var rejected = response.data.rejected;
 
 			// Update stats count.
 			if ( $( button ).closest( 'td' ).hasClass( 'old' ) ) {

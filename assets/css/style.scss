@@ -1,1 +1,69 @@
 /* CSS for GP-Toolbox. */
+table {
+
+	&.gp-table {
+
+		&.translation-sets {
+
+			tbody {
+
+				tr {
+
+					td {
+
+						&.stats {
+
+							&.old,
+							&.rejected {
+
+								div {
+
+									display: flex;
+									justify-content: center;
+
+									a,
+									button {
+
+										display: inline-flex;
+										// vertical-align: middle;
+										// line-height: 20px;
+									}
+
+									a {
+
+										&.count {
+
+											flex: fit-content;
+											flex-flow: column;
+										}
+
+									}
+
+									button {
+
+										&.delete {
+											padding: 0;
+											border: none;
+											background: none;
+											cursor: pointer;
+											// margin-left: 1em;
+											color: var(--gp-color-primary-500);
+
+											&:disabled {
+												color: var(--gp-color-btn-disabled-text);
+												cursor: default;
+											}
+										}
+									}
+								}
+
+
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+}

@@ -17,7 +17,8 @@ This plugin for GlotPress adds tools to help you manage and debug your own insta
 
 == Features ==
 
-*   (add features here).
+*   Adds 'Old' and 'Rejected' columns to the project table of Translation Sets.
+*   Button to quickly and permanently delete 'Old' and 'Rejected' translations.
 
 == Requirements ==
 

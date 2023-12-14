@@ -47,14 +47,14 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 			// Register and enqueue plugin style sheet.
 			add_action( 'wp_enqueue_scripts', array( self::class, 'register_plugin_styles' ) );
 
-			// Register and enqueue plugin scripts.
-			add_action( 'wp_enqueue_scripts', array( self::class, 'register_plugin_scripts' ) );
-
 			// Load things before templates.
 			add_action( 'gp_pre_tmpl_load', array( self::class, 'pre_template_load' ), 10, 2 );
 
 			// Load things after templates.
 			add_action( 'gp_post_tmpl_load', array( self::class, 'post_template_load' ), 10, 2 );
+
+			// Delete translations with a specified status.
+			add_action( 'wp_ajax_delete_translations', array( self::class, 'delete_translations' ) );
 		}
 
 
@@ -114,8 +114,17 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 		 */
 		public static function pre_template_load( $template, &$args ) {
 
-			// Unset unused variables.
-			unset( $template, $args );
+			if ( $template === 'project' ) {
+
+				// Register and enqueue plugin scripts.
+				add_action(
+					'wp_enqueue_scripts',
+					function () use ( $template, $args ) {
+						self::register_plugin_scripts( $template, $args );
+					}
+				);
+
+			}
 		}
 
 
@@ -131,54 +140,10 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 		 */
 		public static function post_template_load( $template, &$args ) {
 
-			// TODO: Enqueue based on template.
-
-			// Project template.
-			if ( $template === 'project' ) {
-				?>
-				<script type="text/javascript">
-					jQuery( document ).ready( function( $ ) {
-						var table = $( 'table.gp-table.translation-sets' );
-
-						// Add table header column.
-						$( table ).children( 'thead' ).children( 'tr' ).find( 'th.gp-column-waiting' ).after( '<th class="stats gp-toolbox"><?php echo esc_html( 'Info', 'gp-toolbox' ); ?></td>' );
-
-						// Customize rows.
-						$( table ).children( 'tbody' ).children( 'tr' ).each(
-							function() {
-								var gpUrlProject = '<?php echo gp_url_project(); ?>';
-
-								// Add row column.
-								$( this ).find( 'td.stats.waiting' ).after( '<td class="gp-toolbox"></td>' );
-
-								// Add attributes 'gp-toolbox-data-' to each row.
-								$( this ).children( 'td:first-child' ).find( 'a' ).each( function() {
-									var dataPrefix = 'gptoolbox-data-';
-									// Create a regular expression pattern with the variable
-									var regexPattern = new RegExp( '^' + gpUrlProject + '(.*).*/(.+)/(.+)/$' );
-
-									/**
-									 * Check for Locale and Slug in the link.
-									 * Example: ../glotpress/projects/plugins/hello-dolly/pt/default/
-									 */
-									var match = $( this ).attr( 'href' ).match( regexPattern );
-									var projectPath = match[1]; // 'path/project-slug'
-									var locale = match[2];      // 'pt'.
-									var slug = match[3];        // 'default'.
-
-									$( this ).closest( 'tr' ).attr( dataPrefix + 'project-path', projectPath );
-									$( this ).closest( 'tr' ).attr( dataPrefix + 'locale', locale );
-									$( this ).closest( 'tr' ).attr( dataPrefix + 'slug', slug );
-								} );
-							}
-						);
-					} );
-				</script>
-				<?php
-			}
+			// Currently unused.
 
 			// Unset unused variables.
-			unset( $args );
+			unset( $template, $args );
 		}
 
 
@@ -212,37 +177,151 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 		 *
 		 * @since 1.0.0
 		 *
+		 * @param string             $template       GlotPress template name.
+		 * @param array<string>      $args           GlotPress template arguments.
+		 * @param array<int, string> $dependencies   Array of script dependencies.
+		 *
 		 * @return void
 		 */
-		public static function register_plugin_scripts() {
+		public static function register_plugin_scripts( $template, &$args, $dependencies = array() ) {
 
 			// Check if SCRIPT_DEBUG is true.
 			$suffix = SCRIPT_DEBUG ? '' : '.min';
 
+			// Set custom script ID.
+			$script_id = sprintf(
+				'gp-toolbox-%s',
+				$template
+			);
+
 			wp_register_script(
-				'gp-toolbox',
-				GP_TOOLBOX_DIR_URL . 'assets/js/scripts' . $suffix . '.js',
-				array(),
+				$script_id,
+				GP_TOOLBOX_DIR_URL . 'assets/js/' . $template . $suffix . '.js',
+				$dependencies,
 				GP_TOOLBOX_VERSION,
 				false
 			);
 
-			gp_enqueue_scripts( 'gp-toolbox' );
+			gp_enqueue_scripts( $script_id );
 
 			wp_set_script_translations(
-				'gp-toolbox',
+				$script_id,
 				'gp-toolbox'
 			);
 
 			wp_localize_script(
-				'gp-toolbox',
-				'gpToolbox',
+				$script_id,
+				'gpToolbox' . ucfirst( $template ), // Eg. 'gpToolboxProject'.
 				array(
 					'admin'          => GP::$permission->current_user_can( 'admin' ),
-					'gp_url'         => gp_url(),         // /glotpress/.
-					'gp_url_project' => gp_url_project(), // /glotpress/projects/.
+					'gp_url'         => gp_url(),         // GlotPress base URL. Defaults to /glotpress/.
+					'gp_url_project' => gp_url_project(), // GlotPress projects base URL. Defaults to /glotpress/projects/.
 					'ajaxurl'        => admin_url( 'admin-ajax.php' ),
 					'nonce'          => wp_create_nonce( 'gp-toolbox-nonce' ),
+					'args'           => self::{'template_args_' . $template}( $args ),
+				)
+			);
+		}
+
+
+		/**
+		 * Project template arguments.
+		 *
+		 * @since 1.0.0
+		 *
+		 * @param array<string, mixed> $args   GlotPress template arguments.
+		 *
+		 * @return array<string, mixed>   Array of template arguments.
+		 */
+		public static function template_args_project( array $args ) {
+
+			$result = array();
+
+			$result['project'] = $args['project'];
+
+			if ( is_array( $args['translation_sets'] ) ) {
+				foreach ( $args['translation_sets'] as $translation_set ) {
+					$result['translation_sets'][ $translation_set->locale ] = $translation_set;
+				}
+			}
+
+			// Return Project and Translation Sets.
+			return $result;
+		}
+
+
+		/**
+		 * Delete translations with a specified status.
+		 *
+		 * @since 1.0.0
+		 *
+		 * @return void
+		 */
+		public static function delete_translations() {
+
+			check_ajax_referer( 'gp-toolbox-nonce', 'nonce' );
+
+			// Initialize variables.
+			$project_path = '';
+			$locale       = '';
+			$slug         = '';
+			$status       = '';
+
+			if ( isset( $_POST['projectPath'] ) ) {
+				$project_path = sanitize_key( $_POST['projectPath'] );
+			} else {
+				wp_die();
+			}
+
+			if ( isset( $_POST['locale'] ) ) {
+				$locale = sanitize_key( $_POST['locale'] );
+			} else {
+				wp_die();
+			}
+
+			if ( isset( $_POST['slug'] ) ) {
+				$slug = sanitize_key( $_POST['slug'] );
+			} else {
+				wp_die();
+			}
+
+			if ( isset( $_POST['status'] ) ) {
+				$status = sanitize_key( $_POST['status'] );
+			} else {
+				wp_die();
+			}
+
+			// Get the GP_Project.
+			$project = GP::$project->by_path( $project_path );
+
+			// Get the GP_Translation_Set.
+			$translation_set = GP::$translation_set->by_project_id_slug_and_locale( $project->id, $slug, $locale );
+
+			// Get the translations.
+			$translations = GP::$translation->for_translation( $project, $translation_set, 'no-limit', gp_get( 'filters', array( 'status' => $status ) ) );
+
+			// Delete all translations.
+			foreach ( $translations as $translation ) {
+
+				$translation = GP::$translation->get( $translation );
+				if ( ! $translation ) {
+					continue;
+				}
+				$translation->delete();
+			}
+
+			gp_clean_translation_set_cache( $translation_set->id );
+
+			// Send JSON response and die.
+			wp_send_json_success(
+				array(
+					'percent'      => $translation_set->percent_translated(),
+					'current'      => $translation_set->current_count(),
+					'fuzzy'        => $translation_set->fuzzy_count(),
+					'untranslated' => $translation_set->untranslated_count(),
+					'waiting'      => $translation_set->waiting_count(),
+					'old'          => $translation_set->old_count,
+					'rejected'     => $translation_set->rejected_count,
 				)
 			);
 		}
