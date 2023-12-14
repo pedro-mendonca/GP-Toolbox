@@ -3,26 +3,49 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Toolbox for GlotPress\n"
 "Report-Msgid-Bugs-To: https://github.com/pedro-mendonca/GP-Toolbox/issues\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: Pedro Mendonça <ped.gaspar@gmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.4.2\n"
+"X-Generator: Poedit 3.4.1\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
 "X-Textdomain-Support: yes\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-WPHeader: gp-toolbox.php\n"
 "X-Poedit-Flags-xgettext: --add-comments=translators:\n"
-"POT-Creation-Date: \n"
-"PO-Revision-Date: \n"
-"Last-Translator: \n"
-"Language-Team: Pedro Mendonça <ped.gaspar@gmail.com>\n"
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-SearchPathExcluded-0: node_modules\n"
 "X-Poedit-SearchPathExcluded-1: vendor\n"
 
-#. Plugin Name of the plugin/theme
+#: assets/js/project.js:22 assets/js/project.min.js:1
+msgid "Old"
+msgstr ""
+
+#: assets/js/project.js:23 assets/js/project.min.js:1
+msgid "Rejected"
+msgstr ""
+
+#. translators: 1: Plugin name. 2: Error message.
+#: includes/class-toolbox.php:94
+#, php-format
+msgid "%1$s: %2$s"
+msgstr ""
+
+#: includes/class-toolbox.php:95
+msgctxt "Plugin name"
 msgid "Toolbox for GlotPress"
+msgstr ""
+
+#: includes/class-toolbox.php:96
+msgid "GlotPress not found. Please install and activate it."
+msgstr ""
+
+#. Plugin Name of the plugin/theme
+msgid "GP Toolbox"
 msgstr ""
 
 #. Plugin URI of the plugin/theme
