@@ -1,10 +1,13 @@
 /* CSS for GP-Toolbox. */
 table.gp-table.translation-sets {
-	display: none;
-}
 
-table.gp-table.translation-sets.ready {
-	display: table;
+	/*
+			display: none;
+
+			&.ready {
+				display: table;
+			}
+			*/
 }
 
 table.gp-table.translation-sets tbody tr td.highlight.translated {
