@@ -5,11 +5,48 @@ table {
 
 		&.translation-sets {
 
+			/*
+			display: none;
+
+			&.ready {
+				display: table;
+			}
+			*/
+
 			tbody {
 
 				tr {
 
 					td {
+
+						&.highlight {
+
+							&.translated {
+								background-color: var(--gp-color-status-current-subtle);
+							}
+
+							&.fuzzy {
+								background-color: var(--gp-color-status-fuzzy-subtle);
+							}
+
+							&.untranslated {
+								background-color: var(--gp-color-secondary-200);
+							}
+
+							&.waiting {
+								background-color: var(--gp-color-status-waiting-subtle);
+							}
+
+							&.old {
+								background-color: var(--gp-color-status-old-subtle);
+							}
+
+							&.rejected {
+								background-color: var(--gp-color-status-rejected-subtle);
+							}
+
+						}
+
 
 						&.stats {
 
@@ -17,24 +54,20 @@ table {
 							&.rejected {
 
 								div {
-
 									display: flex;
-									justify-content: center;
+									align-items: center;
 
 									a,
 									button {
-
 										display: inline-flex;
-										// vertical-align: middle;
-										// line-height: 20px;
+										justify-content: center;
 									}
 
 									a {
 
 										&.count {
-
-											flex: fit-content;
-											flex-flow: column;
+											flex: max-content;
+											margin: 0 10px;
 										}
 
 									}
@@ -46,24 +79,36 @@ table {
 											border: none;
 											background: none;
 											cursor: pointer;
-											// margin-left: 1em;
 											color: var(--gp-color-primary-500);
+											margin-left: -20px;
 
 											&:disabled {
 												color: var(--gp-color-btn-disabled-text);
 												cursor: default;
 											}
+
+											&.hidden {
+												display: none;
+											}
+
 										}
+
 									}
+
 								}
 
-
 							}
+
 						}
+
 					}
+
 				}
+
 			}
+
 		}
+
 	}
 
 }

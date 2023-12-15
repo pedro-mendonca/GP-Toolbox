@@ -71,15 +71,17 @@ jQuery( document ).ready( function( $ ) {
 				// Check if user has GLotPress administrator previleges.
 				if ( glotpressAdmin ) {
 					// Add buttons to delete Old and Rejected translations.
-					$( old ).find( 'div a.count' ).after( '<button class="delete" disabled><span class="dashicons dashicons-trash"></span></button>' );
-					$( rejected ).find( 'div a.count' ).after( '<button class="delete" disabled><span class="dashicons dashicons-trash"></span></button></div>' );
+					$( old ).find( 'div a.count' ).after( '<button class="delete hidden" disabled><span class="dashicons dashicons-trash"></span></button>' );
+					$( rejected ).find( 'div a.count' ).after( '<button class="delete hidden" disabled><span class="dashicons dashicons-trash"></span></button></div>' );
 
 					// Enable delete buttons for non-zero counts.
 					if ( $( old ).find( 'div a.count' ).text().trim() !== '0' ) {
-						$( old ).find( 'div button.delete' ).attr( 'disabled', false );
+						$( old ).addClass( 'highlight' );
+						$( old ).find( 'div button.delete' ).attr( 'disabled', false ).removeClass( 'hidden' );
 					}
 					if ( $( rejected ).find( 'div a.count' ).text().trim() !== '0' ) {
-						$( rejected ).find( 'div button.delete' ).attr( 'disabled', false );
+						$( rejected ).addClass( 'highlight' );
+						$( rejected ).find( 'div button.delete' ).attr( 'disabled', false ).removeClass( 'hidden' );
 					}
 
 					// Delete Old and Rejected translations.
@@ -92,6 +94,10 @@ jQuery( document ).ready( function( $ ) {
 				}
 			}
 		);
+
+		updateHighlight();
+
+		// tableTranslationSets.addClass( 'ready' );
 	}
 
 	/**
@@ -131,11 +137,17 @@ jQuery( document ).ready( function( $ ) {
 
 			// Update stats count.
 			if ( $( button ).closest( 'td' ).hasClass( 'old' ) ) {
+				$( old ).closest( 'td' ).removeClass( 'highlight' );
 				button.closest( 'div' ).children( 'a' ).text( old );
+				button.addClass( 'hidden' );
 			}
 			if ( $( button ).closest( 'td' ).hasClass( 'rejected' ) ) {
+				$( rejected ).closest( 'td' ).removeClass( 'highlight' );
 				button.closest( 'div' ).children( 'a' ).text( rejected );
+				button.addClass( 'hidden' );
 			}
+
+			updateHighlight( button.closest( 'td' ) );
 
 			console.log( 'Ajax request has been completed (' + textStatus + '). Status: ' + jqXHR.status + ' ' + jqXHR.statusText );
 			console.log( response );
@@ -147,5 +159,42 @@ jQuery( document ).ready( function( $ ) {
 		} ).always( function() {
 			console.log( 'Ajax end.' );
 		} );
+	}
+
+	/**
+	 * Update count highlight status.
+	 *
+	 * @param {Object} element : HTML element to update.
+	 */
+	function updateHighlight( element ) {
+		var count = 0;
+		if ( element ) {
+			// Get stats count.
+			count = $( element ).find( 'a' ).text();
+
+			if ( count === '0' ) {
+				// Remove highlight.
+				$( element ).removeClass( 'highlight' );
+			} else {
+				// Add highlight.
+				$( element ).addClass( 'highlight' );
+			}
+		} else {
+			// Update all.
+			$( tableTranslationSets ).find( 'td.stats' ).each(
+				function() {
+					// Get stats count.
+					count = $( this ).find( 'a' ).text();
+
+					if ( count === '0' ) {
+						// Remove highlight.
+						$( this ).removeClass( 'highlight' );
+					} else {
+						// Add highlight.
+						$( this ).addClass( 'highlight' );
+					}
+				}
+			);
+		}
 	}
 } );
