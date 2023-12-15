@@ -19,36 +19,45 @@ table {
 
 					td {
 
-						&.highlight {
-
-							&.translated {
-								background-color: var(--gp-color-status-current-subtle);
-							}
-
-							&.fuzzy {
-								background-color: var(--gp-color-status-fuzzy-subtle);
-							}
-
-							&.untranslated {
-								background-color: var(--gp-color-secondary-200);
-							}
-
-							&.waiting {
-								background-color: var(--gp-color-status-waiting-subtle);
-							}
-
-							&.old {
-								background-color: var(--gp-color-status-old-subtle);
-							}
-
-							&.rejected {
-								background-color: var(--gp-color-status-rejected-subtle);
-							}
-
-						}
-
-
 						&.stats {
+
+							&:not(.percent) {
+
+								background-color: var(--gp-color-secondary-100);
+
+								opacity: 0.25;
+
+								&.highlight {
+
+									opacity: 1;
+
+									&.translated {
+										background-color: var(--gp-color-status-current-subtle);
+									}
+
+									&.fuzzy {
+										background-color: var(--gp-color-status-fuzzy-subtle);
+									}
+
+									&.untranslated {
+										background-color: inherit;
+									}
+
+									&.waiting {
+										background-color: var(--gp-color-status-waiting-subtle);
+									}
+
+									&.old {
+										background-color: var(--gp-color-status-old-subtle);
+									}
+
+									&.rejected {
+										background-color: var(--gp-color-status-rejected-subtle);
+									}
+
+								}
+
+							}
 
 							&.old,
 							&.rejected {

@@ -10,27 +10,36 @@ table.gp-table.translation-sets {
 			*/
 }
 
-table.gp-table.translation-sets tbody tr td.highlight.translated {
+table.gp-table.translation-sets tbody tr td.stats:not(.percent) {
+	background-color: var(--gp-color-secondary-100);
+	opacity: 0.25;
+}
+
+table.gp-table.translation-sets tbody tr td.stats:not(.percent).highlight {
+	opacity: 1;
+}
+
+table.gp-table.translation-sets tbody tr td.stats:not(.percent).highlight.translated {
 	background-color: var(--gp-color-status-current-subtle);
 }
 
-table.gp-table.translation-sets tbody tr td.highlight.fuzzy {
+table.gp-table.translation-sets tbody tr td.stats:not(.percent).highlight.fuzzy {
 	background-color: var(--gp-color-status-fuzzy-subtle);
 }
 
-table.gp-table.translation-sets tbody tr td.highlight.untranslated {
-	background-color: var(--gp-color-secondary-200);
+table.gp-table.translation-sets tbody tr td.stats:not(.percent).highlight.untranslated {
+	background-color: inherit;
 }
 
-table.gp-table.translation-sets tbody tr td.highlight.waiting {
+table.gp-table.translation-sets tbody tr td.stats:not(.percent).highlight.waiting {
 	background-color: var(--gp-color-status-waiting-subtle);
 }
 
-table.gp-table.translation-sets tbody tr td.highlight.old {
+table.gp-table.translation-sets tbody tr td.stats:not(.percent).highlight.old {
 	background-color: var(--gp-color-status-old-subtle);
 }
 
-table.gp-table.translation-sets tbody tr td.highlight.rejected {
+table.gp-table.translation-sets tbody tr td.stats:not(.percent).highlight.rejected {
 	background-color: var(--gp-color-status-rejected-subtle);
 }
 
