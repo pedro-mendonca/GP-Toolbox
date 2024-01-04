@@ -48,7 +48,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Tools' ) ) {
 				exit;
 			}
 
-			$this->tmpl( 'tools' );
+			$this->tmpl( 'gptoolbox-tools' );
 		}
 	}
 }

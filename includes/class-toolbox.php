@@ -55,6 +55,82 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 
 			// Delete translations with a specified status.
 			add_action( 'wp_ajax_delete_translations', array( self::class, 'delete_translations' ) );
+
+			// Add Tools menu item.
+			add_filter( 'gp_nav_menu_items', array( self::class, 'nav_menu_items' ), 10, 2 );
+
+			// Register routes.
+			add_action( 'template_redirect', array( $this, 'register_routes' ), 5 );
+
+			// Set template locations.
+			add_filter( 'gp_tmpl_load_locations', array( $this, 'template_load_locations' ), 10, 4 );
+		}
+
+
+		/**
+		 * Add Tools menu item.
+		 *
+		 * @since 1.0.1
+		 *
+		 * @return void
+		 */
+		public static function nav_menu_items( $items, $location ) {
+
+			$new_item = array();
+
+			// Check for 'side' menu location.
+			if ( $location === 'side' ) {
+
+				// Check if user is logged in and has GlotPress admin previleges.
+				if ( is_user_logged_in() && current_user_can( 'manage_options' ) && GP::$permission->current_user_can( 'admin' ) ) {
+					// Add Tools item to admin bar side menu.
+					$new_item[ gp_url( '/tools/' ) ] = esc_html__( 'Tools', 'gp-toolbox' );
+				}
+			}
+
+			return array_merge( $new_item, $items );
+		}
+
+
+		/**
+		 * Register custom routes for GP-Toolbox.
+		 *
+		 * @since 1.0.1
+		 *
+		 * @return void
+		 */
+		public function register_routes() {
+
+			GP::$router->prepend( '/tools', array( __NAMESPACE__ . '\Routes\Tools', 'tools_get' ) );
+			GP::$router->prepend( '/tools/originals', array( __NAMESPACE__ . '\Routes\Originals', 'originals_get' ) );
+			GP::$router->prepend( '/tools/translations', array( __NAMESPACE__ . '\Routes\Translations', 'translations_get' ) );
+			GP::$router->prepend( '/tools/translation-sets', array( __NAMESPACE__ . '\Routes\Translation_Sets', 'translation_sets_get' ) );
+		}
+
+
+		/**
+		 * Get GP-Toolbox templates.
+		 *
+		 * @since 1.0.0
+		 *
+		 * @return array   Template location.
+		 */
+		public function template_load_locations( $locations, $template, $args, $template_path ) {
+
+			$gp_toolbox_templates = array(
+				'gptoolbox-tools',
+				'gptoolbox-originals',
+				'gptoolbox-translations',
+				'gptoolbox-translation-sets',
+			);
+
+			if ( in_array( $template, $gp_toolbox_templates, true ) ) {
+				$locations = array(
+					GP_TOOLBOX_DIR_PATH . 'gp-templates/',
+				);
+			}
+
+			return $locations;
 		}
 
 
