@@ -74,6 +74,6 @@ require_once GP_TOOLBOX_DIR_PATH . 'vendor/autoload.php'; // phpcs:ignore.
  * @return void
  */
 function gp_toolbox_init() {
-	Toolbox::init();
+	new Toolbox();
 }
-add_action( 'plugins_loaded', __NAMESPACE__ . '\gp_toolbox_init' );
+add_action( 'gp_init', __NAMESPACE__ . '\gp_toolbox_init' );

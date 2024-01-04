@@ -35,7 +35,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 		 *
 		 * @return void
 		 */
-		public static function init() {
+		public function __construct() {
 
 			/**
 			 * Check if GlotPress is activated.
