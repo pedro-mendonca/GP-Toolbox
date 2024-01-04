@@ -178,6 +178,10 @@ jQuery( document ).ready( function( $ ) {
 
 				// Disable button.
 				button.attr( 'disabled', true );
+
+				// Start the AJAX process with the initial step (1)
+				//getProgress( 1 );
+				getProgress( button.closest( 'td' ), 1 );
 			},
 
 		} ).done( function( response, textStatus, jqXHR ) {
@@ -253,4 +257,44 @@ jQuery( document ).ready( function( $ ) {
 			);
 		}
 	}
+
+	function getProgress( element, step ) {
+		console.log( 'Progress: ' + step );
+            $.ajax({
+
+				url: gpToolboxProject.ajaxurl,
+				type: 'POST',
+				data: {
+					action: 'get_progress',
+					step: step, // Pass the current step
+					nonce: gpToolboxProject.nonce,
+                },
+                success: function (response) {
+                    if ( response.success ) {
+                        var progress = response.data.progress;
+						console.log( progress );
+						console.log( response.success );
+                        //$('#progress-bar').css('width', progress + '%');
+						$( element ).css( 'background', 'linear-gradient(90deg, var(--gp-color-secondary-100) ' + progress + '%, var(--gp-color-status-rejected-subtle) ' + progress + '%)' );
+						// background: linear-gradient(90deg, rgba(255,255,0,1) 60%, rgba(187,187,187,1) 60%);
+
+                        if ( progress < 100 ) {
+                            // If the progress is not 100%, continue the AJAX call with the next step
+                            //setTimeout( getProgress( progress + 1 ), 100 );
+							//getProgress( progress + 1 )
+							getProgress( element, progress + 1 );
+                        } else {
+                            //$('#progress-container').hide(); // Hide progress bar when AJAX is complete
+                        }
+
+
+                    } else {
+                        // Handle error
+                    }
+                },
+                error: function () {
+                    // Handle AJAX error
+                },
+            });
+        }
 } );

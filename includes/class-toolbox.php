@@ -56,6 +56,9 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 			// Delete translations with a specified status.
 			add_action( 'wp_ajax_delete_translations', array( self::class, 'delete_translations' ) );
 
+			// Get progress of an action.
+			add_action( 'wp_ajax_get_progress', array( self::class, 'get_progress' ) );
+
 			// Add Tools menu item.
 			add_filter( 'gp_nav_menu_items', array( self::class, 'nav_menu_items' ), 10, 2 );
 
@@ -392,15 +395,48 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 			// Get the translations.
 			$translations = GP::$translation->for_translation( $project, $translation_set, 'no-limit', gp_get( 'filters', array( 'status' => $status ) ) );
 
+			$total = count( $translations );
+			//var_dump( $total );
+
+			// Check if a progress transient exists.
+			$progress = get_transient( 'gp_toolbox_progress' );
+
+			// If the transient doesn't exist, initialize the progress.
+			if ( $progress === false ) {
+				$progress = 0;
+			}
+
 			// Delete all translations.
-			foreach ( $translations as $translation ) {
+			foreach ( $translations as $key => $translation ) {
+				//var_dump( $key );
+
+				sleep( 1 );
+
+				$progress = ( $key + 1 ) * 100 / $total;
+
+				// Update the transient with the current progress.
+				set_transient( 'gp_toolbox_progress', $progress, MINUTE_IN_SECONDS );
+
+				// Send JSON response with progress
+				/*
+				wp_send_json(
+					array(
+						'progress' => $progress,
+					)
+				);
+				*/
 
 				$translation = GP::$translation->get( $translation );
 				if ( ! $translation ) {
 					continue;
 				}
+
 				$translation->delete();
+
 			}
+
+			// Remove the transient when the task is complete.
+			// delete_transient( 'gp_toolbox_progress' );
 
 			gp_clean_translation_set_cache( $translation_set->id );
 
@@ -414,8 +450,52 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 					'waiting'      => $translation_set->waiting_count(),
 					'old'          => $translation_set->old_count,
 					'rejected'     => $translation_set->rejected_count,
+					'progress'     => 100,
 				)
 			);
+		}
+
+		/**
+		 * Get progress of an action.
+		 *
+		 * @since 1.0.1
+		 *
+		 * @return void
+		 */
+		public static function get_progress() {
+
+			check_ajax_referer( 'gp-toolbox-nonce', 'nonce' );
+
+			// Initialize variables.
+			$progress = '';
+
+			if ( isset( $_POST['progress'] ) ) {
+				$progress = sanitize_key( $_POST['progress'] );
+			} else {
+				wp_die();
+			}
+
+			// Check if a progress transient exists.
+			$progress = get_transient( 'gp_toolbox_progress' );
+
+			// If the transient doesn't exist, initialize the progress.
+			if ( $progress === false ) {
+				$progress = 0;
+			}
+
+			if ( $progress === 100 ) {
+				delete_transient( 'gp_toolbox_progress' );
+			}
+
+			// Send JSON response and die.
+			wp_send_json_success(
+				array(
+					'progress' => $progress,
+				)
+			);
+
+			wp_die();
+		}
 
 
 		/**
