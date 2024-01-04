@@ -22,6 +22,12 @@ jQuery( document ).ready( function( $ ) {
 	// Set the data attrib prefix.
 	var dataPrefix = 'gptoolboxdata-';
 
+	// Get the highlight_counts setting.
+	var highlightCounts = false;
+	if ( gpToolboxProject.highlight_counts === '1' ) {
+		highlightCounts = true;
+	}
+
 	console.log( supportedTranslationStatuses );
 
 	// Check if the Translation Sets table exist.
@@ -122,11 +128,9 @@ jQuery( document ).ready( function( $ ) {
 
 					// Enable Old and Rejected delete buttons for non-zero counts.
 					if ( $( old ).find( 'div a.count' ).text().trim() !== '0' ) {
-						$( old ).addClass( 'highlight' );
 						$( old ).find( 'div button.delete' ).attr( 'disabled', false ).removeClass( 'hidden' );
 					}
 					if ( $( rejected ).find( 'div a.count' ).text().trim() !== '0' ) {
-						$( rejected ).addClass( 'highlight' );
 						$( rejected ).find( 'div button.delete' ).attr( 'disabled', false ).removeClass( 'hidden' );
 					}
 
@@ -214,6 +218,12 @@ jQuery( document ).ready( function( $ ) {
 	 */
 	function updateHighlight( element ) {
 		var count = 0;
+
+		// Check highlightCounts setting and don't highlight if not set to true.
+		if ( highlightCounts === false ) {
+			return;
+		}
+
 		if ( element ) {
 			// Get stats count.
 			count = $( element ).find( 'a' ).text();

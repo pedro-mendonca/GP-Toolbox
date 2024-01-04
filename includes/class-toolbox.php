@@ -227,6 +227,14 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 					'args'               => self::{'template_args_' . $template}( $args ),
 					'supported_statuses' => self::supported_translation_statuses(), // Supported translation statuses.
 					'user_locale'        => GP_locales::by_field( 'wp_locale', get_user_locale() ),
+					/**
+					 * Filters wether to color highlight or not the translation stats counts of the translation sets on the project page.
+					 *
+					 * @since 1.0.1
+					 *
+					 * @param bool   True to highlight, false to don't highlight. Defaults to true.
+					 */
+					'highlight_counts'   => apply_filters( 'gp_toolbox_highlight_counts', true ),
 				)
 			);
 		}
