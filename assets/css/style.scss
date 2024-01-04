@@ -25,11 +25,15 @@ table {
 
 								background-color: var(--gp-color-secondary-100);
 
-								opacity: 0.25;
+								a {
+									opacity: 0.5;
+								}
 
 								&.highlight {
 
-									opacity: 1;
+									a {
+										opacity: 1;
+									}
 
 									&.translated {
 										background-color: var(--gp-color-status-current-subtle);

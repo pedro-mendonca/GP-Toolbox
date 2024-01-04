@@ -12,10 +12,13 @@ table.gp-table.translation-sets {
 
 table.gp-table.translation-sets tbody tr td.stats:not(.percent) {
 	background-color: var(--gp-color-secondary-100);
-	opacity: 0.25;
 }
 
-table.gp-table.translation-sets tbody tr td.stats:not(.percent).highlight {
+table.gp-table.translation-sets tbody tr td.stats:not(.percent) a {
+	opacity: 0.5;
+}
+
+table.gp-table.translation-sets tbody tr td.stats:not(.percent).highlight a {
 	opacity: 1;
 }
 
@@ -41,6 +44,10 @@ table.gp-table.translation-sets tbody tr td.stats:not(.percent).highlight.old {
 
 table.gp-table.translation-sets tbody tr td.stats:not(.percent).highlight.rejected {
 	background-color: var(--gp-color-status-rejected-subtle);
+}
+
+table.gp-table.translation-sets tbody tr td.stats:not(.percent).highlight.changesrequested {
+	background-color: var(--gp-color-status-changesrequested-subtle);
 }
 
 table.gp-table.translation-sets tbody tr td.stats.old div,
