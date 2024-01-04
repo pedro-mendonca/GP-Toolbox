@@ -120,7 +120,13 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 				add_action(
 					'wp_enqueue_scripts',
 					function () use ( $template, $args ) {
-						self::register_plugin_scripts( $template, $args );
+						self::register_plugin_scripts(
+							$template,
+							$args,
+							array(
+								'wp-i18n',
+							)
+						);
 					}
 				);
 
@@ -213,12 +219,14 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 				$script_id,
 				'gpToolbox' . ucfirst( $template ), // Eg. 'gpToolboxProject'.
 				array(
-					'admin'          => GP::$permission->current_user_can( 'admin' ),
-					'gp_url'         => gp_url(),         // GlotPress base URL. Defaults to /glotpress/.
-					'gp_url_project' => gp_url_project(), // GlotPress projects base URL. Defaults to /glotpress/projects/.
-					'ajaxurl'        => admin_url( 'admin-ajax.php' ),
-					'nonce'          => wp_create_nonce( 'gp-toolbox-nonce' ),
-					'args'           => self::{'template_args_' . $template}( $args ),
+					'admin'              => GP::$permission->current_user_can( 'admin' ),
+					'gp_url'             => gp_url(),         // GlotPress base URL. Defaults to /glotpress/.
+					'gp_url_project'     => gp_url_project(), // GlotPress projects base URL. Defaults to /glotpress/projects/.
+					'ajaxurl'            => admin_url( 'admin-ajax.php' ),
+					'nonce'              => wp_create_nonce( 'gp-toolbox-nonce' ),
+					'args'               => self::{'template_args_' . $template}( $args ),
+					'supported_statuses' => self::supported_translation_statuses(), // Supported translation statuses.
+					'user_locale'        => GP_locales::by_field( 'wp_locale', get_user_locale() ),
 				)
 			);
 		}
@@ -324,6 +332,50 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 					'rejected'     => $translation_set->rejected_count,
 				)
 			);
+
+
+		/**
+		 * Get the translation statuses to manage.
+		 * Currently GlotPress project tables only show the 'current', 'fuzzy' and 'waiting' strings.
+		 * This enables all the statuses, adding the columns 'old', 'rejected' and 'changesrequested' to the project tables.
+		 * The list is filterable by 'gp_toolbox_supported_translation_statuses' below.
+		 *
+		 * @since 1.0.1
+		 *
+		 * @return array<int, string>   Translations statuses to enable management.
+		 */
+		public static function supported_translation_statuses() {
+
+			$glotpress_statuses = array(
+				'current'  => esc_html__( 'Current', 'gp-toolbox' ),
+				'fuzzy'    => esc_html__( 'Fuzzy', 'gp-toolbox' ),
+				'waiting'  => esc_html__( 'Waiting', 'gp-toolbox' ),
+				'old'      => esc_html__( 'Old', 'gp-toolbox' ),
+				'rejected' => esc_html__( 'Rejected', 'gp-toolbox' ),
+				// TODO: Uncomment when the gp-translation-helpers is merged in GlotPress.
+				// 'changesrequested' => esc_html__( 'Changes requested', 'gp-toolbox' ), // phpcs:ignore
+			);
+
+			$supported_statuses = array_keys( $glotpress_statuses );
+
+			/**
+			 * Filter to set the translation statuses to manage with GP Toolbox.
+			 *
+			 * @since 1.0.1
+			 *
+			 * @param array $supported_statuses   The array of the supported statuses to enable management, check and cleanup.
+			 */
+			$filtered_statuses = apply_filters( 'gp_toolbox_supported_translation_statuses', $supported_statuses );
+
+			// Sanitize the filtered statuses.
+			$statuses = array();
+			foreach ( $filtered_statuses as $filtered_status ) {
+				if ( array_key_exists( $filtered_status, $glotpress_statuses ) ) {
+					$statuses[ $filtered_status ] = $glotpress_statuses[ $filtered_status ];
+				}
+			}
+
+			return $statuses;
 		}
 	}
 }

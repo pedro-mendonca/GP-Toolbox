@@ -1,6 +1,12 @@
-/* global document, gpToolboxProject, wp */
+/* global document, Intl, gpToolboxProject, wp */
 
 jQuery( document ).ready( function( $ ) {
+	// Get User Locale.
+	var userLocale = gpToolboxProject.user_locale;
+
+	// Get the supported translation statuses.
+	var supportedTranslationStatuses = gpToolboxProject.supported_statuses;
+
 	// Get the Translation Sets table.
 	var tableTranslationSets = $( 'table.gp-table.translation-sets' );
 
@@ -16,18 +22,46 @@ jQuery( document ).ready( function( $ ) {
 	// Set the data attrib prefix.
 	var dataPrefix = 'gptoolboxdata-';
 
+	console.log( supportedTranslationStatuses );
+
 	// Check if the Translation Sets table exist.
 	if ( tableTranslationSets.length ) {
-		// Add Old and Rejected translations columns.
-		$( tableTranslationSets ).children( 'thead' ).children( 'tr' ).find( 'th.gp-column-waiting' ).after( '<th class="gptoolbox-column-old">' + wp.i18n.__( 'Old', 'gp-toolbox' ) + '</td>' );
-		$( tableTranslationSets ).children( 'thead' ).children( 'tr' ).find( 'th.gptoolbox-column-old' ).after( '<th class="gptoolbox-column-rejected">' + wp.i18n.__( 'Rejected', 'gp-toolbox' ) + '</td>' );
+		// Check if the 'old' status is supported.
+		if ( supportedTranslationStatuses.hasOwnProperty( 'old' ) ) {
+			// Add column header to header row.
+			$( tableTranslationSets ).children( 'thead' ).children( 'tr' ).find( 'th:last' ).after( '<th class="gptoolbox-column-old">' + wp.i18n.__( 'Old', 'gp-toolbox' ) + '</td>' );
+		}
+
+		// Check if the 'rejected' status is supported.
+		if ( supportedTranslationStatuses.hasOwnProperty( 'rejected' ) ) {
+			// Add column header to header row.
+			$( tableTranslationSets ).children( 'thead' ).children( 'tr' ).find( 'th:last' ).after( '<th class="gptoolbox-column-rejected">' + wp.i18n.__( 'Rejected', 'gp-toolbox' ) + '</td>' );
+		}
+
+		// Check if the 'changesrequested' status is supported.
+		if ( supportedTranslationStatuses.hasOwnProperty( 'changesrequested' ) ) {
+			// Add column header to header row.
+			$( tableTranslationSets ).children( 'thead' ).children( 'tr' ).find( 'th:last' ).after( '<th class="gptoolbox-column-changesrequested">' + wp.i18n.__( 'Changes requested', 'gp-toolbox' ) + '</td>' );
+		}
 
 		// Customize translation sets rows.
 		$( tableTranslationSets ).children( 'tbody' ).children( 'tr' ).each(
 			function() {
-				// Add Old and Rejected translations to row.
-				$( this ).find( 'td.stats.waiting' ).after( '<td class="stats old"></td>' );
-				$( this ).find( 'td.stats.old' ).after( '<td class="stats rejected"></td>' );
+				// Check if the 'old' status is supported.
+				if ( supportedTranslationStatuses.hasOwnProperty( 'old' ) ) {
+					// Add cell to row.
+					$( this ).find( 'td:last' ).after( '<td class="stats old"></td>' );
+				}
+				// Check if the 'rejected' status is supported.
+				if ( supportedTranslationStatuses.hasOwnProperty( 'rejected' ) ) {
+					// Add cell to row.
+					$( this ).find( 'td:last' ).after( '<td class="stats rejected"></td>' );
+				}
+				// Check if the 'changesrequested' status is supported.
+				if ( supportedTranslationStatuses.hasOwnProperty( 'changesrequested' ) ) {
+					// Add cell to row.
+					$( this ).find( 'td:last' ).after( '<td class="stats changesrequested"></td>' );
+				}
 
 				// Add attributes 'gptoolboxdata-' to each row.
 				$( this ).children( 'td:first-child' ).find( 'a' ).each( function() {
@@ -49,7 +83,7 @@ jQuery( document ).ready( function( $ ) {
 			}
 		);
 
-		// Add Old and Rejected translations to translation set.
+		// Add Old, Rejected and Changes requested translations to translation set.
 		$( tableTranslationSets ).children( 'tbody' ).children( 'tr' ).each(
 			function() {
 				var locale = $( this ).attr( 'gptoolboxdata-locale' );
@@ -64,9 +98,21 @@ jQuery( document ).ready( function( $ ) {
 				var old = $( this ).children( 'td.stats.old' );
 				var rejected = $( this ).children( 'td.stats.rejected' );
 
-				// Add Old and Rejected translations count.
-				$( this ).find( 'td.stats.old' ).html( '<div><a class="count" href="' + url + '?filters[status]=old">' + translationSet.old_count + '</a></div>' );
-				$( this ).find( 'td.stats.rejected' ).html( '<div><a class="count" href="' + url + '?filters[status]=rejected">' + translationSet.rejected_count + '</a></div>' );
+				// Check if the 'old' status is supported.
+				if ( supportedTranslationStatuses.hasOwnProperty( 'old' ) ) {
+					// Add value to cell.
+					$( this ).find( 'td.stats.old' ).attr( 'data-text', translationSet.old_count ).html( '<div><a class="count" href="' + url + '?filters[status]=old">' + new Intl.NumberFormat( userLocale.slug ).format( translationSet.old_count ) + '</a></div>' );
+				}
+				// Check if the 'rejected' status is supported.
+				if ( supportedTranslationStatuses.hasOwnProperty( 'rejected' ) ) {
+					// Add value to cell.
+					$( this ).find( 'td.stats.rejected' ).attr( 'data-text', translationSet.rejected_count ).html( '<div><a class="count" href="' + url + '?filters[status]=rejected">' + new Intl.NumberFormat( userLocale.slug ).format( translationSet.rejected_count ) + '</a></div>' );
+				}
+				// Check if the 'changesrequested' status is supported.
+				if ( supportedTranslationStatuses.hasOwnProperty( 'changesrequested' ) ) {
+					// Add value to cell.
+					$( this ).find( 'td.stats.changesrequested' ).attr( 'data-text', translationSet.changesrequested_count ).html( '<div><a class="count" href="' + url + '?filters[status]=changesrequested">' + new Intl.NumberFormat( userLocale.slug ).format( translationSet.changesrequested_count ) + '</a></div>' );
+				}
 
 				// Check if user has GLotPress administrator previleges.
 				if ( glotpressAdmin ) {
@@ -74,7 +120,7 @@ jQuery( document ).ready( function( $ ) {
 					$( old ).find( 'div a.count' ).after( '<button class="delete hidden" disabled><span class="dashicons dashicons-trash"></span></button>' );
 					$( rejected ).find( 'div a.count' ).after( '<button class="delete hidden" disabled><span class="dashicons dashicons-trash"></span></button></div>' );
 
-					// Enable delete buttons for non-zero counts.
+					// Enable Old and Rejected delete buttons for non-zero counts.
 					if ( $( old ).find( 'div a.count' ).text().trim() !== '0' ) {
 						$( old ).addClass( 'highlight' );
 						$( old ).find( 'div button.delete' ).attr( 'disabled', false ).removeClass( 'hidden' );
@@ -135,15 +181,15 @@ jQuery( document ).ready( function( $ ) {
 			var old = response.data.old;
 			var rejected = response.data.rejected;
 
-			// Update stats count.
+			// Update Old and Rejected stats count after delete.
 			if ( $( button ).closest( 'td' ).hasClass( 'old' ) ) {
 				$( old ).closest( 'td' ).removeClass( 'highlight' );
-				button.closest( 'div' ).children( 'a' ).text( old );
+				button.closest( 'div' ).children( 'a' ).text( new Intl.NumberFormat( userLocale.slug ).format( old ) );
 				button.addClass( 'hidden' );
 			}
 			if ( $( button ).closest( 'td' ).hasClass( 'rejected' ) ) {
 				$( rejected ).closest( 'td' ).removeClass( 'highlight' );
-				button.closest( 'div' ).children( 'a' ).text( rejected );
+				button.closest( 'div' ).children( 'a' ).text( new Intl.NumberFormat( userLocale.slug ).format( rejected ) );
 				button.addClass( 'hidden' );
 			}
 

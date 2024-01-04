@@ -55,6 +55,10 @@ table {
 										background-color: var(--gp-color-status-rejected-subtle);
 									}
 
+									&.changesrequested {
+										background-color: var(--gp-color-status-changesrequested-subtle);
+									}
+
 								}
 
 							}
