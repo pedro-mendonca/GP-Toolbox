@@ -428,20 +428,6 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 				);
 				*/
 
-				// Store JSON-encoded data in a buffer
-				/*
-        ob_start();
-        echo json_encode(array('progress' => $progress));
-        $output = ob_get_clean();
-
-        // Send the buffered output
-        echo $output;
-
-        // Flush the output buffer to send data immediately to the client
-        ob_flush();
-        flush();
-		*/
-
 
 				$translation = GP::$translation->get( $translation );
 				if ( ! $translation ) {
