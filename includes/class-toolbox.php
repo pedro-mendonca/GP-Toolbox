@@ -354,6 +354,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 		 */
 		public static function delete_translations() {
 
+			// Check nonce.
 			check_ajax_referer( 'gp-toolbox-nonce', 'nonce' );
 
 			// Initialize variables.
@@ -399,23 +400,24 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 			//var_dump( $total );
 
 			// Check if a progress transient exists.
-			$progress = get_transient( 'gp_toolbox_progress' );
+			//$progress = get_transient( 'gp_toolbox_ajax_progress' );
 
 			// If the transient doesn't exist, initialize the progress.
-			if ( $progress === false ) {
-				$progress = 0;
-			}
+			//if ( $progress === false ) {
+			//	$progress = 0;
+			//}
 
 			// Delete all translations.
 			foreach ( $translations as $key => $translation ) {
 				//var_dump( $key );
 
-				sleep( 1 );
+				// Delay for debug purposes.
+				//sleep( 0.1 );
 
 				$progress = ( $key + 1 ) * 100 / $total;
 
 				// Update the transient with the current progress.
-				set_transient( 'gp_toolbox_progress', $progress, MINUTE_IN_SECONDS );
+				set_transient( 'gp_toolbox_ajax_progress', $progress, MINUTE_IN_SECONDS );
 
 				// Send JSON response with progress
 				/*
@@ -426,17 +428,32 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 				);
 				*/
 
+				// Store JSON-encoded data in a buffer
+				/*
+        ob_start();
+        echo json_encode(array('progress' => $progress));
+        $output = ob_get_clean();
+
+        // Send the buffered output
+        echo $output;
+
+        // Flush the output buffer to send data immediately to the client
+        ob_flush();
+        flush();
+		*/
+
+
 				$translation = GP::$translation->get( $translation );
 				if ( ! $translation ) {
 					continue;
 				}
 
-				$translation->delete();
+				// $translation->delete();
 
 			}
 
 			// Remove the transient when the task is complete.
-			// delete_transient( 'gp_toolbox_progress' );
+			// delete_transient( 'gp_toolbox_ajax_progress' );
 
 			gp_clean_translation_set_cache( $translation_set->id );
 
@@ -464,19 +481,21 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 		 */
 		public static function get_progress() {
 
+			// Check nonce.
 			check_ajax_referer( 'gp-toolbox-nonce', 'nonce' );
-
+/*
 			// Initialize variables.
-			$progress = '';
+			$progress = null;
 
 			if ( isset( $_POST['progress'] ) ) {
 				$progress = sanitize_key( $_POST['progress'] );
 			} else {
 				wp_die();
 			}
+			*/
 
 			// Check if a progress transient exists.
-			$progress = get_transient( 'gp_toolbox_progress' );
+			$progress = get_transient( 'gp_toolbox_ajax_progress' );
 
 			// If the transient doesn't exist, initialize the progress.
 			if ( $progress === false ) {
@@ -484,7 +503,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 			}
 
 			if ( $progress === 100 ) {
-				delete_transient( 'gp_toolbox_progress' );
+				delete_transient( 'gp_toolbox_ajax_progress' );
 			}
 
 			// Send JSON response and die.
@@ -493,8 +512,6 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 					'progress' => $progress,
 				)
 			);
-
-			wp_die();
 		}
 
 
