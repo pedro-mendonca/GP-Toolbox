@@ -62,6 +62,9 @@ define( 'GP_TOOLBOX_DIR_PATH', plugin_dir_path( __FILE__ ) );
 // Set the plugin file path.
 define( 'GP_TOOLBOX_FILE', plugin_basename( __FILE__ ) );
 
+// Set the plugin Rest API namespace.
+define( 'GP_TOOLBOX_REST_NAMESPACE', 'gp-toolbox/v1' );
+
 
 // Include Composer autoload.
 require_once GP_TOOLBOX_DIR_PATH . 'vendor/autoload.php'; // phpcs:ignore.

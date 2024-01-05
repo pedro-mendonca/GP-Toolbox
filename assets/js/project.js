@@ -1,4 +1,4 @@
-/* global document, Intl, gpToolboxProject, wp */
+/* global document, Intl, gpToolboxProject, clearInterval, setInterval, setTimeout, wp, wpApiSettings */
 
 jQuery( document ).ready( function( $ ) {
 	// Get User Locale.
@@ -22,6 +22,8 @@ jQuery( document ).ready( function( $ ) {
 	// Set the data attrib prefix.
 	var dataPrefix = 'gptoolboxdata-';
 
+	var progressInterval;
+
 	// Get the highlight_counts setting.
 	var highlightCounts = false;
 	if ( gpToolboxProject.highlight_counts === '1' ) {
@@ -29,6 +31,8 @@ jQuery( document ).ready( function( $ ) {
 	}
 
 	console.log( supportedTranslationStatuses );
+
+	// console.log( project.path );
 
 	// Check if the Translation Sets table exist.
 	if ( tableTranslationSets.length ) {
@@ -208,104 +212,110 @@ jQuery( document ).ready( function( $ ) {
 
 		$.ajax( {
 
-			url: gpToolboxProject.ajaxurl,
+			url: wpApiSettings.root + 'gp-toolbox/v1/translations/' + project.path + '/' + locale + '/' + slug + '/' + status + '/-delete',
 			type: 'POST',
-			data: {
-				action: 'delete_translations',
-				projectPath: project.path,
-				locale: locale,
-				slug: slug,
-				status: status,
-				nonce: gpToolboxProject.nonce,
-			},
-			//cache: false,
+
 			beforeSend: function() {
-				console.log( 'Ajax request is starting...' );
+				console.log( 'Start deleting translations...' );
 
 				// Disable button.
 				button.attr( 'disabled', true );
 
 				// Start the AJAX process with the initial step (1)
 				//getProgress( 1 );
-				getProgress( button.closest( 'td' ), 1 );
+
+				//var progressInterval = setInterval( updateProgressBar, 1000 ); // Update every second
+
+				// startProgressInterval( button.closest( 'td' ) );
+
+				// var progressInterval = setInterval( getProgress, 1000, button.closest( 'td' ) ); // Update every second
+
+				getProgress( locale, slug, status );
+				// progressInterval = setTimeout( getProgress, 1000, locale, slug, status ); // Update every second
+				//setTimeout( getProgress, 500, locale, slug, status ); // Update after 0.5 second.
+
+				/*
+				var progressInterval = setInterval(
+					getProgress( button.closest( 'td' ), 1 ),
+					1000
+				); // Update every second
+				*/
 			},
 
-		} ).done( function( response, textStatus, jqXHR ) {
-			// Set translation set data.
-			var old = response.data.old;
-			var rejected = response.data.rejected;
+			success: function( response ) {
+				// Set translation set data.
+				var old = response.old;
+				var rejected = response.rejected;
 
-			// Update Old and Rejected stats count after delete.
-			if ( $( button ).closest( 'td' ).hasClass( 'old' ) ) {
-				$( old ).closest( 'td' ).removeClass( 'highlight' );
-				button.closest( 'div' ).children( 'a' ).text( new Intl.NumberFormat( userLocale.slug ).format( old ) );
-				button.addClass( 'hidden' );
-			}
-			if ( $( button ).closest( 'td' ).hasClass( 'rejected' ) ) {
-				$( rejected ).closest( 'td' ).removeClass( 'highlight' );
-				button.closest( 'div' ).children( 'a' ).text( new Intl.NumberFormat( userLocale.slug ).format( rejected ) );
-				button.addClass( 'hidden' );
-			}
+				// Update Old and Rejected stats count after delete.
+				if ( $( button ).closest( 'td' ).hasClass( 'old' ) ) {
+					$( old ).closest( 'td' ).removeClass( 'highlight' );
+					button.closest( 'div' ).children( 'a' ).text( new Intl.NumberFormat( userLocale.slug ).format( old ) );
+					button.addClass( 'hidden' );
+				}
+				if ( $( button ).closest( 'td' ).hasClass( 'rejected' ) ) {
+					$( rejected ).closest( 'td' ).removeClass( 'highlight' );
+					button.closest( 'div' ).children( 'a' ).text( new Intl.NumberFormat( userLocale.slug ).format( rejected ) );
+					button.addClass( 'hidden' );
+				}
 
-			updateHighlight( button.closest( 'td' ) );
+				updateHighlight( button.closest( 'td' ) );
 
-			console.log( 'Ajax request has been completed (' + textStatus + '). Status: ' + jqXHR.status + ' ' + jqXHR.statusText );
-			console.log( response );
-			console.log( textStatus );
-			console.log( jqXHR );
-		} ).fail( function( jqXHR, textStatus ) {
-			// Show the Error notice.
-			console.log( 'Ajax request has failed (' + textStatus + '). Status: ' + jqXHR.status + ' ' + jqXHR.statusText );
-		} ).always( function() {
-			console.log( 'Ajax end.' );
+				clearInterval( progressInterval );
+				console.log( 'Successfully deleted translations!' );
+				console.log( response );
+			},
+
+			error: function( response ) {
+				// Show the Error notice.
+				console.log( 'Failed to delete translations.' );
+				console.log( response );
+			},
+
+			always: function() {
+				console.log( 'Request ended.' );
+			},
 		} );
 	}
 
-
-
-	function getProgress( element, step ) {
-		console.log( 'Getting progress, step ' + step );
-		// console.log( 'Element: ' + element );
+	function getProgress( locale, slug, status ) {
 		$.ajax( {
 
-			url: gpToolboxProject.ajaxurl,
-			type: 'POST',
-			data: {
-				action: 'get_progress',
-				//step: step, // Pass the current step.
-				nonce: gpToolboxProject.nonce,
+			url: wpApiSettings.root + 'gp-toolbox/v1/translations/' + project.path + '/' + locale + '/' + slug + '/' + status + '/-delete-progress',
+			type: 'GET',
+
+			success: function( response ) {
+				console.log( 'Progress: ', response.progress );
+
+				if ( response.progress !== undefined ) {
+					$( tableTranslationSets ).find( 'tbody tr[' + dataPrefix + 'locale="' + locale + '"][' + dataPrefix + 'slug="' + slug + '"] td.stats.' + status ).css( 'background', 'linear-gradient(90deg, var(--gp-color-secondary-100) ' + response.progress + '%, var(--gp-color-status-' + status + '-subtle) ' + response.progress + '%)' );
+
+					if ( response.progress !== '100' ) {
+						setTimeout( getProgress, 1000, locale, slug, status ); // Update after 1 second.
+					}
+
+					// Check if the process is complete
+					/*if ( response.progress === '100' ) {
+						clearInterval( progressInterval );
+						console.log( 'Complete!' );
+						console.log( response.progress );
+					} else {
+						console.log( 'Continue...' );
+						console.log( response.progress );
+					}*/
+				} else {
+					console.log( 'Invalid response from the server.' );
+				}
 			},
 
-		} ).done( function( response, textStatus, jqXHR ) {
-			if ( response.success ) {
-				var progress = response.data.progress;
-				console.log( 'Progress: ' + progress );
-				// console.log( 'Response: ' + response.success );
-				//$('#progress-bar').css('width', progress + '%');
-				$( element ).css( 'background', 'linear-gradient(90deg, var(--gp-color-secondary-100) ' + progress + '%, var(--gp-color-status-rejected-subtle) ' + progress + '%)' );
-				// background: linear-gradient(90deg, rgba(255,255,0,1) 60%, rgba(187,187,187,1) 60%);
+			error: function( response ) {
+				console.log( 'Error while fetching progress.' );
+				console.log( response );
+			},
 
-				if ( progress < 100 ) {
-					// If the progress is not 100%, continue the AJAX call with the next step
-					// setTimeout( getProgress( element, step + 1 ), 0 );
-					//getProgress( progress + 1 )
-					//console.log( 'Get Progress again.' );
-					//getProgress( element, step + 1 );
-					setTimeout( function () {
-						getProgress( element, step + 1 );
-					}, 1000);
-				} else {
-					//$('#progress-container').hide(); // Hide progress bar when AJAX is complete
-				}
-
-			} else {
-				// Handle error
-			}
-		} ).fail( function( jqXHR, textStatus ) {
-			// Show the Error notice.
-			console.log( 'Ajax request has failed (' + textStatus + '). Status: ' + jqXHR.status + ' ' + jqXHR.statusText );
-		} ).always( function() {
-			console.log( 'Ajax end.' );
+			always: function() {
+				console.log( 'Request ended.' );
+			},
 		} );
 	}
 } );

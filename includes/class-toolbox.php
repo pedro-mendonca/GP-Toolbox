@@ -37,6 +37,8 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 		 */
 		public function __construct() {
 
+			//set_transient( 'gp_toolbox_ajax_progress', '17', MINUTE_IN_SECONDS );
+
 			/**
 			 * Check if GlotPress is activated.
 			 */
@@ -64,6 +66,11 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 
 			// Register routes.
 			add_action( 'template_redirect', array( $this, 'register_routes' ), 5 );
+			add_action( 'gp_router_default_routes_set', array( $this, 'add_routes' ), 5 );
+
+			//add_action( 'rest_api_init', array( $this, 'register_rest_routes' ) );
+
+			new Rest_API();
 
 			// Set template locations.
 			add_filter( 'gp_tmpl_load_locations', array( $this, 'template_load_locations' ), 10, 4 );
@@ -102,12 +109,149 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 		 *
 		 * @return void
 		 */
+		public function register_rest_routes() {
+
+			// Rota para o Calendário. Exemplo: ./wp-json/pac/v1/calendario/2023-2024
+			register_rest_route(
+				PAC_FPB_SCRAPPER_REST_NAMESPACE,
+				'/calendario/(?P<epoca>\d+-\d+)',
+				array(
+					'methods' => 'GET',
+					'callback' => array( $this, 'calendario' ),
+					//'permission_callback' => array( $this, 'get_private_data_permissions_check' ),
+					'permission_callback' => '__return_true',
+				)
+			);
+
+
+
+		}
+
+
+		/**
+		 * Register custom routes for GP-Toolbox.
+		 *
+		 * @since 1.0.1
+		 *
+		 * @return void
+		 */
 		public function register_routes() {
 
 			GP::$router->prepend( '/tools', array( __NAMESPACE__ . '\Routes\Tools', 'tools_get' ) );
 			GP::$router->prepend( '/tools/originals', array( __NAMESPACE__ . '\Routes\Originals', 'originals_get' ) );
 			GP::$router->prepend( '/tools/translations', array( __NAMESPACE__ . '\Routes\Translations', 'translations_get' ) );
 			GP::$router->prepend( '/tools/translation-sets', array( __NAMESPACE__ . '\Routes\Translation_Sets', 'translation_sets_get' ) );
+
+/*
+			// Rota para o Calendário. Exemplo: ./wp-json/pac/v1/calendario/2023-2024
+			register_rest_route(
+				PAC_FPB_SCRAPPER_REST_NAMESPACE,
+				'/calendario/(?P<epoca>\d+-\d+)',
+				array(
+					'methods' => 'GET',
+					'callback' => array( $this, 'calendario' ),
+					//'permission_callback' => array( $this, 'get_private_data_permissions_check' ),
+					'permission_callback' => '__return_true',
+				)
+			);
+
+			// Rota para a Associação. Exemplo: ./wp-json/pac/v1/calendario/2023-2024/associacoes/associacao_1
+			register_rest_route(
+				PAC_FPB_SCRAPPER_REST_NAMESPACE,
+				'/calendario/(?P<epoca>\d+-\d+)/associacoes/(?P<associacao>associacao_\d+)',
+				array(
+					'methods' => 'GET',
+					'callback' => array( $this, 'associacao' ),
+					//'permission_callback' => array( $this, 'get_private_data_permissions_check' ),
+					'permission_callback' => '__return_true',
+				)
+			);
+
+			// Rota para a Associação. Exemplo: ./wp-json/pac/v1/calendario/2023-2024/associacoes/associacao_1
+			register_rest_route(
+				PAC_FPB_SCRAPPER_REST_NAMESPACE,
+				'/associacao/(?P<associacao>associacao_\d+)',
+				array(
+					'methods' => 'GET',
+					'callback' => array( $this, 'get_associacao' ),
+					//'permission_callback' => array( $this, 'get_private_data_permissions_check' ),
+					'permission_callback' => '__return_true',
+				)
+			);
+
+			// Rota para a Associação. Exemplo: ./wp-json/pac/v1/calendario/2023-2024/associacoes/associacao_1
+			register_rest_route(
+				PAC_FPB_SCRAPPER_REST_NAMESPACE,
+				'/associacoes',
+				array(
+					'methods' => 'GET',
+					'callback' => array( $this, 'get_associacoes' ),
+					//'permission_callback' => array( $this, 'get_private_data_permissions_check' ),
+					'permission_callback' => '__return_true',
+				)
+			);
+
+			// Rota para o Clube. Exemplo: ./wp-json/pac/v1/calendario/2023-2024/associacoes/associacao_1/clube_3486
+			register_rest_route(
+				PAC_FPB_SCRAPPER_REST_NAMESPACE,
+				'/calendario/(?P<epoca>\d+-\d+)/associacoes/(?P<associacao>associacao_\d+)/(?P<clube>clube_\d+)',
+				array(
+					'methods' => 'GET',
+					'callback' => array( $this, 'clube' ),
+					//'permission_callback' => array( $this, 'get_private_data_permissions_check' ),
+					'permission_callback' => '__return_true',
+				)
+			);
+
+
+			// Rota para o Clube. Exemplo: ./wp-json/pac/v1/calendario/2023-2024/associacoes/associacao_1/clube_3486
+			register_rest_route(
+				PAC_FPB_SCRAPPER_REST_NAMESPACE,
+				'/clube/(?P<clube>clube_\d+)',
+				array(
+					'methods' => 'GET',
+					'callback' => array( $this, 'get_clube' ),
+					//'permission_callback' => array( $this, 'get_private_data_permissions_check' ),
+					'permission_callback' => '__return_true',
+				)
+			);
+
+			// Rota para oa Clubes. Exemplo: ./wp-json/pac/v1/calendario/2023-2024/associacoes/associacao_1/clube_3486
+			register_rest_route(
+				PAC_FPB_SCRAPPER_REST_NAMESPACE,
+				'/clubes/(?P<associacao>associacao_\d+)',
+				array(
+					'methods' => 'GET',
+					'callback' => array( $this, 'clubes' ),
+					//'permission_callback' => array( $this, 'get_private_data_permissions_check' ),
+					'permission_callback' => '__return_true',
+				)
+			);
+
+			// Rota para a Equipa. Exemplo: ./wp-json/pac/v1/calendario/2023-2024/associacoes/associacao_1/clube_3486/equipa_48908
+			register_rest_route(
+				PAC_FPB_SCRAPPER_REST_NAMESPACE,
+				'/calendario/(?P<epoca>\d+-\d+)/associacoes/(?P<associacao>associacao_\d+)/(?P<clube>clube_\d+)/(?P<equipa>equipa_\d+)',
+				array(
+					'methods' => 'GET',
+					'callback' => array( $this, 'equipa' ),
+					//'permission_callback' => array( $this, 'get_private_data_permissions_check' ),
+					'permission_callback' => '__return_true',
+				)
+			);
+
+			// Rota para a Equipa. Exemplo: ./wp-json/pac/v1/calendario/2023-2024/associacoes/associacao_1/clube_3486/equipa_48908
+			register_rest_route(
+				PAC_FPB_SCRAPPER_REST_NAMESPACE,
+				'/equipa/(?P<equipa>equipa_\d+)',
+				array(
+					'methods' => 'GET',
+					'callback' => array( $this, 'get_equipa' ),
+					//'permission_callback' => array( $this, 'get_private_data_permissions_check' ),
+					'permission_callback' => '__return_true',
+				)
+			);
+			*/
 		}
 
 
@@ -204,6 +348,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 							$args,
 							array(
 								'wp-i18n',
+								'wp-api',
 							)
 						);
 					}
@@ -396,6 +541,8 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 			// Get the translations.
 			$translations = GP::$translation->for_translation( $project, $translation_set, 'no-limit', gp_get( 'filters', array( 'status' => $status ) ) );
 
+			$transient = 'gp_toolbox_progress__' . $project_path . '__' . $locale . '__' . $slug . '__' . $status;
+
 			$total = count( $translations );
 			//var_dump( $total );
 
@@ -417,7 +564,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 				$progress = ( $key + 1 ) * 100 / $total;
 
 				// Update the transient with the current progress.
-				set_transient( 'gp_toolbox_ajax_progress', $progress, MINUTE_IN_SECONDS );
+				set_transient( $transient, $progress, MINUTE_IN_SECONDS );
 
 				// Send JSON response with progress
 				/*
