@@ -119,7 +119,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Rest_API' ) ) {
 			foreach ( $translations as $key => $translation ) {
 
 				// Delay for debug purposes.
-				//sleep( 1 );
+				sleep( 0.1 );
 
 				$progress = ( $key + 1 ) * 100 / $total;
 

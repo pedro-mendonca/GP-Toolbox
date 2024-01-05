@@ -1,4 +1,4 @@
-/* global document, Intl, gpToolboxProject, clearInterval, setInterval, setTimeout, wp, wpApiSettings */
+/* global document, Intl, gpToolboxProject, clearInterval, setInterval, wp, wpApiSettings */
 
 jQuery( document ).ready( function( $ ) {
 	// Get User Locale.
@@ -230,9 +230,8 @@ jQuery( document ).ready( function( $ ) {
 
 				// var progressInterval = setInterval( getProgress, 1000, button.closest( 'td' ) ); // Update every second
 
-				getProgress( locale, slug, status );
-				// progressInterval = setTimeout( getProgress, 1000, locale, slug, status ); // Update every second
-				//setTimeout( getProgress, 500, locale, slug, status ); // Update after 0.5 second.
+				// getProgress( project.path, locale, slug, status );
+				progressInterval = setInterval( getProgress, 5000, locale, slug, status ); // Update every second
 
 				/*
 				var progressInterval = setInterval(
@@ -287,22 +286,20 @@ jQuery( document ).ready( function( $ ) {
 			success: function( response ) {
 				console.log( 'Progress: ', response.progress );
 
+
 				if ( response.progress !== undefined ) {
 					$( tableTranslationSets ).find( 'tbody tr[' + dataPrefix + 'locale="' + locale + '"][' + dataPrefix + 'slug="' + slug + '"] td.stats.' + status ).css( 'background', 'linear-gradient(90deg, var(--gp-color-secondary-100) ' + response.progress + '%, var(--gp-color-status-' + status + '-subtle) ' + response.progress + '%)' );
 
-					if ( response.progress !== '100' ) {
-						setTimeout( getProgress, 1000, locale, slug, status ); // Update after 1 second.
-					}
 
 					// Check if the process is complete
-					/*if ( response.progress === '100' ) {
+					if ( response.progress === '100' ) {
 						clearInterval( progressInterval );
-						console.log( 'Complete!' );
+						console.log( 'Process complete!' );
 						console.log( response.progress );
 					} else {
-						console.log( 'Continue...' );
+						console.log( 'Continue!' );
 						console.log( response.progress );
-					}*/
+					}
 				} else {
 					console.log( 'Invalid response from the server.' );
 				}
