@@ -25,6 +25,8 @@ table {
 
 								background-color: var(--gp-color-secondary-100);
 
+
+
 								a {
 									opacity: 0.5;
 								}
@@ -68,11 +70,13 @@ table {
 							}
 
 							&.old,
-							&.rejected {
+							&.rejected,
+							&.changesrequested {
 
 								div {
 									display: flex;
 									align-items: center;
+									justify-content: center;
 
 									a,
 									button {

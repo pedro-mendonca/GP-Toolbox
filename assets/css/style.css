@@ -51,27 +51,33 @@ table.gp-table.translation-sets tbody tr td.stats:not(.percent).highlight.change
 }
 
 table.gp-table.translation-sets tbody tr td.stats.old div,
-table.gp-table.translation-sets tbody tr td.stats.rejected div {
+table.gp-table.translation-sets tbody tr td.stats.rejected div,
+table.gp-table.translation-sets tbody tr td.stats.changesrequested div {
 	display: flex;
 	align-items: center;
+	justify-content: center;
 }
 
 table.gp-table.translation-sets tbody tr td.stats.old div a,
 table.gp-table.translation-sets tbody tr td.stats.old div button,
 table.gp-table.translation-sets tbody tr td.stats.rejected div a,
-table.gp-table.translation-sets tbody tr td.stats.rejected div button {
+table.gp-table.translation-sets tbody tr td.stats.rejected div button,
+table.gp-table.translation-sets tbody tr td.stats.changesrequested div a,
+table.gp-table.translation-sets tbody tr td.stats.changesrequested div button {
 	display: inline-flex;
 	justify-content: center;
 }
 
 table.gp-table.translation-sets tbody tr td.stats.old div a.count,
-table.gp-table.translation-sets tbody tr td.stats.rejected div a.count {
+table.gp-table.translation-sets tbody tr td.stats.rejected div a.count,
+table.gp-table.translation-sets tbody tr td.stats.changesrequested div a.count {
 	flex: max-content;
 	margin: 0 10px;
 }
 
 table.gp-table.translation-sets tbody tr td.stats.old div button.delete,
-table.gp-table.translation-sets tbody tr td.stats.rejected div button.delete {
+table.gp-table.translation-sets tbody tr td.stats.rejected div button.delete,
+table.gp-table.translation-sets tbody tr td.stats.changesrequested div button.delete {
 	padding: 0;
 	border: none;
 	background: none;
@@ -81,12 +87,14 @@ table.gp-table.translation-sets tbody tr td.stats.rejected div button.delete {
 }
 
 table.gp-table.translation-sets tbody tr td.stats.old div button.delete:disabled,
-table.gp-table.translation-sets tbody tr td.stats.rejected div button.delete:disabled {
+table.gp-table.translation-sets tbody tr td.stats.rejected div button.delete:disabled,
+table.gp-table.translation-sets tbody tr td.stats.changesrequested div button.delete:disabled {
 	color: var(--gp-color-btn-disabled-text);
 	cursor: default;
 }
 
 table.gp-table.translation-sets tbody tr td.stats.old div button.delete.hidden,
-table.gp-table.translation-sets tbody tr td.stats.rejected div button.delete.hidden {
+table.gp-table.translation-sets tbody tr td.stats.rejected div button.delete.hidden,
+table.gp-table.translation-sets tbody tr td.stats.changesrequested div button.delete.hidden {
 	display: none;
 }
