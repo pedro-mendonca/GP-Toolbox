@@ -47,10 +47,10 @@ if ( ! class_exists( __NAMESPACE__ . '\Rest_API' ) ) {
 		function register_routes() {
 
 			$base         = 'translations';           // Base for translations routes.
-			$project_path = '(?P<project_path>.+?)';  // Project path.
-			$locale       = '(?P<locale>.+?)';        // Locale.
-			$slug         = '(?P<slug>.+?)';          // Locale slug.
-			$status       = '(?P<status>.+?)';        // Translations status.
+			$project_path = '(?P<project_path>.+)';  // Project path.
+			$locale       = '(?P<locale>.+)';        // Locale.
+			$slug         = '(?P<slug>.+)';          // Locale slug.
+			$status       = '(?P<status>.+)';        // Translations status.
 
 			// Set the main route for translations by Translation Set, with a specified status.
 			$translations_by_set_and_status = $base . '/' . $project_path . '/' . $locale . '/' . $slug . '/' . $status;
