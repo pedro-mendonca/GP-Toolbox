@@ -320,7 +320,7 @@ jQuery( document ).ready( function( $ ) {
 
 	function updateStats( locale, slug, status, progress ) {
 		if ( progress === 100 ) {
-			$( tableTranslationSets ).find( 'tbody tr[' + dataPrefix + 'locale="' + locale + '"][' + dataPrefix + 'slug="' + slug + '"] td.stats.' + status ).css( 'background', 'var(--gp-color-secondary-100)' );
+			$( tableTranslationSets ).find( 'tbody tr[' + dataPrefix + 'locale="' + locale + '"][' + dataPrefix + 'slug="' + slug + '"] td.stats.' + status ).removeAttr( 'style' );
 		} else {
 			$( tableTranslationSets ).find( 'tbody tr[' + dataPrefix + 'locale="' + locale + '"][' + dataPrefix + 'slug="' + slug + '"] td.stats.' + status ).css( 'background', 'linear-gradient(90deg, var(--gp-color-secondary-100) ' + progress + '%, var(--gp-color-status-' + status + '-subtle) ' + progress + '%)' );
 		}
