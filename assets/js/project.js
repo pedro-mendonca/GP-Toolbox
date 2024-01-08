@@ -22,7 +22,7 @@ jQuery( document ).ready( function( $ ) {
 	// Set the data attrib prefix.
 	var dataPrefix = 'gptoolboxdata-';
 
-	var progressInterval;
+	var progressInterval = null;
 
 	// Get the highlight_counts setting.
 	var highlightCounts = false;
@@ -141,11 +141,9 @@ jQuery( document ).ready( function( $ ) {
 					// Delete Old and Rejected translations.
 					$( old ).find( 'div button.delete' ).on( 'click', function() {
 						deleteTranslations( translationSet.locale, translationSet.slug, 'old' );
-						//getProgress( $( this ).closest( 'td' ), 1 );
 					} );
 					$( rejected ).find( 'div button.delete' ).on( 'click', function() {
 						deleteTranslations( translationSet.locale, translationSet.slug, 'rejected' );
-						//getProgress( $( this ).closest( 'td' ), 1 );
 					} );
 				}
 			}
@@ -231,7 +229,9 @@ jQuery( document ).ready( function( $ ) {
 				// var progressInterval = setInterval( getProgress, 1000, button.closest( 'td' ) ); // Update every second
 
 				// getProgress( project.path, locale, slug, status );
-				progressInterval = setInterval( getProgress, 5000, locale, slug, status ); // Update every second
+				// Update every 10 seconds.
+				progressInterval = setInterval( getProgress, 10000, locale, slug, status );
+				// progressTimeout = setTimeout( getProgress, 5000, locale, slug, status );
 
 				/*
 				var progressInterval = setInterval(
@@ -261,6 +261,9 @@ jQuery( document ).ready( function( $ ) {
 				updateHighlight( button.closest( 'td' ) );
 
 				clearInterval( progressInterval );
+				updateStats( locale, slug, status, response.progress );
+
+				// clearInterval( progressIntervals[ locale + '_' + slug + '_' + status ] );
 				console.log( 'Successfully deleted translations!' );
 				console.log( response );
 			},
@@ -285,19 +288,18 @@ jQuery( document ).ready( function( $ ) {
 
 			success: function( response ) {
 				console.log( 'Progress: ', response.progress );
-
+				console.log( progressInterval );
 
 				if ( response.progress !== undefined ) {
-					$( tableTranslationSets ).find( 'tbody tr[' + dataPrefix + 'locale="' + locale + '"][' + dataPrefix + 'slug="' + slug + '"] td.stats.' + status ).css( 'background', 'linear-gradient(90deg, var(--gp-color-secondary-100) ' + response.progress + '%, var(--gp-color-status-' + status + '-subtle) ' + response.progress + '%)' );
-
+					updateStats( locale, slug, status, response.progress );
+					// $( tableTranslationSets ).find( 'tbody tr[' + dataPrefix + 'locale="' + locale + '"][' + dataPrefix + 'slug="' + slug + '"] td.stats.' + status ).css( 'background', 'linear-gradient(90deg, var(--gp-color-secondary-100) ' + response.progress + '%, var(--gp-color-status-' + status + '-subtle) ' + response.progress + '%)' );
 
 					// Check if the process is complete
 					if ( response.progress === '100' ) {
-						clearInterval( progressInterval );
-						console.log( 'Process complete!' );
-						console.log( response.progress );
+						// clearInterval( progressInterval );
+						console.log( 'Process complete.' );
 					} else {
-						console.log( 'Continue!' );
+						console.log( 'Continue...' );
 						console.log( response.progress );
 					}
 				} else {
@@ -314,5 +316,13 @@ jQuery( document ).ready( function( $ ) {
 				console.log( 'Request ended.' );
 			},
 		} );
+	}
+
+	function updateStats( locale, slug, status, progress ) {
+		if ( progress === 100 ) {
+			$( tableTranslationSets ).find( 'tbody tr[' + dataPrefix + 'locale="' + locale + '"][' + dataPrefix + 'slug="' + slug + '"] td.stats.' + status ).css( 'background', 'var(--gp-color-secondary-100)' );
+		} else {
+			$( tableTranslationSets ).find( 'tbody tr[' + dataPrefix + 'locale="' + locale + '"][' + dataPrefix + 'slug="' + slug + '"] td.stats.' + status ).css( 'background', 'linear-gradient(90deg, var(--gp-color-secondary-100) ' + progress + '%, var(--gp-color-status-' + status + '-subtle) ' + progress + '%)' );
+		}
 	}
 } );
