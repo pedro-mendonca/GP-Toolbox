@@ -274,7 +274,7 @@ jQuery( document ).ready( function( $ ) {
 
 			url: wpApiSettings.root + 'gp-toolbox/v1/translations/' + project.path + '/' + locale + '/' + slug + '/' + status + '/-delete-progress',
 			type: 'GET',
-			async: true,
+			//async: true,
 
 			beforeSend: function() {
 				console.log( 'Getting progress...' );
@@ -284,12 +284,11 @@ jQuery( document ).ready( function( $ ) {
 				var deleting = response.deleting;
 				var percent = parseInt( response.percent );
 
-				console.log( deleting );
-				console.log( percent );
+				console.log( 'Deleting', deleting );
 
 				// Check if there is a deleting process runing.
-				if ( deleting /* && percent !== null*/ ) {
-					console.log( 'Percent: ' + percent + '%' );
+				if ( deleting ) {
+					console.log( 'Percent', percent );
 					if ( percent < 100 ) {
 						setTimeout( getProgress, 3000, locale, slug, status );
 						updateStats( locale, slug, status, percent );

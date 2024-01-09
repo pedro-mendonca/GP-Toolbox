@@ -14,10 +14,6 @@ table.gp-table.translation-sets tbody tr td.stats:not(.percent) {
 	background-color: var(--gp-color-secondary-100);
 }
 
-table.gp-table.translation-sets tbody tr td.stats:not(.percent) a {
-	opacity: 0.5;
-}
-
 table.gp-table.translation-sets tbody tr td.stats:not(.percent).highlight a {
 	opacity: 1;
 }

@@ -219,38 +219,16 @@ if ( ! class_exists( __NAMESPACE__ . '\Rest_API' ) ) {
 				);
 			}
 
-
-			// If the transient doesn't exist, there is no progress, return null.
-			/*
-			if ( $transient['deleting'] === true ) {
-				$progress = $transient['progress'];
-			}
-			*/
-
 			if ( $progress['percent'] === 100 ) {
 
 				// Return process not running.
 				$progress['deleting'] = false;
-				//delete_transient( $transient );
 
+				// Remove the transient when the task is complete.
+				delete_transient( $transient );
 			}
 
 			return rest_ensure_response( $progress );
-
-			/*return rest_ensure_response(
-				array(
-					'deleting' => $progress === 100 ? false : true,
-					'progress' => $progress,
-				)
-			);*/
-
-
-
-
 		}
-
-
-
-
 	}
 }
