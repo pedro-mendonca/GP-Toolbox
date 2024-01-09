@@ -25,8 +25,6 @@ table {
 
 								background-color: var(--gp-color-secondary-100);
 
-
-
 								a {
 									opacity: 0.5;
 								}
@@ -73,47 +71,42 @@ table {
 							&.rejected,
 							&.changesrequested {
 
-								div {
-									display: flex;
-									align-items: center;
-									justify-content: center;
+								div.progress-notice {
+									font-size: 0.75em;
+									font-style: italic;
+								}
 
-									a,
-									button {
-										display: inline-flex;
-										justify-content: center;
+								a,
+								button {
+									display: inline-block;
+
+									&.hidden {
+										display: none;
+									}
+								}
+
+								a {
+									padding: 0 1rem;
+									width: 100%;
+								}
+
+								button.delete {
+									position: absolute;
+									translate: -1rem;
+									padding: 0;
+									border: none;
+									background: none;
+									cursor: pointer;
+									color: var(--gp-color-primary-500);
+
+									&:disabled {
+										color: var(--gp-color-btn-disabled-text);
+										cursor: default;
 									}
 
-									a {
-
-										&.count {
-											flex: max-content;
-											margin: 0 10px;
-										}
-
-									}
-
-									button {
-
-										&.delete {
-											padding: 0;
-											border: none;
-											background: none;
-											cursor: pointer;
-											color: var(--gp-color-primary-500);
-											margin-left: -20px;
-
-											&:disabled {
-												color: var(--gp-color-btn-disabled-text);
-												cursor: default;
-											}
-
-											&.hidden {
-												display: none;
-											}
-
-										}
-
+									span.dashicons {
+										font-size: 1rem;
+										vertical-align: middle;
 									}
 
 								}

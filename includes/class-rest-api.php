@@ -128,6 +128,16 @@ if ( ! class_exists( __NAMESPACE__ . '\Rest_API' ) ) {
 
 			$transient = 'gp_toolbox_translations__' . $project_path . '__' . $locale . '__' . $slug . '__' . $status . '__progress';
 
+			// Start progress.
+			set_transient(
+				$transient,
+				array(
+					'deleting' => true,
+					'percent'  => 0,
+				),
+				MINUTE_IN_SECONDS
+			);
+
 			$total = count( $translations );
 
 			// Delete all translations.
@@ -136,10 +146,15 @@ if ( ! class_exists( __NAMESPACE__ . '\Rest_API' ) ) {
 				// Delay for debug purposes.
 				//sleep( 0.5 );
 
-				$progress = ( $key + 1 ) * 100 / $total;
-
 				// Update the transient with the current progress.
-				set_transient( $transient, $progress, MINUTE_IN_SECONDS );
+				set_transient(
+					$transient,
+					array(
+						'deleting' => true,
+						'percent'  => ( $key + 1 ) * 100 / $total,
+					),
+					MINUTE_IN_SECONDS
+				);
 
 				$translation = GP::$translation->get( $translation );
 				if ( ! $translation ) {
@@ -151,20 +166,21 @@ if ( ! class_exists( __NAMESPACE__ . '\Rest_API' ) ) {
 			}
 
 			// Remove the transient when the task is complete.
-			// delete_transient( 'gp_toolbox_ajax_progress' );
+			// delete_transient( $transient );
 
 			gp_clean_translation_set_cache( $translation_set->id );
 
 			return rest_ensure_response(
 				array(
-					'percent'      => $translation_set->percent_translated(),
-					'current'      => $translation_set->current_count(),
-					'fuzzy'        => $translation_set->fuzzy_count(),
-					'untranslated' => $translation_set->untranslated_count(),
-					'waiting'      => $translation_set->waiting_count(),
-					'old'          => $translation_set->old_count,
-					'rejected'     => $translation_set->rejected_count,
-					'progress'     => 100,
+					'translations' => array(
+						'percent'      => $translation_set->percent_translated(),
+						'current'      => $translation_set->current_count(),
+						'fuzzy'        => $translation_set->fuzzy_count(),
+						'untranslated' => $translation_set->untranslated_count(),
+						'waiting'      => $translation_set->waiting_count(),
+						'old'          => $translation_set->old_count,
+						'rejected'     => $translation_set->rejected_count,
+					),
 				)
 			);
 		}
@@ -188,26 +204,45 @@ if ( ! class_exists( __NAMESPACE__ . '\Rest_API' ) ) {
 
 			$parameters = $request->get_params();
 
+
 			$transient = 'gp_toolbox_translations__' . $project_path . '__' . $locale . '__' . $slug . '__' . $status . '__progress';
 
 			// Check if a progress transient exists.
 			$progress = get_transient( $transient );
-
-			// If the transient doesn't exist, initialize the progress.
-			if ( $progress === false ) {
-				$progress = 0;
+			if ( ! $progress ) {
+				// No deleting process found.
+				return rest_ensure_response(
+					array(
+						'deleting' => false,
+						'percent' => null,
+					)
+				);
 			}
 
-			if ( $progress === 100 ) {
-				delete_transient( $transient );
+
+			// If the transient doesn't exist, there is no progress, return null.
+			/*
+			if ( $transient['deleting'] === true ) {
+				$progress = $transient['progress'];
+			}
+			*/
+
+			if ( $progress['percent'] === 100 ) {
+
+				// Return process not running.
+				$progress['deleting'] = false;
+				//delete_transient( $transient );
+
 			}
 
-			return rest_ensure_response(
+			return rest_ensure_response( $progress );
+
+			/*return rest_ensure_response(
 				array(
-					// 'parameters' => $parameters,
+					'deleting' => $progress === 100 ? false : true,
 					'progress' => $progress,
 				)
-			);
+			);*/
 
 
 

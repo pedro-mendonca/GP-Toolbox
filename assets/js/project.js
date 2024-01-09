@@ -1,4 +1,4 @@
-/* global document, Intl, gpToolboxProject, clearInterval, setInterval, wp, wpApiSettings */
+/* global document, Intl, gpToolboxProject, clearInterval, setTimeout, setInterval, wp, wpApiSettings */
 
 jQuery( document ).ready( function( $ ) {
 	// Get User Locale.
@@ -22,7 +22,7 @@ jQuery( document ).ready( function( $ ) {
 	// Set the data attrib prefix.
 	var dataPrefix = 'gptoolboxdata-';
 
-	var progressInterval = null;
+	// var progressInterval = null;
 
 	// Get the highlight_counts setting.
 	var highlightCounts = false;
@@ -111,38 +111,38 @@ jQuery( document ).ready( function( $ ) {
 				// Check if the 'old' status is supported.
 				if ( supportedTranslationStatuses.hasOwnProperty( 'old' ) ) {
 					// Add value to cell.
-					$( this ).find( 'td.stats.old' ).attr( 'data-text', translationSet.old_count ).html( '<div><a class="count" href="' + url + '?filters[status]=old">' + new Intl.NumberFormat( userLocale.slug ).format( translationSet.old_count ) + '</a></div>' );
+					$( this ).find( 'td.stats.old' ).attr( 'data-text', translationSet.old_count ).html( '<div class="progress-notice" style="display: none;"></div><a class="count" href="' + url + '?filters[status]=old">' + new Intl.NumberFormat( userLocale.slug ).format( translationSet.old_count ) + '</a>' );
 				}
 				// Check if the 'rejected' status is supported.
 				if ( supportedTranslationStatuses.hasOwnProperty( 'rejected' ) ) {
 					// Add value to cell.
-					$( this ).find( 'td.stats.rejected' ).attr( 'data-text', translationSet.rejected_count ).html( '<div><a class="count" href="' + url + '?filters[status]=rejected">' + new Intl.NumberFormat( userLocale.slug ).format( translationSet.rejected_count ) + '</a></div>' );
+					$( this ).find( 'td.stats.rejected' ).attr( 'data-text', translationSet.rejected_count ).html( '<div class="progress-notice" style="display: none;"></div><a class="count" href="' + url + '?filters[status]=rejected">' + new Intl.NumberFormat( userLocale.slug ).format( translationSet.rejected_count ) + '</a>' );
 				}
 				// Check if the 'changesrequested' status is supported.
 				if ( supportedTranslationStatuses.hasOwnProperty( 'changesrequested' ) ) {
 					// Add value to cell.
-					$( this ).find( 'td.stats.changesrequested' ).attr( 'data-text', translationSet.changesrequested_count ).html( '<div><a class="count" href="' + url + '?filters[status]=changesrequested">' + new Intl.NumberFormat( userLocale.slug ).format( translationSet.changesrequested_count ) + '</a></div>' );
+					$( this ).find( 'td.stats.changesrequested' ).attr( 'data-text', translationSet.changesrequested_count ).html( '<a class="count" href="' + url + '?filters[status]=changesrequested">' + new Intl.NumberFormat( userLocale.slug ).format( translationSet.changesrequested_count ) + '</a>' );
 				}
 
 				// Check if user has GLotPress administrator previleges.
 				if ( glotpressAdmin ) {
 					// Add buttons to delete Old and Rejected translations.
-					$( old ).find( 'div a.count' ).after( '<button class="delete hidden" disabled><span class="dashicons dashicons-trash"></span></button>' );
-					$( rejected ).find( 'div a.count' ).after( '<button class="delete hidden" disabled><span class="dashicons dashicons-trash"></span></button></div>' );
+					$( old ).find( 'a.count' ).after( '<button class="delete hidden" disabled><span class="dashicons dashicons-trash"></span></button>' );
+					$( rejected ).find( 'a.count' ).after( '<button class="delete hidden" disabled><span class="dashicons dashicons-trash"></span></button>' );
 
 					// Enable Old and Rejected delete buttons for non-zero counts.
-					if ( $( old ).find( 'div a.count' ).text().trim() !== '0' ) {
-						$( old ).find( 'div button.delete' ).attr( 'disabled', false ).removeClass( 'hidden' );
+					if ( $( old ).find( 'a.count' ).text().trim() !== '0' ) {
+						$( old ).find( 'button.delete' ).attr( 'disabled', false ).removeClass( 'hidden' );
 					}
-					if ( $( rejected ).find( 'div a.count' ).text().trim() !== '0' ) {
-						$( rejected ).find( 'div button.delete' ).attr( 'disabled', false ).removeClass( 'hidden' );
+					if ( $( rejected ).find( 'a.count' ).text().trim() !== '0' ) {
+						$( rejected ).find( 'button.delete' ).attr( 'disabled', false ).removeClass( 'hidden' );
 					}
 
 					// Delete Old and Rejected translations.
-					$( old ).find( 'div button.delete' ).on( 'click', function() {
+					$( old ).find( 'button.delete' ).on( 'click', function() {
 						deleteTranslations( translationSet.locale, translationSet.slug, 'old' );
 					} );
-					$( rejected ).find( 'div button.delete' ).on( 'click', function() {
+					$( rejected ).find( 'button.delete' ).on( 'click', function() {
 						deleteTranslations( translationSet.locale, translationSet.slug, 'rejected' );
 					} );
 				}
@@ -160,7 +160,7 @@ jQuery( document ).ready( function( $ ) {
 	 * @param {Object} element : HTML element to update.
 	 */
 	function updateHighlight( element ) {
-		var count = 0;
+		var count = null;
 
 		// Check highlightCounts setting and don't highlight if not set to true.
 		if ( highlightCounts === false ) {
@@ -205,77 +205,66 @@ jQuery( document ).ready( function( $ ) {
 	 * @param {string} status : Status of the GP_Translation.
 	 */
 	function deleteTranslations( locale, slug, status ) {
-		var button = $( tableTranslationSets ).find( 'tbody tr[' + dataPrefix + 'locale="' + locale + '"][' + dataPrefix + 'slug="' + slug + '"] td.stats.' + status + ' div button.delete' );
+		// Find the table cell.
+		var td = $( tableTranslationSets ).find( 'tbody tr[' + dataPrefix + 'locale="' + locale + '"][' + dataPrefix + 'slug="' + slug + '"] td.stats.' + status );
+
+		var notice = $( td ).find( 'div.progress-notice' );
+		var stats = $( td ).find( 'a.count' );
+		var button = $( td ).find( 'button.delete' );
+
 		console.log( 'Clicked to delete translations on project "' + project.path + '" locale "' + locale + '/' + slug + '"' + ' and status "' + status + '"' );
 
 		$.ajax( {
 
 			url: wpApiSettings.root + 'gp-toolbox/v1/translations/' + project.path + '/' + locale + '/' + slug + '/' + status + '/-delete',
 			type: 'POST',
+			async: true,
 
 			beforeSend: function() {
 				console.log( 'Start deleting translations...' );
 
-				// Disable button.
-				button.attr( 'disabled', true );
+				// Hide stats.
+				$( stats ).hide();
+				// Hide and disable button.
+				$( button ).hide().attr( 'disabled', true );
+				// Show progress notice.
+				$( notice ).text( wp.i18n.__( 'Deleting...', 'gp-toolbox' ) ).fadeIn();
 
-				// Start the AJAX process with the initial step (1)
-				//getProgress( 1 );
-
-				//var progressInterval = setInterval( updateProgressBar, 1000 ); // Update every second
-
-				// startProgressInterval( button.closest( 'td' ) );
-
-				// var progressInterval = setInterval( getProgress, 1000, button.closest( 'td' ) ); // Update every second
-
-				// getProgress( project.path, locale, slug, status );
-				// Update every 10 seconds.
-				progressInterval = setInterval( getProgress, 10000, locale, slug, status );
-				// progressTimeout = setTimeout( getProgress, 5000, locale, slug, status );
-
-				/*
-				var progressInterval = setInterval(
-					getProgress( button.closest( 'td' ), 1 ),
-					1000
-				); // Update every second
-				*/
+				// Get progress after 1 second.
+				setTimeout( getProgress, 3000, locale, slug, status );
 			},
 
 			success: function( response ) {
 				// Set translation set data.
-				var old = response.old;
-				var rejected = response.rejected;
-
-				// Update Old and Rejected stats count after delete.
-				if ( $( button ).closest( 'td' ).hasClass( 'old' ) ) {
-					$( old ).closest( 'td' ).removeClass( 'highlight' );
-					button.closest( 'div' ).children( 'a' ).text( new Intl.NumberFormat( userLocale.slug ).format( old ) );
-					button.addClass( 'hidden' );
-				}
-				if ( $( button ).closest( 'td' ).hasClass( 'rejected' ) ) {
-					$( rejected ).closest( 'td' ).removeClass( 'highlight' );
-					button.closest( 'div' ).children( 'a' ).text( new Intl.NumberFormat( userLocale.slug ).format( rejected ) );
-					button.addClass( 'hidden' );
+				var count = null;
+				if ( status === 'old' ) {
+					count = response.translations.old;
+				} else if ( status === 'rejected' ) {
+					count = response.translations.rejected;
 				}
 
-				updateHighlight( button.closest( 'td' ) );
+				// Update stats count.
+				$( stats ).text( new Intl.NumberFormat( userLocale.slug ).format( count ) );
+				// Temporarily force ending in '0' for debugging.
+				( stats ).text( '0' );
 
-				clearInterval( progressInterval );
-				updateStats( locale, slug, status, response.progress );
+				// Hide progress notice.
+				$( notice ).hide().text( '' );
+				// Show stats.
+				$( stats ).fadeIn();
 
-				// clearInterval( progressIntervals[ locale + '_' + slug + '_' + status ] );
+				// Remove background highlight.
+				updateHighlight( td );
+
+				updateStats( locale, slug, status, 100 );
+
 				console.log( 'Successfully deleted translations!' );
-				console.log( response );
 			},
 
 			error: function( response ) {
 				// Show the Error notice.
 				console.log( 'Failed to delete translations.' );
 				console.log( response );
-			},
-
-			always: function() {
-				console.log( 'Request ended.' );
 			},
 		} );
 	}
@@ -285,25 +274,30 @@ jQuery( document ).ready( function( $ ) {
 
 			url: wpApiSettings.root + 'gp-toolbox/v1/translations/' + project.path + '/' + locale + '/' + slug + '/' + status + '/-delete-progress',
 			type: 'GET',
+			async: true,
+
+			beforeSend: function() {
+				console.log( 'Getting progress...' );
+			},
 
 			success: function( response ) {
-				console.log( 'Progress: ', response.progress );
-				console.log( progressInterval );
+				var deleting = response.deleting;
+				var percent = parseInt( response.percent );
 
-				if ( response.progress !== undefined ) {
-					updateStats( locale, slug, status, response.progress );
-					// $( tableTranslationSets ).find( 'tbody tr[' + dataPrefix + 'locale="' + locale + '"][' + dataPrefix + 'slug="' + slug + '"] td.stats.' + status ).css( 'background', 'linear-gradient(90deg, var(--gp-color-secondary-100) ' + response.progress + '%, var(--gp-color-status-' + status + '-subtle) ' + response.progress + '%)' );
+				console.log( deleting );
+				console.log( percent );
 
-					// Check if the process is complete
-					if ( response.progress === '100' ) {
-						// clearInterval( progressInterval );
-						console.log( 'Process complete.' );
+				// Check if there is a deleting process runing.
+				if ( deleting /* && percent !== null*/ ) {
+					console.log( 'Percent: ' + percent + '%' );
+					if ( percent < 100 ) {
+						setTimeout( getProgress, 3000, locale, slug, status );
+						updateStats( locale, slug, status, percent );
 					} else {
-						console.log( 'Continue...' );
-						console.log( response.progress );
+						console.log( 'Stop getting progress.' );
 					}
 				} else {
-					console.log( 'Invalid response from the server.' );
+					console.log( 'No delete process found.' );
 				}
 			},
 
@@ -311,18 +305,24 @@ jQuery( document ).ready( function( $ ) {
 				console.log( 'Error while fetching progress.' );
 				console.log( response );
 			},
-
-			always: function() {
-				console.log( 'Request ended.' );
-			},
 		} );
 	}
 
-	function updateStats( locale, slug, status, progress ) {
-		if ( progress === 100 ) {
-			$( tableTranslationSets ).find( 'tbody tr[' + dataPrefix + 'locale="' + locale + '"][' + dataPrefix + 'slug="' + slug + '"] td.stats.' + status ).removeAttr( 'style' );
+	function updateStats( locale, slug, status, percent ) {
+		// Find the table cell.
+		var td = $( tableTranslationSets ).find( 'tbody tr[' + dataPrefix + 'locale="' + locale + '"][' + dataPrefix + 'slug="' + slug + '"] td.stats.' + status );
+
+		var notice = $( td ).find( 'div.progress-notice' );
+		var stats = $( td ).find( 'a.count' );
+
+		if ( percent < 100 ) {
+			console.log( 'Update to progress ' + percent );
+			$( td ).css( 'background', 'linear-gradient(90deg, var(--gp-color-secondary-100) ' + percent + '%, var(--gp-color-status-' + status + '-subtle) ' + percent + '%)' );
 		} else {
-			$( tableTranslationSets ).find( 'tbody tr[' + dataPrefix + 'locale="' + locale + '"][' + dataPrefix + 'slug="' + slug + '"] td.stats.' + status ).css( 'background', 'linear-gradient(90deg, var(--gp-color-secondary-100) ' + progress + '%, var(--gp-color-status-' + status + '-subtle) ' + progress + '%)' );
+			updateHighlight( td );
+			$( td ).css( 'background', '' );
+			$( notice ).hide();
+			$( stats ).fadeIn();
 		}
 	}
 } );
