@@ -150,8 +150,6 @@ jQuery( document ).ready( function( $ ) {
 		);
 
 		updateHighlight();
-
-		// tableTranslationSets.addClass( 'ready' );
 	}
 
 	/**
@@ -269,6 +267,13 @@ jQuery( document ).ready( function( $ ) {
 		} );
 	}
 
+	/**
+	 * Get deletion progress.
+	 *
+	 * @param {string} locale : Locale of the GP_Translation_Set.
+	 * @param {string} slug   : Slug of the GP_Translation_Set.
+	 * @param {string} status : Status of the GP_Translation.
+	 */
 	function getProgress( locale, slug, status ) {
 		$.ajax( {
 
@@ -307,6 +312,14 @@ jQuery( document ).ready( function( $ ) {
 		} );
 	}
 
+	/**
+	 * Update stats count.
+	 *
+	 * @param {string}  locale  : Locale of the GP_Translation_Set.
+	 * @param {string}  slug    : Slug of the GP_Translation_Set.
+	 * @param {string}  status  : Status of the GP_Translation.
+	 * @param {percent} percent : Status of the GP_Translation.
+	 */
 	function updateStats( locale, slug, status, percent ) {
 		// Find the table cell.
 		var td = $( tableTranslationSets ).find( 'tbody tr[' + dataPrefix + 'locale="' + locale + '"][' + dataPrefix + 'slug="' + slug + '"] td.stats.' + status );
