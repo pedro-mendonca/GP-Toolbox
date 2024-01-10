@@ -56,11 +56,16 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 			// Delete translations with a specified status.
 			add_action( 'wp_ajax_delete_translations', array( self::class, 'delete_translations' ) );
 
+			// Get progress of an action.
+			add_action( 'wp_ajax_get_progress', array( self::class, 'get_progress' ) );
+
 			// Add Tools menu item.
 			add_filter( 'gp_nav_menu_items', array( self::class, 'nav_menu_items' ), 10, 2 );
 
 			// Register routes.
 			add_action( 'template_redirect', array( $this, 'register_routes' ), 5 );
+
+			new Rest_API();
 
 			// Set template locations.
 			add_filter( 'gp_tmpl_load_locations', array( $this, 'template_load_locations' ), 10, 4 );
@@ -201,6 +206,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 							$args,
 							array(
 								'wp-i18n',
+								'wp-api',
 							)
 						);
 					}
@@ -340,82 +346,6 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 			// Return Project and Translation Sets.
 			return $result;
 		}
-
-
-		/**
-		 * Delete translations with a specified status.
-		 *
-		 * @since 1.0.0
-		 *
-		 * @return void
-		 */
-		public static function delete_translations() {
-
-			check_ajax_referer( 'gp-toolbox-nonce', 'nonce' );
-
-			// Initialize variables.
-			$project_path = '';
-			$locale       = '';
-			$slug         = '';
-			$status       = '';
-
-			if ( isset( $_POST['projectPath'] ) ) {
-				$project_path = sanitize_key( $_POST['projectPath'] );
-			} else {
-				wp_die();
-			}
-
-			if ( isset( $_POST['locale'] ) ) {
-				$locale = sanitize_key( $_POST['locale'] );
-			} else {
-				wp_die();
-			}
-
-			if ( isset( $_POST['slug'] ) ) {
-				$slug = sanitize_key( $_POST['slug'] );
-			} else {
-				wp_die();
-			}
-
-			if ( isset( $_POST['status'] ) ) {
-				$status = sanitize_key( $_POST['status'] );
-			} else {
-				wp_die();
-			}
-
-			// Get the GP_Project.
-			$project = GP::$project->by_path( $project_path );
-
-			// Get the GP_Translation_Set.
-			$translation_set = GP::$translation_set->by_project_id_slug_and_locale( $project->id, $slug, $locale );
-
-			// Get the translations.
-			$translations = GP::$translation->for_translation( $project, $translation_set, 'no-limit', gp_get( 'filters', array( 'status' => $status ) ) );
-
-			// Delete all translations.
-			foreach ( $translations as $translation ) {
-
-				$translation = GP::$translation->get( $translation );
-				if ( ! $translation ) {
-					continue;
-				}
-				$translation->delete();
-			}
-
-			gp_clean_translation_set_cache( $translation_set->id );
-
-			// Send JSON response and die.
-			wp_send_json_success(
-				array(
-					'percent'      => $translation_set->percent_translated(),
-					'current'      => $translation_set->current_count(),
-					'fuzzy'        => $translation_set->fuzzy_count(),
-					'untranslated' => $translation_set->untranslated_count(),
-					'waiting'      => $translation_set->waiting_count(),
-					'old'          => $translation_set->old_count,
-					'rejected'     => $translation_set->rejected_count,
-				)
-			);
 
 
 		/**

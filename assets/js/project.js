@@ -1,4 +1,4 @@
-/* global document, Intl, gpToolboxProject, wp */
+/* global document, Intl, gpToolboxProject, setTimeout, wp, wpApiSettings */
 
 jQuery( document ).ready( function( $ ) {
 	// Get User Locale.
@@ -137,84 +137,15 @@ jQuery( document ).ready( function( $ ) {
 					// Delete Old and Rejected translations.
 					$( old ).find( 'button.delete' ).on( 'click', function() {
 						deleteTranslationsStart( translationSet.locale, translationSet.slug, 'old' );
-						// Get progress after 1 second.
-						// setTimeout( deleteTranslationsProgress, 3000, translationSet.locale, translationSet.slug, 'old' );
-						teste();
 					} );
 					$( rejected ).find( 'button.delete' ).on( 'click', function() {
 						deleteTranslationsStart( translationSet.locale, translationSet.slug, 'rejected' );
-						// Get progress after 1 second.
-						// setTimeout( deleteTranslationsProgress, 3000, translationSet.locale, translationSet.slug, 'rejected' );
-						teste();
 					} );
 				}
 			}
 		);
 
 		updateHighlight();
-
-		// tableTranslationSets.addClass( 'ready' );
-	}
-
-	/**
-	 * Delete Translations from a Translation Set with a specific status.
-	 *
-	 * @param {string} locale : Locale of the GP_Translation_Set.
-	 * @param {string} slug   : Slug of the GP_Translation_Set.
-	 * @param {string} status : Status of the GP_Translation.
-	 */
-	function deleteTranslations( locale, slug, status ) {
-		var button = $( tableTranslationSets ).find( 'tbody tr[' + dataPrefix + 'locale="' + locale + '"][' + dataPrefix + 'slug="' + slug + '"] td.stats.' + status + ' div button.delete' );
-		console.log( 'Clicked to delete translations on project "' + project.path + '" locale "' + locale + '/' + slug + '"' + ' and status "' + status + '"' );
-
-		$.ajax( {
-
-			url: gpToolboxProject.ajaxurl,
-			type: 'POST',
-			data: {
-				action: 'delete_translations',
-				projectPath: project.path,
-				locale: locale,
-				slug: slug,
-				status: status,
-				nonce: gpToolboxProject.nonce,
-			},
-			beforeSend: function() {
-				console.log( 'Ajax request is starting...' );
-
-				// Disable button.
-				button.attr( 'disabled', true );
-			},
-
-		} ).done( function( response, textStatus, jqXHR ) {
-			// Set translation set data.
-			var old = response.data.old;
-			var rejected = response.data.rejected;
-
-			// Update Old and Rejected stats count after delete.
-			if ( $( button ).closest( 'td' ).hasClass( 'old' ) ) {
-				$( old ).closest( 'td' ).removeClass( 'highlight' );
-				button.closest( 'div' ).children( 'a' ).text( new Intl.NumberFormat( userLocale.slug ).format( old ) );
-				button.addClass( 'hidden' );
-			}
-			if ( $( button ).closest( 'td' ).hasClass( 'rejected' ) ) {
-				$( rejected ).closest( 'td' ).removeClass( 'highlight' );
-				button.closest( 'div' ).children( 'a' ).text( new Intl.NumberFormat( userLocale.slug ).format( rejected ) );
-				button.addClass( 'hidden' );
-			}
-
-			updateHighlight( button.closest( 'td' ) );
-
-			console.log( 'Ajax request has been completed (' + textStatus + '). Status: ' + jqXHR.status + ' ' + jqXHR.statusText );
-			console.log( response );
-			console.log( textStatus );
-			console.log( jqXHR );
-		} ).fail( function( jqXHR, textStatus ) {
-			// Show the Error notice.
-			console.log( 'Ajax request has failed (' + textStatus + '). Status: ' + jqXHR.status + ' ' + jqXHR.statusText );
-		} ).always( function() {
-			console.log( 'Ajax end.' );
-		} );
 	}
 
 	/**
@@ -223,7 +154,7 @@ jQuery( document ).ready( function( $ ) {
 	 * @param {Object} element : HTML element to update.
 	 */
 	function updateHighlight( element ) {
-		var count = 0;
+		var count = null;
 
 		// Check highlightCounts setting and don't highlight if not set to true.
 		if ( highlightCounts === false ) {
@@ -257,6 +188,198 @@ jQuery( document ).ready( function( $ ) {
 					}
 				}
 			);
+		}
+	}
+
+	/**
+	 * Delete Translations from a Translation Set with a specific status.
+	 *
+	 * @param {string} locale : Locale of the GP_Translation_Set.
+	 * @param {string} slug   : Slug of the GP_Translation_Set.
+	 * @param {string} status : Status of the GP_Translation.
+	 */
+	function deleteTranslationsStart( locale, slug, status ) {
+		// Find the table cell.
+		var td = $( tableTranslationSets ).find( 'tbody tr[' + dataPrefix + 'locale="' + locale + '"][' + dataPrefix + 'slug="' + slug + '"] td.stats.' + status );
+
+		var notice = $( td ).find( 'div.progress-notice' );
+		var stats = $( td ).find( 'a.count' );
+		var button = $( td ).find( 'button.delete' );
+
+		// Hide stats.
+		$( stats ).hide();
+		// Hide and disable button.
+		$( button ).hide().attr( 'disabled', true );
+		// Show progress notice.
+		$( notice ).text( wp.i18n.__( 'Deleting...', 'gp-toolbox' ) ).fadeIn();
+
+		console.log( 'Clicked to delete translations on project "' + project.path + '" locale "' + locale + '/' + slug + '"' + ' and status "' + status + '"' );
+
+		$.ajax( {
+
+			url: wpApiSettings.root + 'gp-toolbox/v1/translations/' + project.path + '/' + locale + '/' + slug + '/' + status + '/-delete-start',
+			type: 'POST',
+
+			success: function( response ) {
+				// Check if deletion started.
+				var deleting = response.deleting;
+				var percent = response.percent;
+
+				console.log( 'Deleting', deleting );
+				console.log( 'Percent', percent );
+
+				if ( deleting === true && percent === 0 ) {
+					deleteTranslations( locale, slug, status );
+
+					// Get progress after 1 second.
+					setTimeout( deleteTranslationsProgress, 3000, locale, slug, status );
+				}
+
+				console.log( 'Start deleting translations...' );
+			},
+
+			error: function( response ) {
+				// Show the Error notice.
+				console.log( 'Failed to start deleting translations.' );
+				console.log( response );
+			},
+		} );
+	}
+
+	/**
+	 * Delete Translations from a Translation Set with a specific status.
+	 *
+	 * @param {string} locale : Locale of the GP_Translation_Set.
+	 * @param {string} slug   : Slug of the GP_Translation_Set.
+	 * @param {string} status : Status of the GP_Translation.
+	 */
+	function deleteTranslations( locale, slug, status ) {
+		// Find the table cell.
+		var td = $( tableTranslationSets ).find( 'tbody tr[' + dataPrefix + 'locale="' + locale + '"][' + dataPrefix + 'slug="' + slug + '"] td.stats.' + status );
+
+		var notice = $( td ).find( 'div.progress-notice' );
+		var stats = $( td ).find( 'a.count' );
+		var button = $( td ).find( 'button.delete' );
+
+		//console.log( 'Clicked to delete translations on project "' + project.path + '" locale "' + locale + '/' + slug + '"' + ' and status "' + status + '"' );
+
+		// Hide stats.
+		$( stats ).hide();
+		// Hide and disable button.
+		$( button ).hide().attr( 'disabled', true );
+		// Show progress notice.
+		$( notice ).text( wp.i18n.__( 'Deleting...', 'gp-toolbox' ) ).fadeIn();
+
+		console.log( 'Deleting translations...' );
+
+		$.ajax( {
+
+			url: wpApiSettings.root + 'gp-toolbox/v1/translations/' + project.path + '/' + locale + '/' + slug + '/' + status + '/-delete',
+			type: 'POST',
+
+			success: function( response ) {
+				// Set translation set data.
+				var count = null;
+				if ( status === 'old' ) {
+					count = response.translations.old;
+				} else if ( status === 'rejected' ) {
+					count = response.translations.rejected;
+				}
+
+				// Update stats count.
+				$( stats ).text( new Intl.NumberFormat( userLocale.slug ).format( count ) );
+				// Temporarily force ending in '0' for debugging.
+				( stats ).text( '0' );
+
+				// Hide progress notice.
+				$( notice ).hide().text( '' );
+				// Show stats.
+				$( stats ).fadeIn();
+
+				// Remove background highlight.
+				updateHighlight( td );
+
+				updateStats( locale, slug, status, 100 );
+				// clearInterval( progressInterval );
+
+				console.log( 'Successfully deleted translations!' );
+			},
+
+			error: function( response ) {
+				// Show the Error notice.
+				console.log( 'Failed to delete translations.' );
+				console.log( response );
+			},
+		} );
+	}
+
+	/**
+	 * Get deletion progress.
+	 *
+	 * @param {string} locale : Locale of the GP_Translation_Set.
+	 * @param {string} slug   : Slug of the GP_Translation_Set.
+	 * @param {string} status : Status of the GP_Translation.
+	 */
+	function deleteTranslationsProgress( locale, slug, status ) {
+		$.ajax( {
+
+			url: wpApiSettings.root + 'gp-toolbox/v1/translations/' + project.path + '/' + locale + '/' + slug + '/' + status + '/-delete-progress',
+			type: 'GET',
+
+			beforeSend: function() {
+				console.log( 'Getting progress...' );
+			},
+
+			success: function( response ) {
+				var deleting = response.deleting;
+				var percent = parseInt( response.percent );
+
+				console.log( 'Deleting', deleting );
+
+				// Check if there is a deleting process runing.
+				if ( deleting ) {
+					console.log( 'Percent', percent );
+					if ( percent < 100 ) {
+						setTimeout( deleteTranslationsProgress, 3000, locale, slug, status );
+						updateStats( locale, slug, status, percent );
+					} else {
+						console.log( 'Stop getting progress.' );
+					}
+				} else {
+					console.log( 'No delete process found.' );
+				}
+			},
+
+			error: function( response ) {
+				console.log( 'Error while fetching progress.' );
+				console.log( response );
+			},
+		} );
+	}
+
+	/**
+	 * Update stats count.
+	 *
+	 * @param {string}  locale  : Locale of the GP_Translation_Set.
+	 * @param {string}  slug    : Slug of the GP_Translation_Set.
+	 * @param {string}  status  : Status of the GP_Translation.
+	 * @param {percent} percent : Status of the GP_Translation.
+	 */
+	function updateStats( locale, slug, status, percent ) {
+		// Find the table cell.
+		var td = $( tableTranslationSets ).find( 'tbody tr[' + dataPrefix + 'locale="' + locale + '"][' + dataPrefix + 'slug="' + slug + '"] td.stats.' + status );
+
+		var notice = $( td ).find( 'div.progress-notice' );
+		var stats = $( td ).find( 'a.count' );
+
+		if ( percent < 100 ) {
+			console.log( 'Update to progress ' + percent );
+			$( td ).css( 'background', 'linear-gradient(90deg, var(--gp-color-secondary-100) ' + percent + '%, var(--gp-color-status-' + status + '-subtle) ' + percent + '%)' );
+		} else {
+			updateHighlight( td );
+			$( td ).css( 'background', '' );
+			$( notice ).hide();
+			$( stats ).fadeIn();
 		}
 	}
 } );
