@@ -143,7 +143,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Rest_API' ) ) {
 				//'status'       => $request->get_param( 'status' );
 				'deleting'     => true,
 				'percent'      => 0,
-				//'translations' => $translations,
+				// 'translations' => $translations,
 				//'total'        => count( $translations ),
 			);
 
@@ -177,6 +177,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Rest_API' ) ) {
 			$locale       = $request->get_param( 'locale' );
 			$slug         = $request->get_param( 'slug' );
 			$status       = $request->get_param( 'status' );
+			$translations       = $request->get_param( 'translations' );
 
 			// Get the GP_Project.
 			$project = GP::$project->by_path( $project_path );
@@ -203,7 +204,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Rest_API' ) ) {
 			}
 
 			$transient = 'gp_toolbox_translations__' . $project_path . '__' . $locale . '__' . $slug . '__' . $status . '__progress';
-
+/*
 			// Start progress.
 			set_transient(
 				$transient,
@@ -213,6 +214,8 @@ if ( ! class_exists( __NAMESPACE__ . '\Rest_API' ) ) {
 				),
 				MINUTE_IN_SECONDS
 			);
+			*/
+
 
 			$total = count( $translations );
 
