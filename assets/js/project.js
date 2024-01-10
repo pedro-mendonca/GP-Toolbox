@@ -107,39 +107,45 @@ jQuery( document ).ready( function( $ ) {
 				// Check if the 'old' status is supported.
 				if ( supportedTranslationStatuses.hasOwnProperty( 'old' ) ) {
 					// Add value to cell.
-					$( this ).find( 'td.stats.old' ).attr( 'data-text', translationSet.old_count ).html( '<div><a class="count" href="' + url + '?filters[status]=old">' + new Intl.NumberFormat( userLocale.slug ).format( translationSet.old_count ) + '</a></div>' );
+					$( this ).find( 'td.stats.old' ).attr( 'data-text', translationSet.old_count ).html( '<div class="progress-notice" style="display: none;"></div><a class="count" href="' + url + '?filters[status]=old">' + new Intl.NumberFormat( userLocale.slug ).format( translationSet.old_count ) + '</a>' );
 				}
 				// Check if the 'rejected' status is supported.
 				if ( supportedTranslationStatuses.hasOwnProperty( 'rejected' ) ) {
 					// Add value to cell.
-					$( this ).find( 'td.stats.rejected' ).attr( 'data-text', translationSet.rejected_count ).html( '<div><a class="count" href="' + url + '?filters[status]=rejected">' + new Intl.NumberFormat( userLocale.slug ).format( translationSet.rejected_count ) + '</a></div>' );
+					$( this ).find( 'td.stats.rejected' ).attr( 'data-text', translationSet.rejected_count ).html( '<div class="progress-notice" style="display: none;"></div><a class="count" href="' + url + '?filters[status]=rejected">' + new Intl.NumberFormat( userLocale.slug ).format( translationSet.rejected_count ) + '</a>' );
 				}
 				// Check if the 'changesrequested' status is supported.
 				if ( supportedTranslationStatuses.hasOwnProperty( 'changesrequested' ) ) {
 					// Add value to cell.
-					$( this ).find( 'td.stats.changesrequested' ).attr( 'data-text', translationSet.changesrequested_count ).html( '<div><a class="count" href="' + url + '?filters[status]=changesrequested">' + new Intl.NumberFormat( userLocale.slug ).format( translationSet.changesrequested_count ) + '</a></div>' );
+					$( this ).find( 'td.stats.changesrequested' ).attr( 'data-text', translationSet.changesrequested_count ).html( '<a class="count" href="' + url + '?filters[status]=changesrequested">' + new Intl.NumberFormat( userLocale.slug ).format( translationSet.changesrequested_count ) + '</a>' );
 				}
 
 				// Check if user has GLotPress administrator previleges.
 				if ( glotpressAdmin ) {
 					// Add buttons to delete Old and Rejected translations.
-					$( old ).find( 'div a.count' ).after( '<button class="delete hidden" disabled><span class="dashicons dashicons-trash"></span></button>' );
-					$( rejected ).find( 'div a.count' ).after( '<button class="delete hidden" disabled><span class="dashicons dashicons-trash"></span></button></div>' );
+					$( old ).find( 'a.count' ).after( '<button class="delete hidden" disabled><span class="dashicons dashicons-trash"></span></button>' );
+					$( rejected ).find( 'a.count' ).after( '<button class="delete hidden" disabled><span class="dashicons dashicons-trash"></span></button>' );
 
 					// Enable Old and Rejected delete buttons for non-zero counts.
-					if ( $( old ).find( 'div a.count' ).text().trim() !== '0' ) {
-						$( old ).find( 'div button.delete' ).attr( 'disabled', false ).removeClass( 'hidden' );
+					if ( $( old ).find( 'a.count' ).text().trim() !== '0' ) {
+						$( old ).find( 'button.delete' ).attr( 'disabled', false ).removeClass( 'hidden' );
 					}
-					if ( $( rejected ).find( 'div a.count' ).text().trim() !== '0' ) {
-						$( rejected ).find( 'div button.delete' ).attr( 'disabled', false ).removeClass( 'hidden' );
+					if ( $( rejected ).find( 'a.count' ).text().trim() !== '0' ) {
+						$( rejected ).find( 'button.delete' ).attr( 'disabled', false ).removeClass( 'hidden' );
 					}
 
 					// Delete Old and Rejected translations.
-					$( old ).find( 'div button.delete' ).on( 'click', function() {
-						deleteTranslations( translationSet.locale, translationSet.slug, 'old' );
+					$( old ).find( 'button.delete' ).on( 'click', function() {
+						deleteTranslationsStart( translationSet.locale, translationSet.slug, 'old' );
+						// Get progress after 1 second.
+						// setTimeout( deleteTranslationsProgress, 3000, translationSet.locale, translationSet.slug, 'old' );
+						teste();
 					} );
-					$( rejected ).find( 'div button.delete' ).on( 'click', function() {
-						deleteTranslations( translationSet.locale, translationSet.slug, 'rejected' );
+					$( rejected ).find( 'button.delete' ).on( 'click', function() {
+						deleteTranslationsStart( translationSet.locale, translationSet.slug, 'rejected' );
+						// Get progress after 1 second.
+						// setTimeout( deleteTranslationsProgress, 3000, translationSet.locale, translationSet.slug, 'rejected' );
+						teste();
 					} );
 				}
 			}
