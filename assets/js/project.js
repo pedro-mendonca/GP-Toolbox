@@ -141,15 +141,63 @@ jQuery( document ).ready( function( $ ) {
 					// Delete Old and Rejected translations.
 					$( old ).find( 'button.delete' ).on( 'click', function() {
 						deleteTranslationsStart( translationSet.locale, translationSet.slug, 'old' );
+						// Get progress after 1 second.
+						// setTimeout( deleteTranslationsProgress, 3000, translationSet.locale, translationSet.slug, 'old' );
+						teste();
 					} );
 					$( rejected ).find( 'button.delete' ).on( 'click', function() {
 						deleteTranslationsStart( translationSet.locale, translationSet.slug, 'rejected' );
+						// Get progress after 1 second.
+						// setTimeout( deleteTranslationsProgress, 3000, translationSet.locale, translationSet.slug, 'rejected' );
+						teste();
 					} );
 				}
 			}
 		);
 
 		updateHighlight();
+	}
+
+	function teste() {
+		var p = new Promise( function ( resolve, reject ) {
+			var a = 1 + 1;
+			if ( a === 2 ) {
+				resolve('Success');
+			} else {
+				reject('Failed');
+			}
+
+		} );
+
+		p.then(
+			function( message ) {
+				console.log('Isto está no "then"' + message );
+			}
+		)
+		.catch(
+				function( message ) {
+				console.log('Isto está no "catch"' + message );
+			}
+		);
+
+		var isMomHappy = true;
+
+		// Promise
+		var willIGetNewPhone = new Promise(
+			function ( resolve, reject ) {
+				if ( isMomHappy ) {
+					var phone = {
+						brand: 'Samsung',
+						color: 'black'
+					};
+					resolve( phone ); // fulfilled
+				} else {
+					var reason = new Error( 'mom is not happy' );
+					reject( reason ); // reject
+				}
+
+			}
+		);
 	}
 
 	/**
@@ -195,6 +243,17 @@ jQuery( document ).ready( function( $ ) {
 		}
 	}
 
+/*
+	async function createPost( post ) {
+		try {
+			const response = await axios.post(`${this.url}/wp-json/wp/v2/posts`, post, { headers: this.headers });
+			return response.data;
+		} catch (error) {
+			throw new Error(`Error while creating post: ${error}`);
+		}
+	}
+	*/
+
 	/**
 	 * Delete Translations from a Translation Set with a specific status.
 	 *
@@ -202,7 +261,7 @@ jQuery( document ).ready( function( $ ) {
 	 * @param {string} slug   : Slug of the GP_Translation_Set.
 	 * @param {string} status : Status of the GP_Translation.
 	 */
-	function deleteTranslationsStart( locale, slug, status ) {
+	async function deleteTranslationsStart( locale, slug, status ) {
 		// Find the table cell.
 		var td = $( tableTranslationSets ).find( 'tbody tr[' + dataPrefix + 'locale="' + locale + '"][' + dataPrefix + 'slug="' + slug + '"] td.stats.' + status );
 
@@ -219,19 +278,49 @@ jQuery( document ).ready( function( $ ) {
 
 		console.log( 'Clicked to delete translations on project "' + project.path + '" locale "' + locale + '/' + slug + '"' + ' and status "' + status + '"' );
 
-		fetch(
-			wpApiSettings.root + 'gp-toolbox/v1/translations/' + project.path + '/' + locale + '/' + slug + '/' + status + '/-delete-start',
-			{
-				method: 'POST',
+
+
+		// Creating a Promise that uses the fetch API with the es6-promise polyfill
+		var startDeletingTranslations = new Promise(
+			function( resolve, reject ) {
+				// Replace 'your_api_endpoint' with the actual API endpoint
+				fetch(
+					wpApiSettings.root + 'gp-toolbox/v1/translations/' + project.path + '/' + locale + '/' + slug + '/' + status + '/-delete-start',
+					{
+						method: 'POST',
+					}
+				)
+				.then(
+					function( response ) {
+						if ( ! response.ok ) {
+							throw new Error('Network response was not ok');
+						}
+
+						return response.json();
+					}
+				)
+				.then(
+					function( data ) {
+						resolve( data );
+					}
+				)
+				.catch(
+					function( error ) {
+						reject( error );
+					}
+				);
+
 			}
-		)
-		.then(
-			response => response.json()
-		)
-		.then(
-			data => {
-				var deleting = data.deleting;
-				var percent = data.percent;
+		);
+
+		// Handling the promise resolution and rejection
+		startDeletingTranslations.then(
+			function( result ) {
+				console.log( 'Data fetched successfully:', result );
+				var deleting = result.deleting;
+				var percent = result.percent;
+
+				console.log( result );
 
 				console.log( 'Deleting', deleting );
 				console.log( 'Percent', percent );
@@ -239,20 +328,25 @@ jQuery( document ).ready( function( $ ) {
 				if ( deleting === true && percent === 0 ) {
 					deleteTranslations( locale, slug, status );
 
-					// Get progress after 1 second.
-					setTimeout( () => deleteTranslationsProgress( locale, slug, status ), 3000 );
+					setTimeout( deleteTranslationsProgress, 3000, locale, slug, status );
+
 				}
 
 				console.log( 'Start deleting translations...' );
 			}
 		)
 		.catch(
-			error => {
+			function( error ) {
+				console.error( 'Error fetching data:', error );
 				// Show the Error notice.
 				console.log( 'Failed to start deleting translations.' );
 				console.error( error );
 			}
 		);
+
+
+
+
 /*
 		$.ajax( {
 
@@ -285,6 +379,8 @@ jQuery( document ).ready( function( $ ) {
 		} );
 		*/
 	}
+
+
 
 	/**
 	 * Delete Translations from a Translation Set with a specific status.
@@ -375,29 +471,43 @@ jQuery( document ).ready( function( $ ) {
 	 * @param {string} status : Status of the GP_Translation.
 	 */
 	function deleteTranslationsProgress( locale, slug, status ) {
-		fetch(wpApiSettings.root + 'gp-toolbox/v1/translations/' + project.path + '/' + locale + '/' + slug + '/' + status + '/-delete-progress', {
-			method: 'GET',
-			})
-			.then(response => response.json())
-			.then(data => {
-				var deleting = data.deleting;
-				var percent = parseInt(data.percent);
 
-				console.log('Deleting', deleting);
 
-				// Check if there is a deleting process running.
-				if (deleting) {
-				console.log('Percent', percent);
-				if (percent < 100) {
-					setTimeout(() => deleteTranslationsProgress(locale, slug, status), 3000);
-					updateStats(locale, slug, status, percent);
-				} else {
-					console.log('Stop getting progress.');
+		fetch(
+			wpApiSettings.root + 'gp-toolbox/v1/translations/' + project.path + '/' + locale + '/' + slug + '/' + status + '/-delete-progress',
+				{
+					method: 'GET',
 				}
-				} else {
-				console.log('No delete process found.');
+			)
+			.then(
+				response => {
+					if ( ! response.ok ) {
+						throw new Error(`Request failed with status ${response.status}`);
+					}
+						return response.json();
+					}
+			)
+			.then(
+					data => {
+					var deleting = data.deleting;
+					var percent = parseInt(data.percent);
+
+					console.log('Deleting', deleting);
+
+					// Check if there is a deleting process running.
+					if (deleting) {
+					console.log('Percent', percent);
+					if (percent < 100) {
+						setTimeout(() => deleteTranslationsProgress(locale, slug, status), 3000);
+						updateStats(locale, slug, status, percent);
+					} else {
+						console.log('Stop getting progress.');
+					}
+					} else {
+					console.log('No delete process found.');
+					}
 				}
-			})
+			)
 			.catch(error => {
 				console.log('Error while fetching progress.');
 				console.error(error);
