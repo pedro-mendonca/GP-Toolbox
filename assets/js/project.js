@@ -140,10 +140,10 @@ jQuery( document ).ready( function( $ ) {
 
 					// Delete Old and Rejected translations.
 					$( old ).find( 'button.delete' ).on( 'click', function() {
-						deleteTranslations( translationSet.locale, translationSet.slug, 'old' );
+						deleteTranslationsStart( translationSet.locale, translationSet.slug, 'old' );
 					} );
 					$( rejected ).find( 'button.delete' ).on( 'click', function() {
-						deleteTranslations( translationSet.locale, translationSet.slug, 'rejected' );
+						deleteTranslationsStart( translationSet.locale, translationSet.slug, 'rejected' );
 					} );
 				}
 			}
@@ -202,7 +202,7 @@ jQuery( document ).ready( function( $ ) {
 	 * @param {string} slug   : Slug of the GP_Translation_Set.
 	 * @param {string} status : Status of the GP_Translation.
 	 */
-	function deleteTranslations( locale, slug, status ) {
+	function deleteTranslationsStart( locale, slug, status ) {
 		// Find the table cell.
 		var td = $( tableTranslationSets ).find( 'tbody tr[' + dataPrefix + 'locale="' + locale + '"][' + dataPrefix + 'slug="' + slug + '"] td.stats.' + status );
 
@@ -214,12 +214,13 @@ jQuery( document ).ready( function( $ ) {
 
 		$.ajax( {
 
-			url: wpApiSettings.root + 'gp-toolbox/v1/translations/' + project.path + '/' + locale + '/' + slug + '/' + status + '/-delete',
+			url: wpApiSettings.root + 'gp-toolbox/v1/translations/' + project.path + '/' + locale + '/' + slug + '/' + status + '/-delete-start',
 			type: 'POST',
 			async: true,
 
+			/*
 			beforeSend: function() {
-				console.log( 'Start deleting translations...' );
+				// console.log( 'Start deleting translations...' );
 
 				// Hide stats.
 				$( stats ).hide();
@@ -229,7 +230,103 @@ jQuery( document ).ready( function( $ ) {
 				$( notice ).text( wp.i18n.__( 'Deleting...', 'gp-toolbox' ) ).fadeIn();
 
 				// Get progress after 1 second.
-				setTimeout( getProgress, 3000, locale, slug, status );
+				//setTimeout( deleteTranslationsProgress, 3000, locale, slug, status );
+			},
+			*/
+
+			success: function( response ) {
+				// Check if deletion started.
+				var deleting = response.deleting;
+				var percent = response.percent;
+
+				console.log( 'Deleting', deleting );
+				console.log( 'Percent', percent );
+
+				if ( deleting === true && percent === 0 ) {
+					deleteTranslations( locale, slug, status );
+
+					// Get progress after 1 second.
+					setTimeout( deleteTranslationsProgress, 3000, locale, slug, status );
+				}
+				/*
+				// Set translation set data.
+				var count = null;
+				if ( status === 'old' ) {
+					count = response.translations.old;
+				} else if ( status === 'rejected' ) {
+					count = response.translations.rejected;
+				}
+
+				// Update stats count.
+				$( stats ).text( new Intl.NumberFormat( userLocale.slug ).format( count ) );
+				// Temporarily force ending in '0' for debugging.
+				( stats ).text( '0' );
+
+				// Hide progress notice.
+				$( notice ).hide().text( '' );
+				// Show stats.
+				$( stats ).fadeIn();
+
+				// Remove background highlight.
+				updateHighlight( td );
+
+				updateStats( locale, slug, status, 100 );
+				*/
+
+				console.log( 'Start deleting translations...' );
+			},
+
+			error: function( response ) {
+				// Show the Error notice.
+				console.log( 'Failed to start deleting translations.' );
+				console.log( response );
+			},
+		} );
+	}
+
+	/**
+	 * Delete Translations from a Translation Set with a specific status.
+	 *
+	 * @param {string} locale : Locale of the GP_Translation_Set.
+	 * @param {string} slug   : Slug of the GP_Translation_Set.
+	 * @param {string} status : Status of the GP_Translation.
+	 */
+	function deleteTranslations( locale, slug, status ) {
+		// Find the table cell.
+		var td = $( tableTranslationSets ).find( 'tbody tr[' + dataPrefix + 'locale="' + locale + '"][' + dataPrefix + 'slug="' + slug + '"] td.stats.' + status );
+
+		var notice = $( td ).find( 'div.progress-notice' );
+		var stats = $( td ).find( 'a.count' );
+		var button = $( td ).find( 'button.delete' );
+
+		//console.log( 'Clicked to delete translations on project "' + project.path + '" locale "' + locale + '/' + slug + '"' + ' and status "' + status + '"' );
+
+		// Hide stats.
+		$( stats ).hide();
+		// Hide and disable button.
+		$( button ).hide().attr( 'disabled', true );
+		// Show progress notice.
+		$( notice ).text( wp.i18n.__( 'Deleting...', 'gp-toolbox' ) ).fadeIn();
+
+		$.ajax( {
+
+			url: wpApiSettings.root + 'gp-toolbox/v1/translations/' + project.path + '/' + locale + '/' + slug + '/' + status + '/-delete',
+			type: 'POST',
+			//async: true,
+
+			beforeSend: function() {
+
+				console.log( 'Deleting translations...' );
+
+				// Hide stats.
+				//$( stats ).hide();
+				// Hide and disable button.
+				//$( button ).hide().attr( 'disabled', true );
+				// Show progress notice.
+				//$( notice ).text( wp.i18n.__( 'Deleting...', 'gp-toolbox' ) ).fadeIn();
+
+				// Get progress after 1 second.
+				// setTimeout( deleteTranslationsProgress, 3000, locale, slug, status );
 			},
 
 			success: function( response ) {
@@ -274,7 +371,7 @@ jQuery( document ).ready( function( $ ) {
 	 * @param {string} slug   : Slug of the GP_Translation_Set.
 	 * @param {string} status : Status of the GP_Translation.
 	 */
-	function getProgress( locale, slug, status ) {
+	function deleteTranslationsProgress( locale, slug, status ) {
 		$.ajax( {
 
 			url: wpApiSettings.root + 'gp-toolbox/v1/translations/' + project.path + '/' + locale + '/' + slug + '/' + status + '/-delete-progress',
@@ -295,7 +392,7 @@ jQuery( document ).ready( function( $ ) {
 				if ( deleting ) {
 					console.log( 'Percent', percent );
 					if ( percent < 100 ) {
-						setTimeout( getProgress, 3000, locale, slug, status );
+						setTimeout( deleteTranslationsProgress, 3000, locale, slug, status );
 						updateStats( locale, slug, status, percent );
 					} else {
 						console.log( 'Stop getting progress.' );
