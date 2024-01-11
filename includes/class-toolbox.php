@@ -72,10 +72,10 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 		 *
 		 * @since 1.0.1
 		 *
-		 * @param array  $items      Menu items.
-		 * @param string $location   Menu location.
+		 * @param array<string, string>  $items      Menu items.
+		 * @param string                 $location   Menu location.
 		 *
-		 * @return array   Menu items.
+		 * @return array<string, string>   Menu items.
 		 */
 		public static function nav_menu_items( $items, $location ) {
 
@@ -87,7 +87,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 				// Check if user is logged in and has GlotPress admin previleges.
 				if ( self::current_user_is_glotpress_admin() ) {
 					// Add Tools item to admin bar side menu.
-					$new_item[ gp_url( '/tools/' ) ] = esc_html__( 'Tools', 'gp-toolbox' );
+					$new_item[ strval( gp_url( '/tools/' ) ) ] = esc_html__( 'Tools', 'gp-toolbox' );
 				}
 			}
 
@@ -116,12 +116,12 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 		 *
 		 * @since 1.0.0
 		 *
-		 * @param array       $locations     File paths of template locations.
-		 * @param string      $template      The template name.
-		 * @param array       $args          Arguments passed to the template.
-		 * @param string|null $template_path Priority template location, if any.
+		 * @param array<int, string> $locations     File paths of template locations.
+		 * @param string             $template      The template name.
+		 * @param array<mixed>       $args          Arguments passed to the template.
+		 * @param string|null        $template_path Priority template location, if any.
 		 *
-		 * @return array   Template location.
+		 * @return array<int, string>   Template locations.
 		 */
 		public function template_load_locations( $locations, $template, $args, $template_path ) {
 
@@ -318,9 +318,9 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 					 *
 					 * @since 1.0.1
 					 *
-					 * @param bool   True to highlight, false to don't highlight. Defaults to true.
+					 * @param bool $highlight_counts  True to highlight, false to don't highlight. Defaults to true.
 					 */
-					'highlight_counts'   => apply_filters( 'gp_toolbox_highlight_counts', true ),   // Wether or not to highlight the translation sets table.
+					'highlight_counts'   => apply_filters( 'gp_toolbox_highlight_counts', $highlight_counts = true ),   // Wether or not to highlight the translation sets table.
 				)
 			);
 		}
@@ -360,7 +360,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 		 *
 		 * @since 1.0.1
 		 *
-		 * @return array<int, string>   Translations statuses to enable management.
+		 * @return array<string, string>   Translations statuses to enable management.
 		 */
 		public static function supported_translation_statuses() {
 

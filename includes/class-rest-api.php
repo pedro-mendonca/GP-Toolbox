@@ -62,7 +62,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Rest_API' ) ) {
 					'callback'            => array( $this, 'translations_bulk_delete' ),
 					'permission_callback' => function () {
 						return Toolbox::current_user_is_glotpress_admin();
-					}
+					},
 				)
 			);
 		}
