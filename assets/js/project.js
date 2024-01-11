@@ -236,6 +236,9 @@ jQuery( document ).ready( function( $ ) {
 				// Update stats count.
 				$( stats ).text( new Intl.NumberFormat( userLocale.slug ).format( count ) );
 
+				// Update stats sort attribute.
+				$( td ).attr( 'data-text', count );
+
 				// Remove background highlight.
 				updateHighlight( td );
 
