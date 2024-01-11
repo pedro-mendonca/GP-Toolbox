@@ -53,17 +53,17 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 			// Load things after templates.
 			add_action( 'gp_post_tmpl_load', array( self::class, 'post_template_load' ), 10, 2 );
 
-			// Delete translations with a specified status.
-			add_action( 'wp_ajax_delete_translations', array( self::class, 'delete_translations' ) );
-
 			// Add Tools menu item.
 			add_filter( 'gp_nav_menu_items', array( self::class, 'nav_menu_items' ), 10, 2 );
 
-			// Register routes.
-			add_action( 'template_redirect', array( $this, 'register_routes' ), 5 );
+			// Register extra GlotPress routes.
+			add_action( 'template_redirect', array( $this, 'register_gp_routes' ), 5 );
 
 			// Set template locations.
 			add_filter( 'gp_tmpl_load_locations', array( $this, 'template_load_locations' ), 10, 4 );
+
+			// Instantiate Rest API.
+			new Rest_API();
 		}
 
 
@@ -72,7 +72,10 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 		 *
 		 * @since 1.0.1
 		 *
-		 * @return void
+		 * @param array<string, string> $items      Menu items.
+		 * @param string                $location   Menu location.
+		 *
+		 * @return array<string, string>   Menu items.
 		 */
 		public static function nav_menu_items( $items, $location ) {
 
@@ -82,9 +85,9 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 			if ( $location === 'side' ) {
 
 				// Check if user is logged in and has GlotPress admin previleges.
-				if ( is_user_logged_in() && current_user_can( 'manage_options' ) && GP::$permission->current_user_can( 'admin' ) ) {
+				if ( self::current_user_is_glotpress_admin() ) {
 					// Add Tools item to admin bar side menu.
-					$new_item[ gp_url( '/tools/' ) ] = esc_html__( 'Tools', 'gp-toolbox' );
+					$new_item[ strval( gp_url( '/tools/' ) ) ] = esc_html__( 'Tools', 'gp-toolbox' );
 				}
 			}
 
@@ -99,7 +102,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 		 *
 		 * @return void
 		 */
-		public function register_routes() {
+		public function register_gp_routes() {
 
 			GP::$router->prepend( '/tools', array( __NAMESPACE__ . '\Routes\Tools', 'tools_get' ) );
 			GP::$router->prepend( '/tools/originals', array( __NAMESPACE__ . '\Routes\Originals', 'originals_get' ) );
@@ -113,9 +116,16 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 		 *
 		 * @since 1.0.0
 		 *
-		 * @return array   Template location.
+		 * @param array<int, string> $locations     File paths of template locations.
+		 * @param string             $template      The template name.
+		 * @param array<mixed>       $args          Arguments passed to the template.
+		 * @param string|null        $template_path Priority template location, if any.
+		 *
+		 * @return array<int, string>   Template locations.
 		 */
 		public function template_load_locations( $locations, $template, $args, $template_path ) {
+
+			unset( $args, $template_path );
 
 			$gp_toolbox_templates = array(
 				'gptoolbox-tools',
@@ -201,6 +211,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 							$args,
 							array(
 								'wp-i18n',
+								'wp-api',
 							)
 						);
 					}
@@ -295,22 +306,21 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 				$script_id,
 				'gpToolbox' . ucfirst( $template ), // Eg. 'gpToolboxProject'.
 				array(
-					'admin'              => GP::$permission->current_user_can( 'admin' ),
-					'gp_url'             => gp_url(),         // GlotPress base URL. Defaults to /glotpress/.
-					'gp_url_project'     => gp_url_project(), // GlotPress projects base URL. Defaults to /glotpress/projects/.
-					'ajaxurl'            => admin_url( 'admin-ajax.php' ),
-					'nonce'              => wp_create_nonce( 'gp-toolbox-nonce' ),
-					'args'               => self::{'template_args_' . $template}( $args ),
-					'supported_statuses' => self::supported_translation_statuses(), // Supported translation statuses.
-					'user_locale'        => GP_locales::by_field( 'wp_locale', get_user_locale() ),
+					'admin'              => self::current_user_is_glotpress_admin(),                // GlotPress Admin with manage options capability.
+					'gp_url'             => gp_url(),                                               // GlotPress base URL. Defaults to /glotpress/.
+					'gp_url_project'     => gp_url_project(),                                       // GlotPress projects base URL. Defaults to /glotpress/projects/.
+					'nonce'              => wp_create_nonce( 'wp_rest' ),                           // Authenticate in the Rest API.
+					'args'               => self::{'template_args_' . $template}( $args ),          // Template arguments.
+					'supported_statuses' => self::supported_translation_statuses(),                 // Supported translation statuses.
+					'user_locale'        => GP_locales::by_field( 'wp_locale', get_user_locale() ), // Current user Locale.
 					/**
 					 * Filters wether to color highlight or not the translation stats counts of the translation sets on the project page.
 					 *
 					 * @since 1.0.1
 					 *
-					 * @param bool   True to highlight, false to don't highlight. Defaults to true.
+					 * @param bool $highlight_counts  True to highlight, false to don't highlight. Defaults to true.
 					 */
-					'highlight_counts'   => apply_filters( 'gp_toolbox_highlight_counts', true ),
+					'highlight_counts'   => apply_filters( 'gp_toolbox_highlight_counts', $highlight_counts = true ),   // Wether or not to highlight the translation sets table.
 				)
 			);
 		}
@@ -343,82 +353,6 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 
 
 		/**
-		 * Delete translations with a specified status.
-		 *
-		 * @since 1.0.0
-		 *
-		 * @return void
-		 */
-		public static function delete_translations() {
-
-			check_ajax_referer( 'gp-toolbox-nonce', 'nonce' );
-
-			// Initialize variables.
-			$project_path = '';
-			$locale       = '';
-			$slug         = '';
-			$status       = '';
-
-			if ( isset( $_POST['projectPath'] ) ) {
-				$project_path = sanitize_key( $_POST['projectPath'] );
-			} else {
-				wp_die();
-			}
-
-			if ( isset( $_POST['locale'] ) ) {
-				$locale = sanitize_key( $_POST['locale'] );
-			} else {
-				wp_die();
-			}
-
-			if ( isset( $_POST['slug'] ) ) {
-				$slug = sanitize_key( $_POST['slug'] );
-			} else {
-				wp_die();
-			}
-
-			if ( isset( $_POST['status'] ) ) {
-				$status = sanitize_key( $_POST['status'] );
-			} else {
-				wp_die();
-			}
-
-			// Get the GP_Project.
-			$project = GP::$project->by_path( $project_path );
-
-			// Get the GP_Translation_Set.
-			$translation_set = GP::$translation_set->by_project_id_slug_and_locale( $project->id, $slug, $locale );
-
-			// Get the translations.
-			$translations = GP::$translation->for_translation( $project, $translation_set, 'no-limit', gp_get( 'filters', array( 'status' => $status ) ) );
-
-			// Delete all translations.
-			foreach ( $translations as $translation ) {
-
-				$translation = GP::$translation->get( $translation );
-				if ( ! $translation ) {
-					continue;
-				}
-				$translation->delete();
-			}
-
-			gp_clean_translation_set_cache( $translation_set->id );
-
-			// Send JSON response and die.
-			wp_send_json_success(
-				array(
-					'percent'      => $translation_set->percent_translated(),
-					'current'      => $translation_set->current_count(),
-					'fuzzy'        => $translation_set->fuzzy_count(),
-					'untranslated' => $translation_set->untranslated_count(),
-					'waiting'      => $translation_set->waiting_count(),
-					'old'          => $translation_set->old_count,
-					'rejected'     => $translation_set->rejected_count,
-				)
-			);
-
-
-		/**
 		 * Get the translation statuses to manage.
 		 * Currently GlotPress project tables only show the 'current', 'fuzzy' and 'waiting' strings.
 		 * This enables all the statuses, adding the columns 'old', 'rejected' and 'changesrequested' to the project tables.
@@ -426,7 +360,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 		 *
 		 * @since 1.0.1
 		 *
-		 * @return array<int, string>   Translations statuses to enable management.
+		 * @return array<string, string>   Translations statuses to enable management.
 		 */
 		public static function supported_translation_statuses() {
 
@@ -437,7 +371,9 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 				'old'      => esc_html__( 'Old', 'gp-toolbox' ),
 				'rejected' => esc_html__( 'Rejected', 'gp-toolbox' ),
 				// TODO: Uncomment when the gp-translation-helpers is merged in GlotPress.
-				// 'changesrequested' => esc_html__( 'Changes requested', 'gp-toolbox' ), // phpcs:ignore
+				/**
+				 * 'changesrequested' => esc_html__( 'Changes requested', 'gp-toolbox' ), // phpcs:ignore
+				 */
 			);
 
 			$supported_statuses = array_keys( $glotpress_statuses );
@@ -460,6 +396,34 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 			}
 
 			return $statuses;
+		}
+
+
+		/**
+		 * Check if the current user is logged in, can manage options and has GlotPress admin previleges.
+		 *
+		 * @since 1.0.0
+		 *
+		 * @return bool   Return true or false.
+		 */
+		public static function current_user_is_glotpress_admin() {
+
+			// Check if user is logged in.
+			if ( ! is_user_logged_in() ) {
+				return false;
+			}
+
+			// Check if user can manage options.
+			if ( ! current_user_can( 'manage_options' ) ) {
+				return false;
+			}
+
+			// Check if user has GlotPress admin previleges.
+			if ( ! GP::$permission->current_user_can( 'admin' ) ) {
+				return false;
+			}
+
+			return true;
 		}
 	}
 }
