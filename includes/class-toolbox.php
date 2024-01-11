@@ -53,12 +53,6 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 			// Load things after templates.
 			add_action( 'gp_post_tmpl_load', array( self::class, 'post_template_load' ), 10, 2 );
 
-			// Delete translations with a specified status.
-			add_action( 'wp_ajax_delete_translations', array( self::class, 'delete_translations' ) );
-
-			// Get progress of an action.
-			add_action( 'wp_ajax_get_progress', array( self::class, 'get_progress' ) );
-
 			// Add Tools menu item.
 			add_filter( 'gp_nav_menu_items', array( self::class, 'nav_menu_items' ), 10, 2 );
 

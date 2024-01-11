@@ -11,8 +11,6 @@
 namespace GP_Toolbox;
 
 use GP;
-use WP_Error;
-use WP_REST_Server;
 use WP_REST_Request;
 
 // Exit if accessed directly.
