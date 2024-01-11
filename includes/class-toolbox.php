@@ -62,13 +62,14 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 			// Add Tools menu item.
 			add_filter( 'gp_nav_menu_items', array( self::class, 'nav_menu_items' ), 10, 2 );
 
-			// Register routes.
-			add_action( 'template_redirect', array( $this, 'register_routes' ), 5 );
-
-			new Rest_API();
+			// Register extra GlotPress routes.
+			add_action( 'template_redirect', array( $this, 'register_gp_routes' ), 5 );
 
 			// Set template locations.
 			add_filter( 'gp_tmpl_load_locations', array( $this, 'template_load_locations' ), 10, 4 );
+
+			// Instantiate Rest API.
+			new Rest_API();
 		}
 
 
@@ -77,7 +78,10 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 		 *
 		 * @since 1.0.1
 		 *
-		 * @return void
+		 * @param array  $items      Menu items.
+		 * @param string $location   Menu location.
+		 *
+		 * @return array   Menu items.
 		 */
 		public static function nav_menu_items( $items, $location ) {
 
@@ -104,7 +108,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 		 *
 		 * @return void
 		 */
-		public function register_routes() {
+		public function register_gp_routes() {
 
 			GP::$router->prepend( '/tools', array( __NAMESPACE__ . '\Routes\Tools', 'tools_get' ) );
 			GP::$router->prepend( '/tools/originals', array( __NAMESPACE__ . '\Routes\Originals', 'originals_get' ) );
@@ -118,9 +122,16 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 		 *
 		 * @since 1.0.0
 		 *
+		 * @param array       $locations     File paths of template locations.
+		 * @param string      $template      The template name.
+		 * @param array       $args          Arguments passed to the template.
+		 * @param string|null $template_path Priority template location, if any.
+		 *
 		 * @return array   Template location.
 		 */
 		public function template_load_locations( $locations, $template, $args, $template_path ) {
+
+			unset( $args, $template_path );
 
 			$gp_toolbox_templates = array(
 				'gptoolbox-tools',
@@ -367,7 +378,9 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 				'old'      => esc_html__( 'Old', 'gp-toolbox' ),
 				'rejected' => esc_html__( 'Rejected', 'gp-toolbox' ),
 				// TODO: Uncomment when the gp-translation-helpers is merged in GlotPress.
-				// 'changesrequested' => esc_html__( 'Changes requested', 'gp-toolbox' ), // phpcs:ignore
+				/**
+				 * 'changesrequested' => esc_html__( 'Changes requested', 'gp-toolbox' ), // phpcs:ignore
+				 */
 			);
 
 			$supported_statuses = array_keys( $glotpress_statuses );
