@@ -60,10 +60,11 @@ if ( ! class_exists( __NAMESPACE__ . '\Rest_API' ) ) {
 				GP_TOOLBOX_REST_NAMESPACE,
 				"/$translations_by_set_and_status/-delete",
 				array(
-					'methods'  => 'POST',
-					'callback' => array( $this, 'translations_bulk_delete' ),
-					// 'permission_callback' => array( $this, 'get_private_data_permissions_check' ), TODO: Check permissions.
-					'permission_callback' => '__return_true',
+					'methods'             => 'POST',
+					'callback'            => array( $this, 'translations_bulk_delete' ),
+					'permission_callback' => function () {
+						return Toolbox::current_user_is_glotpress_admin();
+					}
 				)
 			);
 		}

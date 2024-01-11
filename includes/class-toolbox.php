@@ -91,7 +91,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 			if ( $location === 'side' ) {
 
 				// Check if user is logged in and has GlotPress admin previleges.
-				if ( is_user_logged_in() && current_user_can( 'manage_options' ) && GP::$permission->current_user_can( 'admin' ) ) {
+				if ( self::current_user_is_glotpress_admin() ) {
 					// Add Tools item to admin bar side menu.
 					$new_item[ gp_url( '/tools/' ) ] = esc_html__( 'Tools', 'gp-toolbox' );
 				}
@@ -312,14 +312,13 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 				$script_id,
 				'gpToolbox' . ucfirst( $template ), // Eg. 'gpToolboxProject'.
 				array(
-					'admin'              => GP::$permission->current_user_can( 'admin' ),
-					'gp_url'             => gp_url(),         // GlotPress base URL. Defaults to /glotpress/.
-					'gp_url_project'     => gp_url_project(), // GlotPress projects base URL. Defaults to /glotpress/projects/.
-					'ajaxurl'            => admin_url( 'admin-ajax.php' ),
-					'nonce'              => wp_create_nonce( 'gp-toolbox-nonce' ),
-					'args'               => self::{'template_args_' . $template}( $args ),
-					'supported_statuses' => self::supported_translation_statuses(), // Supported translation statuses.
-					'user_locale'        => GP_locales::by_field( 'wp_locale', get_user_locale() ),
+					'admin'              => self::current_user_is_glotpress_admin(),                // GlotPress Admin with manage options capability.
+					'gp_url'             => gp_url(),                                               // GlotPress base URL. Defaults to /glotpress/.
+					'gp_url_project'     => gp_url_project(),                                       // GlotPress projects base URL. Defaults to /glotpress/projects/.
+					'nonce'              => wp_create_nonce( 'wp_rest' ),                           // Authenticate in the Rest API.
+					'args'               => self::{'template_args_' . $template}( $args ),          // Template arguments.
+					'supported_statuses' => self::supported_translation_statuses(),                 // Supported translation statuses.
+					'user_locale'        => GP_locales::by_field( 'wp_locale', get_user_locale() ), // Current user Locale.
 					/**
 					 * Filters wether to color highlight or not the translation stats counts of the translation sets on the project page.
 					 *
@@ -327,7 +326,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 					 *
 					 * @param bool   True to highlight, false to don't highlight. Defaults to true.
 					 */
-					'highlight_counts'   => apply_filters( 'gp_toolbox_highlight_counts', true ),
+					'highlight_counts'   => apply_filters( 'gp_toolbox_highlight_counts', true ),   // Wether or not to highlight the translation sets table.
 				)
 			);
 		}
@@ -403,6 +402,34 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 			}
 
 			return $statuses;
+		}
+
+
+		/**
+		 * Check if the current user is logged in, can manage options and has GlotPress admin previleges.
+		 *
+		 * @since 1.0.0
+		 *
+		 * @return bool   Return true or false.
+		 */
+		public static function current_user_is_glotpress_admin() {
+
+			// Check if user is logged in.
+			if ( ! is_user_logged_in() ) {
+				return false;
+			}
+
+			// Check if user can manage options.
+			if ( ! current_user_can( 'manage_options' ) ) {
+				return false;
+			}
+
+			// Check if user has GlotPress admin previleges.
+			if ( ! GP::$permission->current_user_can( 'admin' ) ) {
+				return false;
+			}
+
+			return true;
 		}
 	}
 }

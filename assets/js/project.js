@@ -1,4 +1,4 @@
-/* global document, Intl, gpToolboxProject, setTimeout, wp, wpApiSettings */
+/* global document, Intl, gpToolboxProject, wp, wpApiSettings */
 
 jQuery( document ).ready( function( $ ) {
 	// Get User Locale.
@@ -219,6 +219,9 @@ jQuery( document ).ready( function( $ ) {
 
 			url: wpApiSettings.root + 'gp-toolbox/v1/translations/' + project.path + '/' + locale + '/' + slug + '/' + status + '/-delete',
 			type: 'POST',
+			data: {
+				_wpnonce: gpToolboxProject.nonce,
+			},
 
 			success: function( response ) {
 				// Set translation set data.
@@ -233,15 +236,8 @@ jQuery( document ).ready( function( $ ) {
 				// Update stats count.
 				$( stats ).text( new Intl.NumberFormat( userLocale.slug ).format( count ) );
 
-				// Hide progress notice.
-				$( notice ).hide().text( '' );
-				// Show stats.
-				$( stats ).fadeIn();
-
 				// Remove background highlight.
 				updateHighlight( td );
-
-				updateStats( locale, slug, status, 100 );
 
 				console.log( 'Successfully deleted translations!' );
 			},
@@ -249,34 +245,16 @@ jQuery( document ).ready( function( $ ) {
 			error: function( response ) {
 				// Show the Error notice.
 				console.log( 'Failed to delete translations.' );
-				console.log( response );
+				console.log( 'Error message:', response.responseJSON.message );
+			},
+
+			complete: function() {
+				// Hide progress notice.
+				$( notice ).hide().text( '' );
+
+				// Show stats.
+				$( stats ).fadeIn();
 			},
 		} );
-	}
-
-	/**
-	 * Update stats count.
-	 *
-	 * @param {string}  locale  : Locale of the GP_Translation_Set.
-	 * @param {string}  slug    : Slug of the GP_Translation_Set.
-	 * @param {string}  status  : Status of the GP_Translation.
-	 * @param {percent} percent : Status of the GP_Translation.
-	 */
-	function updateStats( locale, slug, status, percent ) {
-		// Find the table cell.
-		var td = $( tableTranslationSets ).find( 'tbody tr[' + dataPrefix + 'locale="' + locale + '"][' + dataPrefix + 'slug="' + slug + '"] td.stats.' + status );
-
-		var notice = $( td ).find( 'div.progress-notice' );
-		var stats = $( td ).find( 'a.count' );
-
-		if ( percent < 100 ) {
-			console.log( 'Update to progress ' + percent );
-			$( td ).css( 'background', 'linear-gradient(90deg, var(--gp-color-secondary-100) ' + percent + '%, var(--gp-color-status-' + status + '-subtle) ' + percent + '%)' );
-		} else {
-			updateHighlight( td );
-			$( td ).css( 'background', '' );
-			$( notice ).hide();
-			$( stats ).fadeIn();
-		}
 	}
 } );
