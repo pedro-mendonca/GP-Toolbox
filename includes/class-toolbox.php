@@ -72,8 +72,8 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 		 *
 		 * @since 1.0.1
 		 *
-		 * @param array<string, string>  $items      Menu items.
-		 * @param string                 $location   Menu location.
+		 * @param array<string, string> $items      Menu items.
+		 * @param string                $location   Menu location.
 		 *
 		 * @return array<string, string>   Menu items.
 		 */
