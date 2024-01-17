@@ -2,14 +2,7 @@
 
 Set of tools to help you manage your GlotPress.
 
-[![WordPress Plugin Version](https://img.shields.io/wordpress/plugin/v/gp-toolbox?label=Plugin%20Version&logo=wordpress)](https://wordpress.org/plugins/gp-toolbox/)
-[![WordPress Plugin Rating](https://img.shields.io/wordpress/plugin/stars/gp-toolbox?label=Plugin%20Rating&logo=wordpress)](https://wordpress.org/support/plugin/gp-toolbox/reviews/)
-[![WordPress Plugin Downloads](https://img.shields.io/wordpress/plugin/dt/gp-toolbox.svg?label=Downloads&logo=wordpress)](https://wordpress.org/plugins/gp-toolbox/advanced/)
 [![Sponsor](https://img.shields.io/badge/GitHub-🤍%20Sponsor-ea4aaa?logo=github)](https://github.com/sponsors/pedro-mendonca)
-
-[![WordPress Plugin Required PHP Version](https://img.shields.io/wordpress/plugin/required-php/gp-toolbox?label=PHP%20Required&logo=php&logoColor=white)](https://wordpress.org/plugins/gp-toolbox/)
-[![WordPress Plugin: Required WP Version](https://img.shields.io/wordpress/plugin/wp-version/gp-toolbox?label=WordPress%20Required&logo=wordpress)](https://wordpress.org/plugins/gp-toolbox/)
-[![WordPress Plugin: Tested WP Version](https://img.shields.io/wordpress/plugin/tested/gp-toolbox.svg?label=WordPress%20Tested&logo=wordpress)](https://wordpress.org/plugins/gp-toolbox/)
 
 [![GlotPress Plugin: Required GP Version](https://img.shields.io/badge/GlotPress%20Required-v3.0-826eb4.svg)](https://wordpress.org/plugins/gp-toolbox/)
 [![GlotPress Plugin: Tested GP Version](https://img.shields.io/badge/GlotPress%20Tested-v4.0%20alpha-826eb4.svg)](https://wordpress.org/plugins/gp-toolbox/)
