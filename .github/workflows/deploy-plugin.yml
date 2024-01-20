@@ -1,0 +1,46 @@
+name: Deploy to WordPress.org
+
+on:
+  push:
+    tags:
+    - "*"
+
+jobs:
+  tag:
+    name: New tag
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up PHP
+      uses: shivammathur/setup-php@2.29.0
+      with:
+        php-version: '7.4'
+        coverage: none
+      env:
+        fail-fast: false
+
+    - name: Log debug information
+      run: |
+        php --version
+        composer --version
+
+    - name: Validate composer.json and composer.lock
+      run: composer validate --strict
+
+    - name: Install Composer dependencies
+      uses: ramsey/composer-install@v2
+      with:
+        composer-options: "--no-dev"
+
+    - name: Make Composer packages available globally
+      run: echo "${PWD}/vendor/bin" >> $GITHUB_PATH
+
+    - name: WordPress.org Plugin Deploy
+      uses: 10up/action-wordpress-plugin-deploy@2.2.2
+      env:
+        SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
+        SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
+        SLUG: gp-toolbox
