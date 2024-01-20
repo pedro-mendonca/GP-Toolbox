@@ -3,15 +3,57 @@ table {
 
 	&.gp-table {
 
-		&.translation-sets {
+		// Generic UI elements.
+		button {
+			display: inline-block;
 
-			/*
-			display: none;
-
-			&.ready {
-				display: table;
+			&.hidden {
+				display: none;
 			}
-			*/
+		}
+
+		button.delete {
+			padding: 0;
+			border: none;
+			background: none;
+			cursor: pointer;
+			color: var(--gp-color-primary-500);
+
+			&:disabled {
+				color: var(--gp-color-btn-disabled-text);
+				cursor: default;
+			}
+
+			span.dashicons {
+				font-size: 1rem;
+				vertical-align: middle;
+			}
+
+		}
+
+		div.progress-notice {
+			font-size: 0.75em;
+			font-style: italic;
+		}
+
+		td {
+
+			span.unknown {
+				text-align: center;
+				vertical-align: middle;
+				color: var(--gp-color-fg-muted);
+				font-style: italic;
+			}
+
+		}
+
+		&.gp-toolbox.permission-admin,
+		&.gp-toolbox.permission-validator,
+		&.gp-toolbox.permission-other {
+			width: auto;
+		}
+
+		&.translation-sets {
 
 			tbody {
 
@@ -24,10 +66,6 @@ table {
 							&:not(.percent) {
 
 								background-color: var(--gp-color-secondary-100);
-
-								a {
-									// opacity: 0.5;
-								}
 
 								&.highlight {
 
@@ -93,22 +131,6 @@ table {
 								button.delete {
 									position: absolute;
 									translate: -1rem;
-									padding: 0;
-									border: none;
-									background: none;
-									cursor: pointer;
-									color: var(--gp-color-primary-500);
-
-									&:disabled {
-										color: var(--gp-color-btn-disabled-text);
-										cursor: default;
-									}
-
-									span.dashicons {
-										font-size: 1rem;
-										vertical-align: middle;
-									}
-
 								}
 
 							}
@@ -121,6 +143,73 @@ table {
 
 			}
 
+		}
+
+		&.permission-validator {
+
+			tr {
+
+				&.duplicate {
+					background-color: var(--gp-color-attention-emphasis);
+
+					td {
+
+						&.action {
+
+							span.duplicate {
+								color: var(--gp-color-bubble-inactive-project-text);
+								padding: 0.2em 0.5em;
+								border: 1px solid var(--gp-color-bubble-inactive-project-text);
+								border-radius: 1em;
+								text-decoration: none;
+								text-align: center;
+								text-shadow: none;
+								margin-left: 0.2rem;
+								font-weight: 500;
+								font-size: 80%;
+								background-color: #fff;
+							}
+
+						}
+
+					}
+
+				}
+
+			}
+
+		}
+
+	}
+
+}
+
+section {
+
+	&.gp-toolbox {
+		margin-top: 2rem;
+	}
+
+}
+
+// System notices.
+.notice {
+
+	&.notice-info {
+		background-color: var(--gp-color-primary-50);
+	}
+
+}
+
+// Header links.
+div.gp-heading div.gp-toolbox-tools {
+	margin-left: auto;
+
+	a {
+
+		&.gp-toolbox-tool-link {
+			font-size: 1.125rem;
+			font-weight: 600;
 		}
 
 	}

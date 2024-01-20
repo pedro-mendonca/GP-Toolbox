@@ -120,7 +120,7 @@ jQuery( document ).ready( function( $ ) {
 					$( this ).find( 'td.stats.changesrequested' ).attr( 'data-text', translationSet.changesrequested_count ).html( '<a class="count" href="' + url + '?filters[status]=changesrequested">' + new Intl.NumberFormat( userLocale.slug ).format( translationSet.changesrequested_count ) + '</a>' );
 				}
 
-				// Check if user has GLotPress administrator previleges.
+				// Check if user has GlotPress administrator previleges.
 				if ( glotpressAdmin ) {
 					// Add buttons to delete Old and Rejected translations.
 					$( old ).find( 'a.count' ).after( '<button class="delete hidden" disabled><span class="dashicons dashicons-trash"></span></button>' );

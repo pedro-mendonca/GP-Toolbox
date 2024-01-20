@@ -53,8 +53,93 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 			// Load things after templates.
 			add_action( 'gp_post_tmpl_load', array( self::class, 'post_template_load' ), 10, 2 );
 
+			// Add Tools menu item.
+			add_filter( 'gp_nav_menu_items', array( self::class, 'nav_menu_items' ), 10, 2 );
+
+			// Register extra GlotPress routes.
+			add_action( 'template_redirect', array( $this, 'register_gp_routes' ), 5 );
+
+			// Set template locations.
+			add_filter( 'gp_tmpl_load_locations', array( $this, 'template_load_locations' ), 10, 4 );
+
 			// Instantiate Rest API.
 			new Rest_API();
+		}
+
+
+		/**
+		 * Add Tools menu item.
+		 *
+		 * @since 1.0.0
+		 *
+		 * @param array<string, string> $items      Menu items.
+		 * @param string                $location   Menu location.
+		 *
+		 * @return array<string, string>   Menu items.
+		 */
+		public static function nav_menu_items( $items, $location ) {
+
+			$new_item = array();
+
+			// Check for 'side' menu location.
+			if ( $location === 'side' ) {
+
+				// Check if user is logged in and has GlotPress admin previleges.
+				if ( self::current_user_is_glotpress_admin() ) {
+					// Add Tools item to admin bar side menu.
+					$new_item[ strval( gp_url( '/tools/' ) ) ] = esc_html__( 'Tools', 'gp-toolbox' );
+				}
+			}
+
+			return array_merge( $new_item, $items );
+		}
+
+
+		/**
+		 * Register custom routes for GP-Toolbox.
+		 *
+		 * @since 1.0.0
+		 *
+		 * @return void
+		 */
+		public function register_gp_routes() {
+
+			GP::$router->prepend( '/tools', array( __NAMESPACE__ . '\Routes\Tools', 'get_route' ) );
+			GP::$router->prepend( '/tools/originals', array( __NAMESPACE__ . '\Routes\Originals', 'get_route' ) );
+			GP::$router->prepend( '/tools/permissions', array( __NAMESPACE__ . '\Routes\Permissions', 'get_route' ) );
+			GP::$router->prepend( '/tools/translations', array( __NAMESPACE__ . '\Routes\Translations', 'get_route' ) );
+			GP::$router->prepend( '/tools/translation-sets', array( __NAMESPACE__ . '\Routes\Translation_Sets', 'get_route' ) );
+			GP::$router->prepend( '/tools/about', array( __NAMESPACE__ . '\Routes\About', 'get_route' ) );
+		}
+
+
+		/**
+		 * Get GP-Toolbox templates.
+		 *
+		 * @since 1.0.0
+		 *
+		 * @param array<int, string> $locations     File paths of template locations.
+		 * @param string             $template      The template name.
+		 * @param array<mixed>       $args          Arguments passed to the template.
+		 * @param string|null        $template_path Priority template location, if any.
+		 *
+		 * @return array<int, string>   Template locations.
+		 */
+		public function template_load_locations( $locations, $template, $args, $template_path ) {
+
+			unset( $args, $template_path );
+
+			// Register and enqueue scripts for Tools.
+			$template_prefix = 'gptoolbox-';
+
+			// Check GP Toolbox templates prefix.
+			if ( substr( $template, 0, strlen( $template_prefix ) ) === $template_prefix ) {
+				$locations = array(
+					GP_TOOLBOX_DIR_PATH . 'gp-templates/',
+				);
+			}
+
+			return $locations;
 		}
 
 
@@ -116,7 +201,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 
 			if ( $template === 'project' ) {
 
-				// Register and enqueue plugin scripts.
+				// Register and enqueue GlotPress project template scripts.
 				add_action(
 					'wp_enqueue_scripts',
 					function () use ( $template, $args ) {
@@ -131,6 +216,27 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 					}
 				);
 
+			}
+
+			// Register and enqueue scripts for Tools.
+			$template_prefix = 'gptoolbox-';
+
+			if ( substr( $template, 0, strlen( $template_prefix ) ) === $template_prefix ) {
+
+				// Register and enqueue plugin scripts.
+				add_action(
+					'wp_enqueue_scripts',
+					function () use ( $args ) {
+						self::register_plugin_scripts(
+							'tools', // Override generic template ID.
+							$args,
+							array(
+								'wp-i18n',
+								'wp-api',
+							)
+						);
+					}
+				);
 			}
 		}
 
@@ -227,10 +333,11 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 					'args'               => self::{'template_args_' . $template}( $args ),          // Template arguments.
 					'supported_statuses' => self::supported_translation_statuses(),                 // Supported translation statuses.
 					'user_locale'        => GP_locales::by_field( 'wp_locale', get_user_locale() ), // Current user Locale.
+					'user_login'         => wp_get_current_user()->user_login,                      // Current user login (username).
 					/**
 					 * Filters wether to color highlight or not the translation stats counts of the translation sets on the project page.
 					 *
-					 * @since 1.0.1
+					 * @since 1.0.0
 					 *
 					 * @param bool $highlight_counts  True to highlight, false to don't highlight. Defaults to true.
 					 */
@@ -267,12 +374,29 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 
 
 		/**
+		 * Tools template arguments.
+		 *
+		 * @since 1.0.0
+		 *
+		 * @param array<string, mixed> $args   GlotPress template arguments.
+		 *
+		 * @return array<string, mixed>   Array of template arguments.
+		 */
+		public static function template_args_tools( array $args ) {
+
+			$result = $args;
+
+			return $result;
+		}
+
+
+		/**
 		 * Get the translation statuses to manage.
 		 * Currently GlotPress project tables only show the 'current', 'fuzzy' and 'waiting' strings.
 		 * This enables all the statuses, adding the columns 'old', 'rejected' and 'changesrequested' to the project tables.
 		 * The list is filterable by 'gp_toolbox_supported_translation_statuses' below.
 		 *
-		 * @since 1.0.1
+		 * @since 1.0.0
 		 *
 		 * @return array<string, string>   Translations statuses to enable management.
 		 */
@@ -295,7 +419,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 			/**
 			 * Filter to set the translation statuses to manage with GP Toolbox.
 			 *
-			 * @since 1.0.1
+			 * @since 1.0.0
 			 *
 			 * @param array $supported_statuses   The array of the supported statuses to enable management, check and cleanup.
 			 */
@@ -338,6 +462,98 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 			}
 
 			return true;
+		}
+
+
+		/**
+		 * Get the available Tools pages.
+		 *
+		 * @since 1.0.0
+		 *
+		 * @return array<string, array<string, string>>   Array of available Tools pages.
+		 */
+		public static function tools_pages() {
+
+			$tools_pages = array(
+				// Main page.
+				/* phpcs:ignore.
+				'tools' => array(
+					'url'           => '/tools/',
+					'title'         => esc_html__( 'Tools', 'gp-toolbox' ),
+				),
+				*/
+				// GP Permissions tools.
+				'tools_permissions' => array(
+					'url'           => '/tools/permissions/',
+					'title'         => esc_html__( 'Permissions', 'gp-toolbox' ),
+					'tools_section' => 'gptoolbox-tools-permissions',
+				),
+				/* phpcs:ignore.
+				// GP Projects tools.
+				'tools_projects' => array(
+					'url'           => '/tools/projects/',
+					'title'         => esc_html__( 'Projects', 'gp-toolbox' ),
+					'tools_section' => 'gptoolbox-tools-projects',
+				),
+				// GP Originals tools.
+				'tools_originals' => array(
+					'url'           => '/tools/originals/',
+					'title'         => esc_html__( 'Originals', 'gp-toolbox' ),
+					'tools_section' => 'gptoolbox-tools-originals',
+				),
+				// GP Translation Sets tools.
+				'tools_translation-sets' => array(
+					'url'           => '/tools/translation-sets/',
+					'title'         => esc_html__( 'Translation Sets', 'gp-toolbox' ),
+					'tools_section' => 'gptoolbox-tools-translation-sets',
+				),
+				// GP Translations tools.
+				'tools_translations' => array(
+					'url'           => '/tools/translations/',
+					'title'         => esc_html__( 'Translations', 'gp-toolbox' ),
+					'tools_section' => 'gptoolbox-tools-translations',
+				),
+				// GP Glossaries tools.
+				'tools_glossaries' => array(
+					'url'           => '/tools/glossaries/',
+					'title'         => esc_html__( 'Glossaries', 'gp-toolbox' ),
+					'tools_section' => 'gptoolbox-tools-glossaries',
+				),
+				// GP Glossary Entries tools.
+				'tools_glossary-entries' => array(
+					'url'           => '/tools/glossary-entries/',
+					'title'         => esc_html__( 'Glossary Entries', 'gp-toolbox' ),
+					'tools_section' => 'gptoolbox-tools-glossary-entries',
+				),
+				// GP Meta tools.
+				'tools_meta' => array(
+					'url'           => '/tools/meta/',
+					'title'         => esc_html__( 'Meta', 'gp-toolbox' ),
+					'tools_section' => 'gptoolbox-tools-meta',
+				),
+				// GP Locales tools.
+				'tools_locales' => array(
+					'url'           => '/tools/locales/',
+					'title'         => esc_html__( 'Locales', 'gp-toolbox' ),
+					'tools_section' => 'gptoolbox-tools-locales',
+				),
+				*/
+				// GP About tools.
+				'tools_about'       => array(
+					'url'           => '/tools/about/',
+					'title'         => esc_html__( 'About', 'gp-toolbox' ),
+					'tools_section' => null,
+				),
+			);
+
+			/**
+			 * Filters the gp_toolbox actual Tools pages.
+			 *
+			 * @since 1.0.0
+			 *
+			 * @param array $tools_pages   Array of the Tools pages.
+			 */
+			return apply_filters( 'gp_toolbox_tools_pages', $tools_pages );
 		}
 	}
 }
