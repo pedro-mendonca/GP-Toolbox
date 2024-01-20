@@ -5,14 +5,9 @@
  * @package GP_Toolbox
  */
 
-// Set plugin version.
-if ( ! defined( 'WPINC' ) ) {
-	define( 'WPINC', 'wp-includes' ); // phpcs:ignore.
-}
-
 // Set script debug.
 if ( ! defined( 'SCRIPT_DEBUG' ) ) {
-	define( 'SCRIPT_DEBUG', true ); // phpcs:ignore.
+	define( 'SCRIPT_DEBUG', true );
 }
 
 // Set plugin version.

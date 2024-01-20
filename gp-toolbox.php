@@ -67,7 +67,7 @@ define( 'GP_TOOLBOX_REST_NAMESPACE', 'gp-toolbox/v1' );
 
 
 // Include Composer autoload.
-require_once GP_TOOLBOX_DIR_PATH . 'vendor/autoload.php'; // phpcs:ignore.
+require_once GP_TOOLBOX_DIR_PATH . 'vendor/autoload.php';
 
 /**
  * Initialize the plugin.
