@@ -13,7 +13,7 @@
  * Plugin URI:        https://github.com/pedro-mendonca/GP-Toolbox
  * GitHub Plugin URI: https://github.com/pedro-mendonca/GP-Toolbox
  * Primary Branch:    main
- * Description:       Set of tools to help you manage your GlotPress.
+ * Description:       This set of tools extends the functionality of GlotPress, bringing to light any potential problems hidden under the hood, keeping it clean, fast and trouble-free.
  * Version:           1.0.0
  * Requires at least: 5.3
  * Tested up to:      6.4

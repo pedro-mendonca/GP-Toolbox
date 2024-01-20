@@ -13,7 +13,7 @@ Set of tools to help you manage your GlotPress.
 
 == Description ==
 
-This plugin for GlotPress adds tools to help you manage and debug your own install.
+This set of tools extends the functionality of GlotPress, bringing to light any potential problems hidden under the hood, keeping it clean, fast and trouble-free.
 
 == Features ==
 
