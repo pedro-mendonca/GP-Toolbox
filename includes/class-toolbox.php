@@ -540,9 +540,8 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 				*/
 				// GP About tools.
 				'tools_about'       => array(
-					'url'           => '/tools/about/',
-					'title'         => esc_html__( 'About', 'gp-toolbox' ),
-					'tools_section' => null,
+					'url'   => '/tools/about/',
+					'title' => esc_html__( 'About', 'gp-toolbox' ),
 				),
 			);
 

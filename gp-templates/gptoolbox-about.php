@@ -1,4 +1,13 @@
 <?php
+/**
+ * Template file.
+ *
+ * @package GP_Toolbox
+ *
+ * @since 1.0.0
+ */
+
+namespace GP_Toolbox;
 
 // Get page title.
 gp_title( __( 'About &lt; Tools &lt; GlotPress', 'gp-toolbox' ) );
@@ -90,7 +99,6 @@ gp_tmpl_load( 'gptoolbox-header', $args );
 		?>
 	</p>
 </section>
-
 
 <?php
 gp_tmpl_footer();

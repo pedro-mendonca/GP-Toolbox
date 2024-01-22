@@ -1,4 +1,13 @@
 <?php
+/**
+ * Template file.
+ *
+ * @package GP_Toolbox
+ *
+ * @since 1.0.0
+ */
+
+namespace GP_Toolbox;
 
 // Get page title.
 gp_title( __( 'Tools &lt; GlotPress', 'gp-toolbox' ) );
@@ -33,21 +42,21 @@ gp_tmpl_load( 'gptoolbox-header', $args );
 <div class="clear"></div>
 
 <?php
-$gp_toolbox_tools_pages = GP_Toolbox\Toolbox::tools_pages();
+$tools_pages = Toolbox::tools_pages();
 
 // Load Tools sections.
-foreach ( $gp_toolbox_tools_pages as $key => $gp_toolbox_tools_page ) {
+foreach ( $tools_pages as $tools_page ) {
 	// Load Tools section navigation template.
-	if ( isset( $gp_toolbox_tools_page['tools_section'] ) && ! is_null( $gp_toolbox_tools_page['tools_section'] ) ) {
+	if ( isset( $tools_page['tools_section'] ) ) {
 		?>
 		<section class="gp-toolbox">
 			<h3>
-				<a class="gp-toolbox-tool-link" href="<?php echo esc_url( gp_url( $gp_toolbox_tools_page['url'] ) ); ?>">
-					<?php echo esc_html( $gp_toolbox_tools_page['title'] ); ?>
+				<a class="gp-toolbox-tool-link" href="<?php echo esc_url( gp_url( $tools_page['url'] ) ); ?>">
+					<?php echo esc_html( $tools_page['title'] ); ?>
 				</a>
 			</h3>
 			<?php
-			gp_tmpl_load( $gp_toolbox_tools_page['tools_section'] );
+			gp_tmpl_load( $tools_page['tools_section'] );
 			?>
 		</section>
 		<?php

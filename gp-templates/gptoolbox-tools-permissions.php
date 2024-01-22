@@ -7,6 +7,8 @@
  * @since 1.0.0
  */
 
+namespace GP_Toolbox;
+
 ?>
 <p class="descrtiption">
 	<?php esc_html_e( 'Overview of all GlotPress Administrators and Validators for each Project and Translation Set.', 'gp-toolbox' ); ?>

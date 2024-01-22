@@ -8,6 +8,7 @@ parameters:
 	paths:
 		- gp-toolbox.php
 		- includes/
+		- gp-templates/
 	bootstrapFiles:
 		# PHPStan bootstrap file.
 		- tests/phpstan/bootstrap.php
