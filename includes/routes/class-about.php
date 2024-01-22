@@ -1,6 +1,6 @@
 <?php
 /**
- * Class file for the route Tools.
+ * Class file for the route About.
  *
  * @package GP_Toolbox
  *
@@ -14,12 +14,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if ( ! class_exists( __NAMESPACE__ . '\Tools' ) ) {
+if ( ! class_exists( __NAMESPACE__ . '\About' ) ) {
 
 	/**
-	 * Class Tools.
+	 * Class About.
 	 */
-	class Tools extends Main {
+	class About extends Main {
 
 
 		/**
@@ -29,7 +29,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Tools' ) ) {
 		 *
 		 * @var string
 		 */
-		protected $route = '/tools/';
+		protected $route = '/tools/about/';
 
 		/**
 		 * Template.
@@ -38,6 +38,6 @@ if ( ! class_exists( __NAMESPACE__ . '\Tools' ) ) {
 		 *
 		 * @var string
 		 */
-		protected $template = 'gptoolbox-tools';
+		protected $template = 'gptoolbox-about';
 	}
 }

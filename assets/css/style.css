@@ -1,13 +1,46 @@
 /* CSS for GP-Toolbox. */
-table.gp-table.translation-sets {
+table.gp-table button {
+	display: inline-block;
+}
 
-	/*
-			display: none;
+table.gp-table button.hidden {
+	display: none;
+}
 
-			&.ready {
-				display: table;
-			}
-			*/
+table.gp-table button.delete {
+	padding: 0;
+	border: none;
+	background: none;
+	cursor: pointer;
+	color: var(--gp-color-primary-500);
+}
+
+table.gp-table button.delete:disabled {
+	color: var(--gp-color-btn-disabled-text);
+	cursor: default;
+}
+
+table.gp-table button.delete span.dashicons {
+	font-size: 1rem;
+	vertical-align: middle;
+}
+
+table.gp-table div.progress-notice {
+	font-size: 0.75em;
+	font-style: italic;
+}
+
+table.gp-table td span.unknown {
+	text-align: center;
+	vertical-align: middle;
+	color: var(--gp-color-fg-muted);
+	font-style: italic;
+}
+
+table.gp-table.gp-toolbox.permission-admin,
+table.gp-table.gp-toolbox.permission-validator,
+table.gp-table.gp-toolbox.permission-other {
+	width: auto;
 }
 
 table.gp-table.translation-sets tbody tr td.stats:not(.percent) {
@@ -83,23 +116,39 @@ table.gp-table.translation-sets tbody tr td.stats.rejected button.delete,
 table.gp-table.translation-sets tbody tr td.stats.changesrequested button.delete {
 	position: absolute;
 	translate: -1rem;
-	padding: 0;
-	border: none;
-	background: none;
-	cursor: pointer;
-	color: var(--gp-color-primary-500);
 }
 
-table.gp-table.translation-sets tbody tr td.stats.old button.delete:disabled,
-table.gp-table.translation-sets tbody tr td.stats.rejected button.delete:disabled,
-table.gp-table.translation-sets tbody tr td.stats.changesrequested button.delete:disabled {
-	color: var(--gp-color-btn-disabled-text);
-	cursor: default;
+table.gp-table.permission-validator tr.duplicate {
+	background-color: var(--gp-color-attention-emphasis);
 }
 
-table.gp-table.translation-sets tbody tr td.stats.old button.delete span.dashicons,
-table.gp-table.translation-sets tbody tr td.stats.rejected button.delete span.dashicons,
-table.gp-table.translation-sets tbody tr td.stats.changesrequested button.delete span.dashicons {
-	font-size: 1rem;
-	vertical-align: middle;
+table.gp-table.permission-validator tr.duplicate td.action span.duplicate {
+	color: var(--gp-color-bubble-inactive-project-text);
+	padding: 0.2em 0.5em;
+	border: 1px solid var(--gp-color-bubble-inactive-project-text);
+	border-radius: 1em;
+	text-decoration: none;
+	text-align: center;
+	text-shadow: none;
+	margin-left: 0.2rem;
+	font-weight: 500;
+	font-size: 80%;
+	background-color: #fff;
+}
+
+section.gp-toolbox {
+	margin-top: 2rem;
+}
+
+.notice.notice-info {
+	background-color: var(--gp-color-primary-50);
+}
+
+div.gp-heading div.gp-toolbox-tools {
+	margin-left: auto;
+}
+
+div.gp-heading div.gp-toolbox-tools a.gp-toolbox-tool-link {
+	font-size: 1.125rem;
+	font-weight: 600;
 }

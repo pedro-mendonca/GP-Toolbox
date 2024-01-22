@@ -3,7 +3,7 @@
  * Class file for registering Rest API encpoints.
  * https://developer.wordpress.org/rest-api/extending-the-rest-api/adding-custom-endpoints/
  *
- * @package PAC_FPB_Scrapper
+ * @package GP_Toolbox
  *
  * @since 1.0.0
  */
@@ -44,7 +44,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Rest_API' ) ) {
 		 */
 		public function register_routes() {
 
-			$base         = 'translations';           // Base for translations routes.
+			$base         = 'translations';          // Base for translations routes.
 			$project_path = '(?P<project_path>.+)';  // Project path.
 			$locale       = '(?P<locale>.+)';        // Locale.
 			$slug         = '(?P<slug>.+)';          // Locale slug.
@@ -60,6 +60,25 @@ if ( ! class_exists( __NAMESPACE__ . '\Rest_API' ) ) {
 				array(
 					'methods'             => 'POST',
 					'callback'            => array( $this, 'translations_bulk_delete' ),
+					'permission_callback' => function () {
+						return Toolbox::current_user_is_glotpress_admin();
+					},
+				)
+			);
+
+			$base          = 'permissions';            // Base for translations routes.
+			$permission_id = '(?P<permission_id>\d+)'; // Permission ID.
+
+			// Set the main route for permissions.
+			$permission_by_id = $base . '/' . $permission_id;
+
+			// Route to delete permission.
+			register_rest_route(
+				GP_TOOLBOX_REST_NAMESPACE,
+				"/$permission_by_id/-delete",
+				array(
+					'methods'             => 'POST',
+					'callback'            => array( $this, 'permission_delete' ),
 					'permission_callback' => function () {
 						return Toolbox::current_user_is_glotpress_admin();
 					},
@@ -132,6 +151,55 @@ if ( ! class_exists( __NAMESPACE__ . '\Rest_API' ) ) {
 					),
 				)
 			);
+		}
+
+
+		/**
+		 * Delete permission by ID.
+		 *
+		 * @since 1.0.0
+		 *
+		 * @param WP_REST_Request $request   Request data.
+		 *
+		 * @return mixed   Array of stats and number of deleted translations. Can also be a string with error message.
+		 */
+		public function permission_delete( WP_REST_Request $request ) {
+
+			// Get permission ID.
+			$permission_id = intval( $request['permission_id'] );
+
+			// Get GP Permission.
+			$permission = GP::$permission->get( $permission_id );
+
+			if ( ! $permission ) {
+				// Return error.
+				return rest_ensure_response(
+					array(
+						'deleted' => false,
+						'message' => esc_html__( 'Permission not found.', 'gp-toolbox' ),
+					)
+				);
+			} else {
+
+				// Delete permission.
+				$deleted = $permission->delete();
+
+				if ( $deleted ) {
+					return rest_ensure_response(
+						array(
+							'deleted' => true,
+							'message' => esc_html__( 'Successfully deleted permission.', 'gp-toolbox' ),
+						)
+					);
+				} else {
+					return rest_ensure_response(
+						array(
+							'deleted' => false,
+							'message' => esc_html__( 'Failed to delete permission.', 'gp-toolbox' ),
+						)
+					);
+				}
+			}
 		}
 	}
 }

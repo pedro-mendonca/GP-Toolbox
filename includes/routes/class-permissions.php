@@ -1,6 +1,6 @@
 <?php
 /**
- * Class file for the route Tools.
+ * Class file for the route Permissions.
  *
  * @package GP_Toolbox
  *
@@ -9,17 +9,19 @@
 
 namespace GP_Toolbox\Routes;
 
+use GP;
+
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-if ( ! class_exists( __NAMESPACE__ . '\Tools' ) ) {
+if ( ! class_exists( __NAMESPACE__ . '\Permissions' ) ) {
 
 	/**
-	 * Class Tools.
+	 * Class Permissions.
 	 */
-	class Tools extends Main {
+	class Permissions extends Main {
 
 
 		/**
@@ -29,7 +31,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Tools' ) ) {
 		 *
 		 * @var string
 		 */
-		protected $route = '/tools/';
+		protected $route = '/tools/permissions/';
 
 		/**
 		 * Template.
@@ -38,6 +40,6 @@ if ( ! class_exists( __NAMESPACE__ . '\Tools' ) ) {
 		 *
 		 * @var string
 		 */
-		protected $template = 'gptoolbox-tools';
+		protected $template = 'gptoolbox-permissions';
 	}
 }
