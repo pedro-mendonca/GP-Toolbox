@@ -39,7 +39,8 @@ table.gp-table td span.unknown {
 
 table.gp-table.gp-toolbox.permission-admin,
 table.gp-table.gp-toolbox.permission-validator,
-table.gp-table.gp-toolbox.permission-other {
+table.gp-table.gp-toolbox.permission-other,
+table.gp-table.gp-toolbox.originals {
 	width: auto;
 }
 
@@ -151,4 +152,13 @@ div.gp-heading div.gp-toolbox-tools {
 div.gp-heading div.gp-toolbox-tools a.gp-toolbox-tool-link {
 	font-size: 1.125rem;
 	font-weight: 600;
+}
+
+.tablesorter-glotpress .tablesorter-header:not(.sorter-false) {
+	padding-right: 2.5em;
+	padding-left: 1em;
+}
+
+td.stats {
+	text-align: center;
 }

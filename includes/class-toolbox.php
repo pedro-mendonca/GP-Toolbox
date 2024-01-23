@@ -495,12 +495,14 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 					'title'         => esc_html__( 'Projects', 'gp-toolbox' ),
 					'tools_section' => 'gptoolbox-tools-projects',
 				),
+				*/
 				// GP Originals tools.
-				'tools_originals' => array(
+				'tools_originals'   => array(
 					'url'           => '/tools/originals/',
 					'title'         => esc_html__( 'Originals', 'gp-toolbox' ),
 					'tools_section' => 'gptoolbox-tools-originals',
 				),
+				/* phpcs:ignore.
 				// GP Translation Sets tools.
 				'tools_translation-sets' => array(
 					'url'           => '/tools/translation-sets/',

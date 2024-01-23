@@ -44,7 +44,7 @@ gp_tmpl_load( 'gptoolbox-header', $args );
 <div class="clear"></div>
 
 <p>
-	<?php esc_html_e( 'Overview of all GlotPress Administrators and Validators for each Project and Translation Set.', 'gp-toolbox' ); ?>
+	<?php esc_html_e( 'Overview of all Administrators and Validators for each Project and Translation Set.', 'gp-toolbox' ); ?>
 </p>
 
 <?php
@@ -111,6 +111,7 @@ foreach ( $gp_permissions as $gp_permission ) {
 
 		<div class="permission-admin-filter">
 			<label for="permission-admin-filter"><?php esc_html_e( 'Filter:', 'gp-toolbox' ); ?> <input id="permission-admin-filter" type="text" placeholder="<?php esc_attr_e( 'Search', 'gp-toolbox' ); ?>" /> </label>
+			<button id="permission-admin-filter-clear" class="button" style="margin-bottom: 3px;" title="<?php esc_attr_e( 'Clear search filter.', 'gp-toolbox' ); ?>"><?php esc_html_e( 'Clear', 'gp-toolbox' ); ?></button>
 		</div>
 
 		<table class="gp-table gp-toolbox permission-admin">
@@ -212,6 +213,7 @@ foreach ( $gp_permissions as $gp_permission ) {
 
 		<div class="permission-validator-filter">
 			<label for="permission-validator-filter"><?php esc_html_e( 'Filter:', 'gp-toolbox' ); ?> <input id="permission-validator-filter" type="text" placeholder="<?php esc_attr_e( 'Search', 'gp-toolbox' ); ?>" /> </label>
+			<button id="permission-validator-filter-clear" class="button" style="margin-bottom: 3px;" title="<?php esc_attr_e( 'Clear search filter.', 'gp-toolbox' ); ?>"><?php esc_html_e( 'Clear', 'gp-toolbox' ); ?></button>
 		</div>
 
 		<table class="gp-table gp-toolbox permission-validator">
@@ -467,6 +469,21 @@ do_action( 'gp_toolbox_after_known_permissions', $gp_toolbox_permissions_by_type
 				} ).show();
 			}
 		} );
+
+		// Clear table filter.
+		$( 'button#permission-admin-filter-clear' ).click( function() {
+			// Clear the text input filter.
+			$( 'input#permission-admin-filter' ).val( '' );
+			// Show all rows.
+			$( '.permission-admin tbody' ).find( 'tr' ).show();
+		});
+		// Clear table filter.
+		$( 'button#permission-validator-filter-clear' ).click( function() {
+			// Clear the text input filter.
+			$( 'input#permission-validator-filter' ).val( '' );
+			// Show all rows.
+			$( '.permission-validator tbody' ).find( 'tr' ).show();
+		});
 	} );
 </script>
 

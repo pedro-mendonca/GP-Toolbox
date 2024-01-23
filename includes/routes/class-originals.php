@@ -9,9 +9,6 @@
 
 namespace GP_Toolbox\Routes;
 
-use GP;
-use GP_Route_Main;
-
 // Exit if accessed directly.
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
@@ -22,33 +19,25 @@ if ( ! class_exists( __NAMESPACE__ . '\Originals' ) ) {
 	/**
 	 * Class Originals.
 	 */
-	class Originals extends GP_Route_Main {
+	class Originals extends Main {
 
 
 		/**
-		 * Displays the Originals page, requires a user to be logged in and have GlotPress admin previleges.
+		 * Route.
 		 *
-		 * @since 1.0.1
+		 * @since 1.0.0
 		 *
-		 * @return void
+		 * @var string
 		 */
-		public function originals_get() {
+		protected $route = '/tools/originals/';
 
-			// Check if the user is logged in.
-			if ( ! is_user_logged_in() ) {
-				// Redirect to the Login page.
-				$this->redirect( wp_login_url( gp_url( '/tools/originals/' ) ) );
-				exit;
-			}
-
-			// Check if current user has GlotPress admin previleges.
-			if ( ! GP::$permission->current_user_can( 'admin' ) ) {
-				// Redirect to the GlotPress home.
-				$this->redirect( gp_url() );
-				exit;
-			}
-
-			$this->tmpl( 'gptoolbox-originals' );
-		}
+		/**
+		 * Template.
+		 *
+		 * @since 1.0.0
+		 *
+		 * @var string
+		 */
+		protected $template = 'gptoolbox-originals';
 	}
 }
