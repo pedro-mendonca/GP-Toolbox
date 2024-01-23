@@ -127,7 +127,7 @@ foreach ( $gp_originals as $gp_original ) {
 
 		<div class="originals-filter">
 			<label for="originals-filter"><?php esc_html_e( 'Filter:', 'gp-toolbox' ); ?> <input id="originals-filter" type="text" placeholder="<?php esc_attr_e( 'Search', 'gp-toolbox' ); ?>" /> </label>
-			<button id="originals-filter-clear" class="button" style="margin-bottom: 3px;" title="Clear search filter."><?php esc_html_e( 'Clear', 'gp-toolbox' ); ?></button>
+			<button id="originals-filter-clear" class="button" style="margin-bottom: 3px;" title="<?php esc_attr_e( 'Clear search filter.', 'gp-toolbox' ); ?>"><?php esc_html_e( 'Clear', 'gp-toolbox' ); ?></button>
 		</div>
 
 		<table id="originals" class="gp-table gp-toolbox originals">
@@ -268,14 +268,12 @@ foreach ( $gp_originals as $gp_original ) {
 
 		});
 
-		// Clear table filter..
+		// Clear table filter.
 		$( 'button#originals-filter-clear' ).click( function() {
-
 			// Clear the text input filter.
 			$( 'input#originals-filter' ).val( '' );
 			// Show all rows.
 			$( '.originals tbody' ).find( 'tr' ).show();
-
 		});
 	} );
 </script>
