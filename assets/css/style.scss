@@ -49,7 +49,8 @@ table {
 
 		&.gp-toolbox.permission-admin,
 		&.gp-toolbox.permission-validator,
-		&.gp-toolbox.permission-other {
+		&.gp-toolbox.permission-other,
+		&.gp-toolbox.originals {
 			width: auto;
 		}
 
@@ -214,4 +215,13 @@ div.gp-heading div.gp-toolbox-tools {
 
 	}
 
+}
+
+// Padding important for small columns.
+.tablesorter-glotpress .tablesorter-header:not(.sorter-false) {
+	padding-right: 2.5em;
+	padding-left: 1em;
+}
+td.stats {
+	text-align: center;
 }

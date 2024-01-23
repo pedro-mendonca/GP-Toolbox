@@ -11,9 +11,9 @@ namespace GP_Toolbox;
 
 ?>
 <p class="descrtiption">
-	<?php esc_html_e( 'Overview of all GlotPress Administrators and Validators for each Project and Translation Set.', 'gp-toolbox' ); ?>
+	<?php esc_html_e( 'Overview of all Administrators and Validators for each Project and Translation Set.', 'gp-toolbox' ); ?>
 	<br>
-	<?php esc_html_e( 'Manage all your installation\'s permissions in one place.', 'gp-toolbox' ); ?>
+	<?php esc_html_e( 'Manage all permissions in one place.', 'gp-toolbox' ); ?>
 </p>
 <h4 class="features"><?php esc_html_e( 'Features', 'gp-toolbox' ); ?></h4>
 <ul>

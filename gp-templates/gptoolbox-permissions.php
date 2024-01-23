@@ -44,7 +44,7 @@ gp_tmpl_load( 'gptoolbox-header', $args );
 <div class="clear"></div>
 
 <p>
-	<?php esc_html_e( 'Overview of all GlotPress Administrators and Validators for each Project and Translation Set.', 'gp-toolbox' ); ?>
+	<?php esc_html_e( 'Overview of all Administrators and Validators for each Project and Translation Set.', 'gp-toolbox' ); ?>
 </p>
 
 <?php
