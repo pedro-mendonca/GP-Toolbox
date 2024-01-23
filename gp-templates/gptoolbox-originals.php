@@ -143,7 +143,7 @@ foreach ( $gp_originals as $gp_original ) {
 
 				foreach ( $gp_originals_by_project as $project_id => $statuses ) {
 
-					$project = GP::$project->get( $project_id );
+					$project = GP::$project->get( intval( $project_id ) );
 
 					$active_count   = isset( $statuses['+active'] ) ? count( $statuses['+active'] ) : 0;
 					$obsolete_count = isset( $statuses['-obsolete'] ) ? count( $statuses['-obsolete'] ) : 0;
@@ -162,7 +162,7 @@ foreach ( $gp_originals as $gp_original ) {
 										sprintf(
 											/* translators: %d ID number. */
 											esc_html__( 'ID #%d', 'gp-toolbox' ),
-											esc_html( $project_id )
+											esc_html( strval( $project_id ) )
 										)
 									);
 									?>
@@ -180,12 +180,12 @@ foreach ( $gp_originals as $gp_original ) {
 						}
 
 						?>
-						<td class="stats active" data-text="<?php echo esc_attr( $active_count ); ?>">
+						<td class="stats active" data-text="<?php echo esc_attr( strval( $active_count ) ); ?>">
 							<?php
 							echo esc_html( number_format_i18n( $active_count ) );
 							?>
 						</td>
-						<td class="stats obsolete" data-text="<?php echo esc_attr( $obsolete_count ); ?>">
+						<td class="stats obsolete" data-text="<?php echo esc_attr( strval( $obsolete_count ) ); ?>">
 							<?php
 							echo esc_html( number_format_i18n( $obsolete_count ) );
 							?>
