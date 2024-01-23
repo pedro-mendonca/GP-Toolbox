@@ -62,7 +62,7 @@ $gp_original_statuses = array(
 	),
 	'obsolete' => array(
 		'singular' => esc_html_x( 'Obsolete', 'Singular noun', 'gp-toolbox' ),
-		'plural'   => esc_html_x( 'Obsolete', 'Plural noun','gp-toolbox' ),
+		'plural'   => esc_html_x( 'Obsolete', 'Plural noun', 'gp-toolbox' ),
 	),
 );
 
