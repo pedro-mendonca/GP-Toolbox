@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Toolbox for GlotPress\n"
 "Report-Msgid-Bugs-To: https://github.com/pedro-mendonca/GP-Toolbox/issues\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2023-12-14 16:17+0000\n"
+"PO-Revision-Date: 2024-01-23 16:58+0000\n"
 "Last-Translator: Pedro Mendonça <ped.gaspar@gmail.com>\n"
 "Language-Team: Pedro Mendonça <ped.gaspar@gmail.com>\n"
 "Language: pt_PT\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 3.4.1\n"
+"X-Generator: Poedit 2.0.4\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-KeywordsList: __;_e;__ngettext:1,2;_n:1,2;__ngettext_noop:1,2;_n_noop:1,2;_c,_nc:4c,1,2;_x:1,2c;_ex:1,2c;_nx:4c,1,2;_nx_noop:4c,1,2;esc_attr__;esc_attr_e;esc_attr_x:1,2c;esc_html__;esc_html_e;esc_html_x:1,2c\n"
 "X-Textdomain-Support: yes\n"
@@ -22,40 +22,379 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-0: node_modules\n"
 "X-Poedit-SearchPathExcluded-1: vendor\n"
 
-#: assets/js/project.js:22 assets/js/project.min.js:1
+#: assets/js/project.js:38 assets/js/project.min.js:1
+#: includes/class-toolbox.php:409
 msgid "Old"
 msgstr "Antigas"
 
-#: assets/js/project.js:23 assets/js/project.min.js:1
+#: assets/js/project.js:44 assets/js/project.min.js:1
+#: includes/class-toolbox.php:410
 msgid "Rejected"
 msgstr "Rejeitadas"
 
+#: assets/js/project.js:50 assets/js/project.min.js:1
+msgid "Changes requested"
+msgstr ""
+
+#: assets/js/project.js:216 assets/js/project.min.js:1 assets/js/tools.js:88
+#: assets/js/tools.min.js:1
+msgid "Deleting..."
+msgstr "A eliminar..."
+
+#: assets/js/tools.js:113 assets/js/tools.min.js:1
+#: gp-templates/gptoolbox-permissions.php:101
+#: gp-templates/gptoolbox-permissions.php:203
+#, php-format, javascript-format
+msgid "%s Permission found."
+msgid_plural "%s Permissions found."
+msgstr[0] "%s permissão encontrada."
+msgstr[1] "%s permissões encontradas."
+
+#: assets/js/tools.js:123 assets/js/tools.min.js:1
+#: gp-templates/gptoolbox-permissions.php:91
+#: gp-templates/gptoolbox-permissions.php:185
+msgid "No permissions found."
+msgstr "Nenhuma permissão encontrada."
+
+#. translators: %s Error message.
+#: assets/js/tools.js:138 assets/js/tools.min.js:1
+#, javascript-format
+msgid "Error: %s"
+msgstr "Erro: %s"
+
+#: gp-templates/gptoolbox-about.php:13
+msgid "About &lt; Tools &lt; GlotPress"
+msgstr "Sobre &lt; Ferramentas &lt; GlotPress"
+
+#: gp-templates/gptoolbox-about.php:26 gp-templates/gptoolbox-originals.php:28
+#: gp-templates/gptoolbox-permissions.php:28
+#: gp-templates/gptoolbox-tools.php:26 gp-templates/gptoolbox-tools.php:34
+#: includes/class-toolbox.php:90
+msgid "Tools"
+msgstr "Ferramentas"
+
+#: gp-templates/gptoolbox-about.php:27 includes/class-toolbox.php:546
+msgid "About"
+msgstr "Sobre"
+
+#: gp-templates/gptoolbox-about.php:35
+msgid "About GP-Toolbox"
+msgstr "Sobre o GP-Toolbox"
+
+#. Description of the plugin/theme
+#: gp-templates/gptoolbox-about.php:45
+msgid "This set of tools extends the functionality of GlotPress, bringing to light any potential problems hidden under the hood, keeping it clean, fast and trouble-free."
+msgstr ""
+
+#: gp-templates/gptoolbox-about.php:50
+msgid "Support"
+msgstr "Suporte"
+
+#. translators: 1: Link opening <a> tag. 2: Link closing </a> tag.
+#: gp-templates/gptoolbox-about.php:57
+#, php-format
+msgid "For Support, please use the %1$sSupport Forum%2$s on WordPress.org."
+msgstr ""
+
+#: gp-templates/gptoolbox-about.php:68
+msgid "Feature requests and bug reports"
+msgstr ""
+
+#. translators: 1: Link opening <a> tag. 2: Link closing </a> tag.
+#: gp-templates/gptoolbox-about.php:75
+#, php-format
+msgid "You are welcome to report any issues or add feature suggestions on the %1$sGitHub repository%2$s."
+msgstr ""
+
+#: gp-templates/gptoolbox-about.php:86
+msgid "Sponsor"
+msgstr "Patrocinador"
+
+#. translators: 1: Link opening <a> tag. 2: Link closing </a> tag.
+#: gp-templates/gptoolbox-about.php:93
+#, php-format
+msgid "Do you like %1$s? Support its development by becoming a %2$sSponsor%3$s!"
+msgstr ""
+
+#: gp-templates/gptoolbox-about.php:94
+msgctxt "Plugin name"
+msgid "GP Toolbox"
+msgstr "GP Toolbox"
+
+#. translators: 1: Link opening <a> tag. 2: Link closing </a> tag.
+#: gp-templates/gptoolbox-header.php:55
+#, php-format
+msgid "<strong>Attention:</strong> Before cleaning any data, please make sure you %1$sbackup your database%2$s first, as any deletion of data will be irreversible."
+msgstr "<strong>Atenção:</strong> Antes de limpar quaisquer dados, primeiro certifique-se de %1$sfazer uma cópia de segurança da sua base de dados%2$s, uma vez que qualquer limpeza será irreversível."
+
+#: gp-templates/gptoolbox-originals.php:15
+msgid "Originals &lt; Tools &lt; GlotPress"
+msgstr "Originais &lt; Ferramentas &lt; GlotPress"
+
+#: gp-templates/gptoolbox-originals.php:29
+#: gp-templates/gptoolbox-originals.php:37 includes/class-toolbox.php:502
+msgid "Originals"
+msgstr "Originais"
+
+#: gp-templates/gptoolbox-originals.php:47
+#: gp-templates/gptoolbox-tools-originals.php:14
+msgid "Overview of all Originals for each Project."
+msgstr ""
+
+#: gp-templates/gptoolbox-originals.php:60
+msgctxt "Singular noun"
+msgid "Active"
+msgstr "Activo"
+
+#: gp-templates/gptoolbox-originals.php:61
+msgctxt "Plural noun"
+msgid "Active"
+msgstr "Activos"
+
+#: gp-templates/gptoolbox-originals.php:64
+msgctxt "Singular noun"
+msgid "Obsolete"
+msgstr "Obsoleto"
+
+#: gp-templates/gptoolbox-originals.php:65
+msgctxt "Plural noun"
+msgid "Obsolete"
+msgstr "Obsoletos"
+
+#: gp-templates/gptoolbox-originals.php:95
+msgid "No originals found."
+msgstr "Nenhum original encontrado."
+
+#. translators: 1: Originals total. 2: Active originals. 3: Obsolete originals.
+#: gp-templates/gptoolbox-originals.php:106
+#, php-format
+msgid "Originals: %1$s %2$s %3$s"
+msgstr "Originais: %1$s %2$s %3$s"
+
+#. translators: %s: Number of Originals.
+#: gp-templates/gptoolbox-originals.php:109
+#, php-format
+msgid "%s original."
+msgid_plural "All %s originals."
+msgstr[0] "%s original."
+msgstr[1] "Todos os %s originais."
+
+#. translators: %s: Number of Originals.
+#: gp-templates/gptoolbox-originals.php:114
+#, php-format
+msgid "%s active original."
+msgid_plural "%s active originals."
+msgstr[0] "%s original activo."
+msgstr[1] "%s originais activos."
+
+#. translators: %s: Number of Originals.
+#: gp-templates/gptoolbox-originals.php:119
+#, php-format
+msgid "%s obsolete original."
+msgid_plural "%s obsolete originals."
+msgstr[0] "%s original obsoleto."
+msgstr[1] "%s originais obsoletos."
+
+#: gp-templates/gptoolbox-originals.php:129
+#: gp-templates/gptoolbox-permissions.php:113
+#: gp-templates/gptoolbox-permissions.php:215
+msgid "Filter:"
+msgstr "Filtrar:"
+
+#: gp-templates/gptoolbox-originals.php:129
+#: gp-templates/gptoolbox-permissions.php:113
+#: gp-templates/gptoolbox-permissions.php:215
+msgid "Search"
+msgstr "Pesquisar"
+
+#: gp-templates/gptoolbox-originals.php:130
+#: gp-templates/gptoolbox-permissions.php:114
+#: gp-templates/gptoolbox-permissions.php:216
+msgid "Clear search filter."
+msgstr "Limpar filtro de pesquisa."
+
+#: gp-templates/gptoolbox-originals.php:130
+#: gp-templates/gptoolbox-permissions.php:114
+#: gp-templates/gptoolbox-permissions.php:216
+msgid "Clear"
+msgstr "Limpar"
+
+#: gp-templates/gptoolbox-originals.php:136
+#: gp-templates/gptoolbox-permissions.php:224
+msgid "Project"
+msgstr "Projecto"
+
+#. translators: Known identifier data.
+#: gp-templates/gptoolbox-originals.php:161
+#: gp-templates/gptoolbox-permissions.php:300
+#, php-format
+msgid "Unknown project (%s)"
+msgstr "Projecto desconhecido (%s)"
+
+#. translators: %d ID number.
+#: gp-templates/gptoolbox-originals.php:164
+#: gp-templates/gptoolbox-permissions.php:149
+#: gp-templates/gptoolbox-permissions.php:271
+#: gp-templates/gptoolbox-permissions.php:303
+#, php-format
+msgid "ID #%d"
+msgstr "ID #%d"
+
+#: gp-templates/gptoolbox-permissions.php:15
+msgid "Permissions &lt; Tools &lt; GlotPress"
+msgstr "Permissões &lt; Ferramentas &lt; GlotPress"
+
+#: gp-templates/gptoolbox-permissions.php:29
+#: gp-templates/gptoolbox-permissions.php:37 includes/class-toolbox.php:488
+msgid "Permissions"
+msgstr "Permissões"
+
+#: gp-templates/gptoolbox-permissions.php:47
+#: gp-templates/gptoolbox-tools-permissions.php:14
+msgid "Overview of all Administrators and Validators for each Project and Translation Set."
+msgstr ""
+
+#: gp-templates/gptoolbox-permissions.php:57
+msgctxt "Singular noun"
+msgid "Administrator"
+msgstr "Administrador"
+
+#: gp-templates/gptoolbox-permissions.php:58
+msgctxt "Plural noun"
+msgid "Administrators"
+msgstr "Administradores"
+
+#: gp-templates/gptoolbox-permissions.php:61
+msgctxt "Singular noun"
+msgid "Validator"
+msgstr "Validador"
+
+#: gp-templates/gptoolbox-permissions.php:62
+msgctxt "Plural noun"
+msgid "Validators"
+msgstr "Validadores"
+
+#: gp-templates/gptoolbox-permissions.php:120
+#: gp-templates/gptoolbox-permissions.php:222
+msgid "ID"
+msgstr "ID"
+
+#: gp-templates/gptoolbox-permissions.php:121
+#: gp-templates/gptoolbox-permissions.php:223
+msgid "User"
+msgstr "Utilizador"
+
+#. translators: Known identifier data.
+#: gp-templates/gptoolbox-permissions.php:146
+#, php-format
+msgid "Unknown (%s)"
+msgstr "Desconhecido (%s)"
+
+#: gp-templates/gptoolbox-permissions.php:225
+msgid "Translation Set"
+msgstr "Conjunto de tradução"
+
+#. translators: Known identifier data.
+#: gp-templates/gptoolbox-permissions.php:268
+#, php-format
+msgid "Unknown user (%s)"
+msgstr "Utilizador desconhecido (%s)"
+
+#. translators: Known identifier data.
+#: gp-templates/gptoolbox-permissions.php:335
+#, php-format
+msgid "Unknown translation set (%s)"
+msgstr "Conjunto de tradução desconhecido (%s)"
+
+#. translators: Known identifier data.
+#: gp-templates/gptoolbox-permissions.php:355
+#, php-format
+msgid "Unknown type (%s)"
+msgstr "Tipo desconhecido (%s)"
+
+#: gp-templates/gptoolbox-permissions.php:374
+msgid "Duplicate"
+msgstr "Duplicado"
+
+#: gp-templates/gptoolbox-tools-originals.php:16
+#: gp-templates/gptoolbox-tools-permissions.php:18
+msgid "Features"
+msgstr "Funcionalidades"
+
+#: gp-templates/gptoolbox-tools-originals.php:18
+msgid "Find Originals for unknown Projects. (e.g. Related Project was deleted)"
+msgstr ""
+
+#: gp-templates/gptoolbox-tools-originals.php:19
+msgid "Find obsolete Originals."
+msgstr ""
+
+#: gp-templates/gptoolbox-tools-permissions.php:16
+msgid "Manage all permissions in one place."
+msgstr ""
+
+#: gp-templates/gptoolbox-tools-permissions.php:20
+msgid "Find and delete obsolete Permissions for unknown users, Projects or Translation Sets. (e.g. Related user, Project or Translation Set was deleted)"
+msgstr ""
+
+#: gp-templates/gptoolbox-tools-permissions.php:21
+msgid "Find and delete Permission duplicates."
+msgstr ""
+
+#: gp-templates/gptoolbox-tools-permissions.php:22
+msgid "Find and delete Permissions of unknown types."
+msgstr ""
+
+#: gp-templates/gptoolbox-tools.php:13
+msgid "Tools &lt; GlotPress"
+msgstr "Ferramentas &lt; GlotPress"
+
+#: includes/class-rest-api.php:179
+msgid "Permission not found."
+msgstr "Permissão não encontrada."
+
+#: includes/class-rest-api.php:191
+msgid "Successfully deleted permission."
+msgstr "Permissão eliminada com sucesso."
+
+#: includes/class-rest-api.php:198
+msgid "Failed to delete permission."
+msgstr "Falha ao eliminar permissão."
+
 #. translators: 1: Plugin name. 2: Error message.
-#: includes/class-toolbox.php:94
+#: includes/class-toolbox.php:179
 #, php-format
 msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s"
 
-#: includes/class-toolbox.php:95
+#: includes/class-toolbox.php:180
 msgctxt "Plugin name"
 msgid "Toolbox for GlotPress"
 msgstr "Toolbox for GlotPress"
 
-#: includes/class-toolbox.php:96
+#: includes/class-toolbox.php:181
 msgid "GlotPress not found. Please install and activate it."
 msgstr "GlotPress não encontrado. Por favor, instale-o e active-o."
+
+#: includes/class-toolbox.php:406
+msgid "Current"
+msgstr "Actual"
+
+#: includes/class-toolbox.php:407
+msgid "Fuzzy"
+msgstr "Imprecisa"
+
+#: includes/class-toolbox.php:408
+msgid "Waiting"
+msgstr ""
 
 #. Plugin Name of the plugin/theme
 msgid "GP Toolbox"
 msgstr "Toolbox for GlotPress"
 
 #. Plugin URI of the plugin/theme
-msgid "https://wordpress.org/plugins/gp-toolbox/"
-msgstr "https://pt.wordpress.org/plugins/gp-toolbox/"
-
-#. Description of the plugin/theme
-msgid "Set of tools to help you manage your GlotPress."
-msgstr "Conjunto de ferramentas para gerir o seu GlotPress."
+msgid "https://github.com/pedro-mendonca/GP-Toolbox"
+msgstr "https://github.com/pedro-mendonca/GP-Toolbox"
 
 #. Author of the plugin/theme
 msgid "Pedro Mendonça"
@@ -64,3 +403,12 @@ msgstr "Pedro Mendonça"
 #. Author URI of the plugin/theme
 msgid "https://profiles.wordpress.org/pedromendonca/"
 msgstr "https://profiles.wordpress.org/pedromendonca/"
+
+#~ msgid "Active"
+#~ msgstr "Activo"
+
+#~ msgid "https://wordpress.org/plugins/gp-toolbox/"
+#~ msgstr "https://pt.wordpress.org/plugins/gp-toolbox/"
+
+#~ msgid "Set of tools to help you manage your GlotPress."
+#~ msgstr "Conjunto de ferramentas para gerir o seu GlotPress."

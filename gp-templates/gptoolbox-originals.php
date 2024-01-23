@@ -57,12 +57,12 @@ $gp_originals = GP::$original->all();
 // GlotPress core originals statuses.
 $gp_original_statuses = array(
 	'active'   => array(
-		'singular' => esc_html__( 'Active', 'gp-toolbox' ),
-		'plural'   => esc_html__( 'Active', 'gp-toolbox' ),
+		'singular' => esc_html_x( 'Active', 'Singular noun', 'gp-toolbox' ),
+		'plural'   => esc_html_x( 'Active', 'Plural noun', 'gp-toolbox' ),
 	),
 	'obsolete' => array(
-		'singular' => esc_html__( 'Obsolete', 'gp-toolbox' ),
-		'plural'   => esc_html__( 'Obsolete', 'gp-toolbox' ),
+		'singular' => esc_html_x( 'Obsolete', 'Singular noun', 'gp-toolbox' ),
+		'plural'   => esc_html_x( 'Obsolete', 'Plural noun','gp-toolbox' ),
 	),
 );
 

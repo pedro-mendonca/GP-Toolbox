@@ -54,12 +54,12 @@ $gp_permissions = GP::$permission->all();
 // GlotPress core permissions.
 $gp_permission_types = array(
 	'admin'   => array(
-		'singular' => esc_html__( 'Administrator', 'gp-toolbox' ),
-		'plural'   => esc_html__( 'Administrators', 'gp-toolbox' ),
+		'singular' => esc_html_x( 'Administrator', 'Singular noun', 'gp-toolbox' ),
+		'plural'   => esc_html_x( 'Administrators', 'Plural noun', 'gp-toolbox' ),
 	),
 	'approve' => array(
-		'singular' => esc_html__( 'Validator', 'gp-toolbox' ),
-		'plural'   => esc_html__( 'Validators', 'gp-toolbox' ),
+		'singular' => esc_html_x( 'Validator', 'Singular noun', 'gp-toolbox' ),
+		'plural'   => esc_html_x( 'Validators', 'Plural noun', 'gp-toolbox' ),
 	),
 );
 
