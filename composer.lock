@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8c0e9aa7f7b25580ca57f401ee45611c",
+    "content-hash": "479250dfa38e2f9c08e248ea6e22d07b",
     "packages": [],
     "packages-dev": [
         {
@@ -685,16 +685,16 @@
         },
         {
             "name": "pedro-mendonca/glotpress-stubs",
-            "version": "4.0.0-alpha.11",
+            "version": "4.0.0-beta.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/pedro-mendonca/glotpress-stubs.git",
-                "reference": "155d643e65a4dbfd5a7290ea40463a2b0186f07e"
+                "reference": "4e2cdf4372cc397ae84fb697a09104ca6c057a10"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pedro-mendonca/glotpress-stubs/zipball/155d643e65a4dbfd5a7290ea40463a2b0186f07e",
-                "reference": "155d643e65a4dbfd5a7290ea40463a2b0186f07e",
+                "url": "https://api.github.com/repos/pedro-mendonca/glotpress-stubs/zipball/4e2cdf4372cc397ae84fb697a09104ca6c057a10",
+                "reference": "4e2cdf4372cc397ae84fb697a09104ca6c057a10",
                 "shasum": ""
             },
             "require-dev": {
@@ -717,7 +717,7 @@
             ],
             "support": {
                 "issues": "https://github.com/pedro-mendonca/glotpress-stubs/issues",
-                "source": "https://github.com/pedro-mendonca/glotpress-stubs/tree/4.0.0-alpha.11"
+                "source": "https://github.com/pedro-mendonca/glotpress-stubs/tree/4.0.0-beta.1"
             },
             "funding": [
                 {
@@ -725,7 +725,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2023-10-19T08:04:26+00:00"
+            "time": "2024-01-25T12:23:05+00:00"
         },
         {
             "name": "php-stubs/wordpress-stubs",
@@ -2459,7 +2459,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "pedro-mendonca/glotpress-stubs": 15
+        "pedro-mendonca/glotpress-stubs": 10
     },
     "prefer-stable": false,
     "prefer-lowest": false,
