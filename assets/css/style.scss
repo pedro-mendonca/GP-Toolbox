@@ -50,7 +50,9 @@ table {
 		&.gp-toolbox.permission-admin,
 		&.gp-toolbox.permission-validator,
 		&.gp-toolbox.permission-other,
-		&.gp-toolbox.originals {
+		&.gp-toolbox.originals,
+		&.gp-toolbox.glossary-global,
+		&.gp-toolbox.glossary-project {
 			width: auto;
 		}
 

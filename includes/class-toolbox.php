@@ -106,6 +106,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 
 			GP::$router->prepend( '/tools', array( __NAMESPACE__ . '\Routes\Tools', 'get_route' ) );
 			GP::$router->prepend( '/tools/originals', array( __NAMESPACE__ . '\Routes\Originals', 'get_route' ) );
+			GP::$router->prepend( '/tools/glossaries', array( __NAMESPACE__ . '\Routes\Glossaries', 'get_route' ) );
 			GP::$router->prepend( '/tools/permissions', array( __NAMESPACE__ . '\Routes\Permissions', 'get_route' ) );
 			GP::$router->prepend( '/tools/translations', array( __NAMESPACE__ . '\Routes\Translations', 'get_route' ) );
 			GP::$router->prepend( '/tools/translation-sets', array( __NAMESPACE__ . '\Routes\Translation_Sets', 'get_route' ) );
@@ -515,12 +516,14 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 					'title'         => esc_html__( 'Translations', 'gp-toolbox' ),
 					'tools_section' => 'gptoolbox-tools-translations',
 				),
+				*/
 				// GP Glossaries tools.
-				'tools_glossaries' => array(
+				'tools_glossaries'  => array(
 					'url'           => '/tools/glossaries/',
 					'title'         => esc_html__( 'Glossaries', 'gp-toolbox' ),
 					'tools_section' => 'gptoolbox-tools-glossaries',
 				),
+				/* phpcs:ignore
 				// GP Glossary Entries tools.
 				'tools_glossary-entries' => array(
 					'url'           => '/tools/glossary-entries/',

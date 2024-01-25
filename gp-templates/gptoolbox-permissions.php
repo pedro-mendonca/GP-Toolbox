@@ -262,16 +262,21 @@ foreach ( $gp_permissions as $gp_permission ) {
 										<a href="<?php echo esc_url( gp_url_profile( $user->user_nicename ) ); ?>"><?php echo esc_html( $user->user_login ); ?></a>
 										<?php
 									} else {
-										echo '<span class="unknown">'
-										. sprintf(
-											/* translators: Known identifier data. */
-											esc_html__( 'Unknown user (%s)', 'gp-toolbox' ),
-											sprintf(
-												/* translators: %d ID number. */
-												esc_html__( 'ID #%d', 'gp-toolbox' ),
-												esc_html( strval( $user_id ) )
-											)
-										) . '</span>';
+										?>
+										<span class="unknown">
+											<?php
+											printf(
+												/* translators: Known identifier data. */
+												esc_html__( 'Unknown user (%s)', 'gp-toolbox' ),
+												sprintf(
+													/* translators: %d ID number. */
+													esc_html__( 'ID #%d', 'gp-toolbox' ),
+													esc_html( strval( $user_id ) )
+												)
+											);
+											?>
+										</span>
+										<?php
 									}
 									?>
 								</td>
@@ -319,7 +324,7 @@ foreach ( $gp_permissions as $gp_permission ) {
 
 										if ( $translation_set ) {
 											?>
-											<td class="translation-set unknown" data-text="<?php echo esc_attr( $translation_set->locale . '/' . $translation_set->slug ); ?>">
+											<td class="translation-set" data-text="<?php echo esc_attr( $translation_set->locale . '/' . $translation_set->slug ); ?>">
 												<?php
 												gp_link( gp_url_project( $project, gp_url_join( $translation_set->locale, $translation_set->slug ) ), $translation_set->name_with_locale() );
 												?>
