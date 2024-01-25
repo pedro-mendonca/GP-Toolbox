@@ -5,7 +5,7 @@ Set of tools to help you manage your GlotPress.
 [![Sponsor](https://img.shields.io/badge/GitHub-🤍%20Sponsor-ea4aaa?logo=github)](https://github.com/sponsors/pedro-mendonca)
 
 [![GlotPress Plugin: Required GP Version](https://img.shields.io/badge/GlotPress%20Required-v3.0-826eb4.svg)](https://wordpress.org/plugins/glotpress/)
-[![GlotPress Plugin: Tested GP Version](https://img.shields.io/badge/GlotPress%20Tested-v4.0%20alpha.11-826eb4.svg)](https://github.com/GlotPress/GlotPress/releases/tag/4.0.0-beta.1)
+[![GlotPress Plugin: Tested GP Version](https://img.shields.io/badge/GlotPress%20Tested-v4.0%20beta.1-826eb4.svg)](https://github.com/GlotPress/GlotPress/releases/tag/4.0.0-beta.1)
 
 [![Coding Standards](https://github.com/pedro-mendonca/GP-Toolbox/actions/workflows/coding-standards.yml/badge.svg)](https://github.com/pedro-mendonca/GP-Toolbox/actions/workflows/coding-standards.yml)
 [![Static Analysis](https://github.com/pedro-mendonca/GP-Toolbox/actions/workflows/static-analysis.yml/badge.svg)](https://github.com/pedro-mendonca/GP-Toolbox/actions/workflows/static-analysis.yml)
