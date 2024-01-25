@@ -63,8 +63,9 @@ foreach ( $gp_glossaries as $gp_glossary ) {
 
 	// Check if translation set is known.
 	$translation_set = GP::$translation_set->get( $gp_glossary->translation_set_id );
-	// Check if translation set is known.
-	if ( ! $translation_set ) {
+
+	// Check if translation set is known. Double check for GP_Translation_Set object.
+	if ( ! $translation_set || ! is_a( $translation_set, 'GP_Translation_Set' ) ) {
 		// Unknown translation set.
 		$project_glossaries[ $gp_glossary->id ] = $gp_glossary;
 		continue;
@@ -134,9 +135,13 @@ foreach ( $gp_glossaries as $gp_glossary ) {
 
 					// Get glossary Locale.
 					$translation_set = GP::$translation_set->get( $global_glossary->translation_set_id );
+					// Check if translation set is known. Double check for GP_Translation_Set object.
+					if ( ! $translation_set || ! is_a( $translation_set, 'GP_Translation_Set' ) ) {
+						continue;
+					}
 					?>
-					<tr gptoolboxdata-glossary="<?php echo esc_attr( $glossary_id ); ?>">
-						<td class="id"><?php echo esc_html( $glossary_id ); ?></td>
+					<tr gptoolboxdata-glossary="<?php echo esc_attr( strval( $glossary_id ) ); ?>">
+						<td class="id"><?php echo esc_html( strval( $glossary_id ) ); ?></td>
 						<td class="translation-set" data-text="<?php echo esc_attr( $translation_set->locale . '/' . $translation_set->slug ); ?>">
 							<?php
 							gp_link( gp_url_join( gp_url( '/languages' ), $translation_set->locale, $translation_set->slug, 'glossary' ), $translation_set->name_with_locale() );
@@ -209,13 +214,14 @@ foreach ( $gp_glossaries as $gp_glossary ) {
 
 					// Get glossary Locale.
 					$translation_set = GP::$translation_set->get( $project_glossary->translation_set_id );
+
 					?>
-					<tr gptoolboxdata-glossary="<?php echo esc_attr( $glossary_id ); ?>">
-						<td class="id"><?php echo esc_html( $glossary_id ); ?></td>
+					<tr gptoolboxdata-glossary="<?php echo esc_attr( strval( $glossary_id ) ); ?>">
+						<td class="id"><?php echo esc_html( strval( $glossary_id ) ); ?></td>
 
 						<?php
-
-						if ( ! $translation_set ) {
+						// Check if translation set is known. Double check for GP_Translation_Set object.
+						if ( ! $translation_set || ! is_a( $translation_set, 'GP_Translation_Set' ) ) {
 							?>
 
 							<td class="translation set" data-text="" colspan="2">
@@ -253,7 +259,7 @@ foreach ( $gp_glossaries as $gp_glossary ) {
 											sprintf(
 												/* translators: %d ID number. */
 												esc_html__( 'ID #%d', 'gp-toolbox' ),
-												esc_html( $translation_set->project_id )
+												esc_html( strval( $translation_set->project_id ) )
 											)
 										);
 										?>
