@@ -52,6 +52,19 @@ gp_tmpl_load( 'gptoolbox-header', $args );
 // Get GlotPress glossaries.
 $gp_glossaries = GP::$glossary->all();
 
+// Get GlotPress glossary entries.
+$gp_glossary_entries = GP::$glossary_entry->all();
+
+$orphaned_glossary_entries = array();
+foreach ( $gp_glossary_entries as $gp_glossary_entry ) {
+	$glossary_exist = GP::$glossary->get( $gp_glossary_entry->glossary_id );
+	if ( ! $glossary_exist ) {
+		$orphaned_glossary_entries[ $gp_glossary_entry->glossary_id ][ $gp_glossary_entry->id ] = $gp_glossary_entry;
+	}
+}
+
+// TODO: Check orphaned glossary entries. Add it to the table and allow delete.
+
 ?>
 <section class="gp-toolbox glossaries">
 	<?php
