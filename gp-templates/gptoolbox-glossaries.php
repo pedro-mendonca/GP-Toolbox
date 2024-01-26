@@ -159,39 +159,26 @@ foreach ( $gp_glossaries as $gp_glossary ) {
 					$translation_set = GP::$translation_set->get( $gp_glossary->translation_set_id );
 
 					// Check wether is a Global or Project glossary.
-					// TODO: Check if all needed.
 					$glossary_type = ( $translation_set && is_a( $translation_set, 'GP_Translation_Set' ) && $translation_set->project_id === 0 ) ? 'global' : 'project';
 					?>
 					<tr gptoolboxdata-glossary="<?php echo esc_attr( strval( $gp_glossary->id ) ); ?>">
 						<td class="id"><?php echo esc_html( strval( $gp_glossary->id ) ); ?></td>
 						<?php
 
-						// Check wether is a Global or Project glossary.
-						if ( $glossary_type === 'global' ) {
-							?>
-							<td class="type global">
-								<?php
-								// Global glossary.
-								esc_html_e( 'Global', 'gp-toolbox' );
-								?>
-							</td>
-							<?php
-						} else {
-							?>
-							<td class="type project">
-								<?php
-								// Project glossary.
-								esc_html_e( 'Project', 'gp-toolbox' );
-								?>
-							</td>
-							<?php
-						}
-
 						// Check if translation set is known. Double check for GP_Translation_Set object.
 						if ( ! $translation_set || ! is_a( $translation_set, 'GP_Translation_Set' ) ) {
-							// Unkown translation set.
+							// Unknown translation set.
 
 							?>
+							<td class="type" data-text="">
+								<span class="unknown">
+									<?php
+									// Unknown type glossary.
+									esc_html_e( 'Unknown', 'gp-toolbox' );
+									?>
+								</span>
+							</td>
+
 							<td class="translation-set" data-text="" colspan="2">
 								<span class="unknown">
 									<?php
@@ -220,6 +207,13 @@ foreach ( $gp_glossaries as $gp_glossary ) {
 							// Global glossary.
 
 							?>
+							<td class="type global" data-text="global">
+								<?php
+								// Global glossary.
+								esc_html_e( 'Global', 'gp-toolbox' );
+								?>
+							</td>
+
 							<td class="translation-set" data-text="<?php echo esc_attr( $translation_set->name_with_locale() ); ?>" colspan="2">
 								<?php
 								gp_link( $gp_glossary->path(), $translation_set->name_with_locale() );
@@ -235,6 +229,15 @@ foreach ( $gp_glossaries as $gp_glossary ) {
 
 						} else {
 							// Project glossary.
+
+							?>
+							<td class="type project" data-text="project">
+								<?php
+								// Project glossary.
+								esc_html_e( 'Project', 'gp-toolbox' );
+								?>
+							</td>
+							<?php
 
 							$project = GP::$project->get( intval( $translation_set->project_id ) );
 
@@ -277,7 +280,7 @@ foreach ( $gp_glossaries as $gp_glossary ) {
 								?>
 								<td class="translation-set" data-text="<?php echo esc_attr( $translation_set->name_with_locale() ); ?>">
 									<?php
-									gp_link( $gp_glossary->path(), number_format_i18n( count( $gp_glossary->get_entries() ) ) );
+									gp_link( $gp_glossary->path(), $translation_set->name_with_locale() );
 									?>
 								</td>
 

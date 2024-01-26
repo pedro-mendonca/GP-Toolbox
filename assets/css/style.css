@@ -181,4 +181,5 @@ table.gp-toolbox.glossaries td.entries a:focus {
 	text-decoration: underline;
 	text-underline-offset: 0.1em;
 	text-underline-position: under;
+	text-decoration-thickness: 0.125rem;
 }
