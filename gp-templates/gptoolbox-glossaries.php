@@ -146,11 +146,8 @@ foreach ( $gp_glossaries as $gp_glossary ) {
 					<th class="gp-column-type"><?php esc_html_e( 'Type', 'gp-toolbox' ); ?></th>
 					<th class="gp-column-locale"><?php esc_html_e( 'Locale', 'gp-toolbox' ); ?></th>
 					<th class="gp-column-translation-set"><?php esc_html_e( 'Project', 'gp-toolbox' ); ?></th>
-					<?php
-					/*
 					<th class="gp-column-entries"><?php esc_html_e( 'Entries', 'gp-toolbox' ); ?></th>
-					*/
-					?>
+
 				</tr>
 			</thead>
 			<tbody>
@@ -210,6 +207,12 @@ foreach ( $gp_glossaries as $gp_glossary ) {
 									?>
 								</span>
 							</td>
+
+							<td class="entries">
+								<?php
+								echo esc_html( number_format_i18n( count( $gp_glossary->get_entries() ) ) );
+								?>
+							</td>
 							<?php
 
 						} elseif ( $glossary_type === 'global' ) {
@@ -220,6 +223,12 @@ foreach ( $gp_glossaries as $gp_glossary ) {
 							<td class="translation-set" data-text="<?php echo esc_attr( $translation_set->name_with_locale() ); ?>" colspan="2">
 								<?php
 								gp_link( $gp_glossary->path(), $translation_set->name_with_locale() );
+								?>
+							</td>
+
+							<td class="entries">
+								<?php
+								gp_link( $gp_glossary->path(), number_format_i18n( count( $gp_glossary->get_entries() ) ) );
 								?>
 							</td>
 							<?php
@@ -254,6 +263,12 @@ foreach ( $gp_glossaries as $gp_glossary ) {
 										?>
 									</span>
 								</td>
+
+								<td class="entries">
+									<?php
+									echo esc_html( number_format_i18n( count( $gp_glossary->get_entries() ) ) );
+									?>
+								</td>
 								<?php
 
 							} else {
@@ -262,13 +277,19 @@ foreach ( $gp_glossaries as $gp_glossary ) {
 								?>
 								<td class="translation-set" data-text="<?php echo esc_attr( $translation_set->name_with_locale() ); ?>">
 									<?php
-									gp_link( $gp_glossary->path(), $translation_set->name_with_locale() );
+									gp_link( $gp_glossary->path(), number_format_i18n( count( $gp_glossary->get_entries() ) ) );
 									?>
 								</td>
 
 								<td class="project" data-text="<?php echo esc_attr( $project->path ); ?>">
 									<?php
 									gp_link_project( $project, esc_html( $project->name ) );
+									?>
+								</td>
+
+								<td class="entries">
+									<?php
+									gp_link( $gp_glossary->path(), number_format_i18n( count( $gp_glossary->get_entries() ) ) );
 									?>
 								</td>
 								<?php

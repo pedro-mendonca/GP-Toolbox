@@ -163,3 +163,22 @@ div.gp-heading div.gp-toolbox-tools a.gp-toolbox-tool-link {
 td.stats {
 	text-align: center;
 }
+
+table.gp-toolbox.glossaries td.id,
+table.gp-toolbox.glossaries td.entries {
+	text-align: center;
+}
+
+table.gp-toolbox.glossaries td.entries a {
+	text-decoration: none;
+	color: var(--gp-color-fg-default);
+	font-weight: 600;
+	display: block;
+}
+
+table.gp-toolbox.glossaries td.entries a:hover,
+table.gp-toolbox.glossaries td.entries a:focus {
+	text-decoration: underline;
+	text-underline-offset: 0.1em;
+	text-underline-position: under;
+}
