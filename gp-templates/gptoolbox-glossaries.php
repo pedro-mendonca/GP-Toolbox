@@ -52,35 +52,6 @@ gp_tmpl_load( 'gptoolbox-header', $args );
 // Get GlotPress glossaries.
 $gp_glossaries = GP::$glossary->all();
 
-// TODO: Reponse if empty.
-
-// Global glossaries.
-$global_glossaries = array();
-// Project glossaries.
-$project_glossaries = array();
-
-foreach ( $gp_glossaries as $gp_glossary ) {
-
-	// Check if translation set is known.
-	$translation_set = GP::$translation_set->get( $gp_glossary->translation_set_id );
-
-	// Check if translation set is known. Double check for GP_Translation_Set object.
-	if ( ! $translation_set || ! is_a( $translation_set, 'GP_Translation_Set' ) ) {
-		// Unknown translation set.
-		$project_glossaries[ $gp_glossary->id ] = $gp_glossary;
-		continue;
-	}
-
-	// Check wether is a Global or Project glossary.
-	if ( $translation_set->project_id === 0 ) {
-		// Global glossaries.
-		$global_glossaries[ $gp_glossary->id ] = $gp_glossary;
-	} else {
-		// Project glossaries.
-		$project_glossaries[ $gp_glossary->id ] = $gp_glossary;
-	}
-}
-
 ?>
 <section class="gp-toolbox glossaries">
 	<?php
@@ -365,11 +336,15 @@ foreach ( $gp_glossaries as $gp_glossary ) {
 				if ( glossaryType === 'glossaries-type-all' ) {
 					// Show all rows.
 					$( '.glossaries tbody' ).find( 'tr' ).show();
-					// Hide Project header column.
+					// Shrink Locale header column.
+					$( '.glossaries thead' ).find( 'th.gp-column-locale' ).attr( 'colspan', 1 );
+					// Show Project header column.
 					$( '.glossaries thead' ).find( 'th' ).show();
 				} else if ( glossaryType === 'glossaries-type-global' ) {
 					// Hide all rows.
 					$( '.glossaries tbody' ).find( 'tr' ).hide();
+					// Enlarge Locale header column.
+					$( '.glossaries thead' ).find( 'th.gp-column-locale' ).attr( 'colspan', 2 );
 					// Hide Project header column.
 					$( '.glossaries thead' ).find( 'th.gp-column-translation-set' ).hide();
 					// Show the specified status rows.
@@ -377,7 +352,9 @@ foreach ( $gp_glossaries as $gp_glossary ) {
 				} else if ( glossaryType === 'glossaries-type-project' ) {
 					// Hide all rows.
 					$( '.glossaries tbody' ).find( 'tr' ).hide();
-					// Hide Project header column.
+					// Shrink Locale header column.
+					$( '.glossaries thead' ).find( 'th.gp-column-locale' ).attr( 'colspan', 1 );
+					// Show Project header column.
 					$( '.glossaries thead' ).find( 'th.gp-column-translation-set' ).show();
 					// Show the specified status rows.
 					$( '.glossaries tbody' ).find( 'tr td.type.project' ).parent().show();
