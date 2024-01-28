@@ -52,179 +52,118 @@ gp_tmpl_load( 'gptoolbox-header', $args );
 // Get GlotPress glossaries.
 $gp_glossaries = GP::$glossary->all();
 
-// TODO: Reponse if empty.
+// Get GlotPress glossary entries.
+$gp_glossary_entries = GP::$glossary_entry->all();
 
-// Global glossaries.
-$global_glossaries = array();
-// Project glossaries.
-$project_glossaries = array();
-
-foreach ( $gp_glossaries as $gp_glossary ) {
-
-	// Check if translation set is known.
-	$translation_set = GP::$translation_set->get( $gp_glossary->translation_set_id );
-
-	// Check if translation set is known. Double check for GP_Translation_Set object.
-	if ( ! $translation_set || ! is_a( $translation_set, 'GP_Translation_Set' ) ) {
-		// Unknown translation set.
-		$project_glossaries[ $gp_glossary->id ] = $gp_glossary;
-		continue;
-	}
-
-	// Check wether is a Global or Project glossary.
-	if ( $translation_set->project_id === 0 ) {
-		// Global glossaries.
-		$global_glossaries[ $gp_glossary->id ] = $gp_glossary;
-	} else {
-		// Project glossaries.
-		$project_glossaries[ $gp_glossary->id ] = $gp_glossary;
+$orphaned_glossary_entries = array();
+foreach ( $gp_glossary_entries as $gp_glossary_entry ) {
+	$glossary_exist = GP::$glossary->get( $gp_glossary_entry->glossary_id );
+	if ( ! $glossary_exist ) {
+		$orphaned_glossary_entries[ $gp_glossary_entry->glossary_id ][ $gp_glossary_entry->id ] = $gp_glossary_entry;
 	}
 }
 
+// TODO: Check orphaned glossary entries. Add it to the table and allow delete.
+
 ?>
-<section class="gp-toolbox glossaries global">
-	<h3 style="margin-top: 2em;">
-		<?php
-		// Global glossaries heading.
-		esc_html_e( 'Global glossaries', 'gp-toolbox' );
-		?>
-	</h3>
+<section class="gp-toolbox glossaries">
 	<?php
 
-	// Check for global glossaries.
-	if ( empty( $global_glossaries ) ) {
+	// Check for glossaries.
+	if ( empty( $gp_glossaries ) ) {
 		?>
-		<p id="glossary-global-count"><?php esc_html_e( 'No glossaries found.', 'gp-toolbox' ); ?></p>
+		<p id="glossaries-type-filters"><?php esc_html_e( 'No glossaries found.', 'gp-toolbox' ); ?></p>
 		<?php
 	} else {
 		?>
-		<p id="glossary-global-count">
+		<p id="glossaries-type-filters">
 			<?php
 
-			echo wp_kses_post(
-				sprintf(
-					/* translators: %s: Glossaries count. */
-					_n(
-						'%s Glossary found.',
-						'%s Glossaries found.',
-						count( $global_glossaries ),
-						'gp-toolbox'
-					),
-					'<span class="count">' . esc_html( number_format_i18n( count( $global_glossaries ) ) ) . '</span>'
-				)
-			);
-			?>
-		</p>
+			$global_glossaries_count  = 0;
+			$project_glossaries_count = 0;
 
-		<div class="glossary-global-filter">
-			<label for="glossary-global-filter"><?php esc_html_e( 'Filter:', 'gp-toolbox' ); ?> <input id="glossary-global-filter" type="text" placeholder="<?php esc_attr_e( 'Search', 'gp-toolbox' ); ?>" /> </label>
-			<button id="glossary-global-filter-clear" class="button" style="margin-bottom: 3px;" title="<?php esc_attr_e( 'Clear search filter.', 'gp-toolbox' ); ?>"><?php esc_html_e( 'Clear', 'gp-toolbox' ); ?></button>
-		</div>
-
-		<table class="gp-table gp-toolbox glossary-global">
-			<thead>
-				<tr>
-					<th class="gp-column-id"><?php esc_html_e( 'ID', 'gp-toolbox' ); ?></th>
-					<th class="gp-column-locale"><?php esc_html_e( 'Locale', 'gp-toolbox' ); ?></th>
-				</tr>
-			</thead>
-			<tbody>
-				<?php
-
-				foreach ( $global_glossaries as $glossary_id => $global_glossary ) {
-
-					// Get glossary Locale.
-					$translation_set = GP::$translation_set->get( $global_glossary->translation_set_id );
-					// Check if translation set is known. Double check for GP_Translation_Set object.
-					if ( ! $translation_set || ! is_a( $translation_set, 'GP_Translation_Set' ) ) {
-						continue;
-					}
-					?>
-					<tr gptoolboxdata-glossary="<?php echo esc_attr( strval( $glossary_id ) ); ?>">
-						<td class="id"><?php echo esc_html( strval( $glossary_id ) ); ?></td>
-						<td class="translation-set" data-text="<?php echo esc_attr( $translation_set->locale . '/' . $translation_set->slug ); ?>">
-							<?php
-							gp_link( gp_url_join( gp_url( '/languages' ), $translation_set->locale, $translation_set->slug, 'glossary' ), $translation_set->name_with_locale() );
-							?>
-						</td>
-					</tr>
-					<?php
+			foreach ( $gp_glossaries as $gp_glossary ) {
+				// Try to get glossary translation set.
+				$translation_set = GP::$translation_set->get( $gp_glossary->translation_set_id );
+				// Set the glossary type.
+				if ( $translation_set && is_a( $translation_set, 'GP_Translation_Set' ) && $translation_set->project_id === 0 ) {
+					++$global_glossaries_count;
+				} else {
+					++$project_glossaries_count;
 				}
+			}
 
-				?>
-			</tbody>
-		</table>
-		<?php
-	}
-	?>
-</section>
-
-<section class="gp-toolbox glossaries project">
-	<h3 style="margin-top: 2em;">
-		<?php
-		// Global glossaries heading.
-		esc_html_e( 'Project glossaries', 'gp-toolbox' );
-		?>
-	</h3>
-	<?php
-
-	// Check for project glossaries.
-	if ( empty( $project_glossaries ) ) {
-		?>
-		<p id="glossary-project-count"><?php esc_html_e( 'No glossaries found.', 'gp-toolbox' ); ?></p>
-		<?php
-	} else {
-		?>
-		<p id="glossary-project-count">
-			<?php
-
+			// Glossaries: All {total} originals. {global} global glossaries. {project} project glossaries.
 			echo wp_kses_post(
 				sprintf(
-					/* translators: %s: Glossaries count. */
-					_n(
-						'%s Glossary found.',
-						'%s Glossaries found.',
-						count( $project_glossaries ),
-						'gp-toolbox'
-					),
-					'<span class="count">' . esc_html( number_format_i18n( count( $project_glossaries ) ) ) . '</span>'
+					/* translators: 1: Glossaries total. 2: Global glossaries. 3: Project glossaries. */
+					__( 'Glossaries: %1$s %2$s %3$s', 'gp-toolbox' ),
+					'<a id="glossaries-type-all" class="glossaries-type" href="#glossaries">' . sprintf(
+						/* translators: %s: Number of Glossaries. */
+						_n( '%s glossary.', 'All %s glossaries.', $global_glossaries_count + $project_glossaries_count, 'gp-toolbox' ),
+						'<strong class="glossaries-label glossaries-label-all">' . esc_html( number_format_i18n( $global_glossaries_count + $project_glossaries_count ) ) . '</strong>'
+					) . '</a>',
+					'<a id="glossaries-type-global" class="glossaries-type" href="#glossaries">' . sprintf(
+						/* translators: %s: Number of Glossaries. */
+						_n( '%s Global glossary original.', '%s Global glossaries.', $global_glossaries_count, 'gp-toolbox' ),
+						'<strong class="glossaries-label glossaries-label-global">' . esc_html( number_format_i18n( $global_glossaries_count ) ) . '</strong>'
+					) . '</a>',
+					'<a id="glossaries-type-project" class="glossaries-type" href="#glossaries">' . sprintf(
+						/* translators: %s: Number of Glossaries. */
+						_n( '%s Project glossary.', '%s Project glossaries.', $project_glossaries_count, 'gp-toolbox' ),
+						'<strong class="glossaries-label glossaries-label-project">' . esc_html( number_format_i18n( $project_glossaries_count ) ) . '</strong>'
+					) . '</a>'
 				)
 			);
 			?>
 		</p>
 
-		<div class="glossary-project-filter">
-			<label for="glossary-project-filter"><?php esc_html_e( 'Filter:', 'gp-toolbox' ); ?> <input id="glossary-project-filter" type="text" placeholder="<?php esc_attr_e( 'Search', 'gp-toolbox' ); ?>" /> </label>
-			<button id="glossary-project-filter-clear" class="button" style="margin-bottom: 3px;" title="<?php esc_attr_e( 'Clear search filter.', 'gp-toolbox' ); ?>"><?php esc_html_e( 'Clear', 'gp-toolbox' ); ?></button>
+		<div class="glossaries-filter">
+			<label for="glossaries-filter"><?php esc_html_e( 'Filter:', 'gp-toolbox' ); ?> <input id="glossaries-filter" type="text" placeholder="<?php esc_attr_e( 'Search', 'gp-toolbox' ); ?>" /> </label>
+			<button id="glossaries-filter-clear" class="button" style="margin-bottom: 3px;" title="<?php esc_attr_e( 'Clear search filter.', 'gp-toolbox' ); ?>"><?php esc_html_e( 'Clear', 'gp-toolbox' ); ?></button>
 		</div>
 
-		<table class="gp-table gp-toolbox glossary-project">
+		<table class="gp-table gp-toolbox glossaries">
 			<thead>
 				<tr>
 					<th class="gp-column-id"><?php esc_html_e( 'ID', 'gp-toolbox' ); ?></th>
+					<th class="gp-column-type"><?php esc_html_e( 'Type', 'gp-toolbox' ); ?></th>
 					<th class="gp-column-locale"><?php esc_html_e( 'Locale', 'gp-toolbox' ); ?></th>
 					<th class="gp-column-translation-set"><?php esc_html_e( 'Project', 'gp-toolbox' ); ?></th>
+					<th class="gp-column-entries"><?php esc_html_e( 'Entries', 'gp-toolbox' ); ?></th>
 
 				</tr>
 			</thead>
 			<tbody>
 				<?php
 
-				foreach ( $project_glossaries as $glossary_id => $project_glossary ) {
+				foreach ( $gp_glossaries as $gp_glossary ) {
 
 					// Get glossary Locale.
-					$translation_set = GP::$translation_set->get( $project_glossary->translation_set_id );
+					$translation_set = GP::$translation_set->get( $gp_glossary->translation_set_id );
 
+					// Check wether is a Global or Project glossary.
+					$glossary_type = ( $translation_set && is_a( $translation_set, 'GP_Translation_Set' ) && $translation_set->project_id === 0 ) ? 'global' : 'project';
 					?>
-					<tr gptoolboxdata-glossary="<?php echo esc_attr( strval( $glossary_id ) ); ?>">
-						<td class="id"><?php echo esc_html( strval( $glossary_id ) ); ?></td>
-
+					<tr gptoolboxdata-glossary="<?php echo esc_attr( strval( $gp_glossary->id ) ); ?>">
+						<td class="id"><?php echo esc_html( strval( $gp_glossary->id ) ); ?></td>
 						<?php
+
 						// Check if translation set is known. Double check for GP_Translation_Set object.
 						if ( ! $translation_set || ! is_a( $translation_set, 'GP_Translation_Set' ) ) {
-							?>
+							// Unknown translation set.
 
-							<td class="translation set" data-text="" colspan="2">
+							?>
+							<td class="type" data-text="">
+								<span class="unknown">
+									<?php
+									// Unknown type glossary.
+									esc_html_e( 'Unknown', 'gp-toolbox' );
+									?>
+								</span>
+							</td>
+
+							<td class="translation-set" data-text="" colspan="2">
 								<span class="unknown">
 									<?php
 									printf(
@@ -233,23 +172,69 @@ foreach ( $gp_glossaries as $gp_glossary ) {
 										sprintf(
 											/* translators: %d ID number. */
 											esc_html__( 'ID #%d', 'gp-toolbox' ),
-											esc_html( $project_glossary->translation_set_id )
+											esc_html( $gp_glossary->translation_set_id )
 										)
 									);
 									?>
 								</span>
 							</td>
+
+							<td class="entries">
+								<?php
+								echo esc_html( number_format_i18n( count( $gp_glossary->get_entries() ) ) );
+								?>
+							</td>
 							<?php
+
+						} elseif ( $glossary_type === 'global' ) {
+							// Known translation set.
+							// Global glossary.
+
+							?>
+							<td class="type global" data-text="global">
+								<?php
+								// Global glossary.
+								esc_html_e( 'Global', 'gp-toolbox' );
+								?>
+							</td>
+
+							<td class="translation-set" data-text="<?php echo esc_attr( $translation_set->name_with_locale() ); ?>" colspan="2">
+								<?php
+								gp_link( $gp_glossary->path(), $translation_set->name_with_locale() );
+								?>
+							</td>
+
+							<td class="entries">
+								<?php
+								gp_link( $gp_glossary->path(), number_format_i18n( count( $gp_glossary->get_entries() ) ) );
+								?>
+							</td>
+							<?php
+
 						} else {
+							// Project glossary.
+
+							?>
+							<td class="type project" data-text="project">
+								<?php
+								// Project glossary.
+								esc_html_e( 'Project', 'gp-toolbox' );
+								?>
+							</td>
+							<?php
+
 							$project = GP::$project->get( intval( $translation_set->project_id ) );
 
 							if ( ! $project ) {
+								// Unknown project.
+
 								?>
-								<td class="translation-set" data-text="<?php echo esc_attr( $translation_set->locale . '/' . $translation_set->slug ); ?>">
+								<td class="translation-set" data-text="<?php echo esc_attr( $translation_set->name_with_locale() ); ?>">
 									<?php
 									echo esc_html( $translation_set->name_with_locale() );
 									?>
 								</td>
+
 								<td class="project" data-text="">
 									<span class="unknown">
 										<?php
@@ -266,24 +251,37 @@ foreach ( $gp_glossaries as $gp_glossary ) {
 									</span>
 								</td>
 
-								<?php
-							} else {
-								?>
-								<td class="translation-set" data-text="<?php echo esc_attr( $translation_set->locale . '/' . $translation_set->slug ); ?>">
+								<td class="entries">
 									<?php
-									gp_link( $project_glossary->path(), $translation_set->name_with_locale() );
+									echo esc_html( number_format_i18n( count( $gp_glossary->get_entries() ) ) );
 									?>
 								</td>
+								<?php
+
+							} else {
+								// Known project.
+
+								?>
+								<td class="translation-set" data-text="<?php echo esc_attr( $translation_set->name_with_locale() ); ?>">
+									<?php
+									gp_link( $gp_glossary->path(), $translation_set->name_with_locale() );
+									?>
+								</td>
+
 								<td class="project" data-text="<?php echo esc_attr( $project->path ); ?>">
 									<?php
 									gp_link_project( $project, esc_html( $project->name ) );
 									?>
 								</td>
 
+								<td class="entries">
+									<?php
+									gp_link( $gp_glossary->path(), number_format_i18n( count( $gp_glossary->get_entries() ) ) );
+									?>
+								</td>
 								<?php
 							}
 						}
-
 						?>
 					</tr>
 					<?php
@@ -298,11 +296,13 @@ foreach ( $gp_glossaries as $gp_glossary ) {
 
 <script type="text/javascript" charset="utf-8">
 	jQuery( document ).ready( function( $ ) {
-		// Global glossaries.
-		$( '.glossary-global' ).tablesorter( {
+		// Project glossaries.
+		$( '.glossaries' ).tablesorter( {
 			theme: 'glotpress',
 			sortList: [
-				[1,0]
+				[ 2, 0 ], // Sort by Locale.
+				[ 1, 0 ], // Sort by Type.
+				[ 3, 0 ]  // Sort by Project.
 			],
 			headers: {
 				0: {
@@ -310,15 +310,17 @@ foreach ( $gp_glossaries as $gp_glossary ) {
 				}
 			}
 		} );
-		var glossaryGlobalRows = $( '.glossary-global tbody' ).find( 'tr' );
-		$( '#glossary-global-filter' ).bind( 'change keyup input', function() {
+
+		var glossariesRows = $( '.glossaries tbody' ).find( 'tr' );
+
+		$( '#glossaries-filter' ).bind( 'change keyup input', function() {
 			var words = this.value.toLowerCase().split( ' ' );
 
 			if ( '' === this.value.trim() ) {
-				glossaryGlobalRows.show();
+				glossariesRows.show();
 			} else {
-				glossaryGlobalRows.hide();
-				glossaryGlobalRows.filter( function ( i, v ) {
+				glossariesRows.hide();
+				glossariesRows.filter( function ( i, v ) {
 					var t = $( this );
 					for ( var d = 0; d < words.length; ++d ) {
 						if ( t.text().toLowerCase().indexOf( words[d] ) !== -1 ) {
@@ -329,52 +331,57 @@ foreach ( $gp_glossaries as $gp_glossary ) {
 				} ).show();
 			}
 		} );
-		// Clear table filter.
-		$( 'button#glossary-global-filter-clear' ).click( function() {
+
+		// Filter table.
+		$( '#glossaries-type-filters a' ).click( function() {
+
 			// Clear the text input filter.
-			$( 'input#glossary-global-filter' ).val( '' );
-			// Show all rows.
-			$( '.glossary-global tbody' ).find( 'tr' ).show();
+			$( 'input#glossaries-filter' ).val( '' );
+
+			// Get the original status.
+			var glossaryType = $( this ).prop( 'id' );
+			console.log( glossaryType );
+			// Get the item class.
+			var itemClass = $( this ).prop( 'class' );
+
+			if ( itemClass === 'glossaries-type' ) {
+
+				if ( glossaryType === 'glossaries-type-all' ) {
+					// Show all rows.
+					$( '.glossaries tbody' ).find( 'tr' ).show();
+					// Shrink Locale header column.
+					$( '.glossaries thead' ).find( 'th.gp-column-locale' ).attr( 'colspan', 1 );
+					// Show Project header column.
+					$( '.glossaries thead' ).find( 'th' ).show();
+				} else if ( glossaryType === 'glossaries-type-global' ) {
+					// Hide all rows.
+					$( '.glossaries tbody' ).find( 'tr' ).hide();
+					// Enlarge Locale header column.
+					$( '.glossaries thead' ).find( 'th.gp-column-locale' ).attr( 'colspan', 2 );
+					// Hide Project header column.
+					$( '.glossaries thead' ).find( 'th.gp-column-translation-set' ).hide();
+					// Show the specified status rows.
+					$( '.glossaries tbody' ).find( 'tr td.type.global' ).parent().show();
+				} else if ( glossaryType === 'glossaries-type-project' ) {
+					// Hide all rows.
+					$( '.glossaries tbody' ).find( 'tr' ).hide();
+					// Shrink Locale header column.
+					$( '.glossaries thead' ).find( 'th.gp-column-locale' ).attr( 'colspan', 1 );
+					// Show Project header column.
+					$( '.glossaries thead' ).find( 'th.gp-column-translation-set' ).show();
+					// Show the specified status rows.
+					$( '.glossaries tbody' ).find( 'tr td.type.project' ).parent().show();
+
+				}
+			}
 		});
 
-		// Project glossaries.
-		$( '.glossary-project' ).tablesorter( {
-			theme: 'glotpress',
-			sortList: [
-				[ 1, 0 ],
-				[ 2, 0 ]
-			],
-			headers: {
-				0: {
-					sorter: 'text'
-				}
-			}
-		} );
-		var glossaryProjectRows = $( '.glossary-project tbody' ).find( 'tr' );
-		$( '#glossary-project-filter' ).bind( 'change keyup input', function() {
-			var words = this.value.toLowerCase().split( ' ' );
-
-			if ( '' === this.value.trim() ) {
-				glossaryProjectRows.show();
-			} else {
-				glossaryProjectRows.hide();
-				glossaryProjectRows.filter( function ( i, v ) {
-					var t = $( this );
-					for ( var d = 0; d < words.length; ++d ) {
-						if ( t.text().toLowerCase().indexOf( words[d] ) !== -1 ) {
-							return true;
-						}
-					}
-					return false;
-				} ).show();
-			}
-		} );
 		// Clear table filter.
-		$( 'button#glossary-project-filter-clear' ).click( function() {
+		$( 'button#glossaries-filter-clear' ).click( function() {
 			// Clear the text input filter.
-			$( 'input#glossary-project-filter' ).val( '' );
+			$( 'input#glossaries-filter' ).val( '' );
 			// Show all rows.
-			$( '.glossary-project tbody' ).find( 'tr' ).show();
+			$( '.glossaries tbody' ).find( 'tr' ).show();
 		});
 	} );
 </script>
