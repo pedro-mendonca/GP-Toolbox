@@ -1,11 +1,11 @@
-/* global document, gpToolboxTools, Intl, wp, sprintf, wpApiSettings */
+/* global document, gpToolbox, Intl, wp, sprintf, wpApiSettings */
 
 jQuery( document ).ready( function( $ ) {
 	// Get User login (username).
-	var userLogin = gpToolboxTools.user_login;
+	var userLogin = gpToolbox.user_login;
 
 	// Get User Locale.
-	var userLocale = gpToolboxTools.user_locale;
+	var userLocale = gpToolbox.user_locale;
 
 	// Get the Admin permissions table.
 	var tablePermissionAdmin = $( 'table.gp-table.permission-admin' );
@@ -14,10 +14,14 @@ jQuery( document ).ready( function( $ ) {
 	var tablePermissionValidator = $( 'table.gp-table.permission-validator' );
 
 	// Check if user is has GlotPress Admin previleges.
-	var glotpressAdmin = gpToolboxTools.admin;
+	var glotpressAdmin = gpToolbox.admin;
 
 	// Set the data attrib prefix.
 	var dataPrefix = 'gptoolboxdata-';
+
+	// Set permission tables rows.
+	var permissionValidatorsRows = $( '.permission-validator tbody' ).find( 'tr' );
+	var permissionAdminsRows = $( '.permission-admin tbody' ).find( 'tr' );
 
 	// Check if the Permission Validators table exist.
 	if ( tablePermissionAdmin.length ) {
@@ -92,7 +96,7 @@ jQuery( document ).ready( function( $ ) {
 			url: wpApiSettings.root + 'gp-toolbox/v1/permissions/' + permissionID + '/-delete',
 			type: 'POST',
 			data: {
-				_wpnonce: gpToolboxTools.nonce,
+				_wpnonce: gpToolbox.nonce,
 			},
 
 			success: function( response ) {
@@ -156,4 +160,90 @@ jQuery( document ).ready( function( $ ) {
 			},
 		} );
 	}
+
+	// Configure Tablesorter.
+	$( '.permission-admin' ).tablesorter( {
+		theme: 'glotpress',
+		sortList: [
+			[ 1, 0 ],
+		],
+		headers: {
+			0: {
+				sorter: 'text',
+			},
+		},
+	} );
+
+	// Table search.
+	$( '#permission-admin-filter' ).bind( 'change keyup input', function() {
+		var words = this.value.toLowerCase().split( ' ' );
+
+		if ( '' === this.value.trim() ) {
+			permissionAdminsRows.show();
+		} else {
+			permissionAdminsRows.hide();
+			permissionAdminsRows.filter( function() {
+				var t = $( this );
+				var d;
+				for ( d = 0; d < words.length; ++d ) {
+					if ( t.text().toLowerCase().indexOf( words[d] ) !== -1 ) {
+						return true;
+					}
+				}
+				return false;
+			} ).show();
+		}
+	} );
+
+	// Configure Tablesorter.
+	$( '.permission-validator' ).tablesorter( {
+		theme: 'glotpress',
+		sortList: [
+			[ 1, 2 ],
+			[ 2, 0 ],
+			[ 3, 0 ],
+		],
+		headers: {
+			0: {
+				sorter: 'text',
+			},
+		},
+	} );
+
+	// Table search.
+	$( '#permission-validator-filter' ).bind( 'change keyup input', function() {
+		var words = this.value.toLowerCase().split( ' ' );
+
+		if ( '' === this.value.trim() ) {
+			permissionValidatorsRows.show();
+		} else {
+			permissionValidatorsRows.hide();
+			permissionValidatorsRows.filter( function() {
+				var t = $( this );
+				var d;
+				for ( d = 0; d < words.length; ++d ) {
+					if ( t.text().toLowerCase().indexOf( words[d] ) !== -1 ) {
+						return true;
+					}
+				}
+				return false;
+			} ).show();
+		}
+	} );
+
+	// Clear table filter.
+	$( 'button#permission-admin-filter-clear' ).click( function() {
+		// Clear the text input filter.
+		$( 'input#permission-admin-filter' ).val( '' );
+		// Show all rows.
+		$( '.permission-admin tbody' ).find( 'tr' ).show();
+	} );
+
+	// Clear table filter.
+	$( 'button#permission-validator-filter-clear' ).click( function() {
+		// Clear the text input filter.
+		$( 'input#permission-validator-filter' ).val( '' );
+		// Show all rows.
+		$( '.permission-validator tbody' ).find( 'tr' ).show();
+	} );
 } );

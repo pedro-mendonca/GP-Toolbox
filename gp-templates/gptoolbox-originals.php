@@ -14,14 +14,6 @@ use GP;
 // Get page title.
 gp_title( __( 'Originals &lt; Tools &lt; GlotPress', 'gp-toolbox' ) );
 
-// Enqueue scripts.
-gp_enqueue_scripts(
-	array(
-		'tablesorter',
-		'tools',
-	)
-);
-
 // Load GlotPress breadcrumbs.
 gp_breadcrumb(
 	array(
@@ -201,82 +193,7 @@ foreach ( $gp_originals as $gp_original ) {
 
 	?>
 </section>
-
-<script type="text/javascript" charset="utf-8">
-	jQuery( document ).ready( function( $ ) {
-		$( '.originals' ).tablesorter( {
-			theme: 'glotpress',
-			sortList: [
-				[0,0]
-			],
-			headers: {
-				0: {
-					sorter: 'text'
-				}
-			}
-		} );
-
-		rows = $( '.originals tbody' ).find( 'tr' );
-
-		$( '#originals-filter' ).bind( 'change keyup input', function() {
-			var words = this.value.toLowerCase().split( ' ' );
-
-			if ( '' === this.value.trim() ) {
-				rows.show();
-			} else {
-				rows.hide();
-				rows.filter( function ( i, v ) {
-					var t = $( this );
-					for ( var d = 0; d < words.length; ++d ) {
-						if ( t.text().toLowerCase().indexOf( words[d] ) !== -1 ) {
-							return true;
-						}
-					}
-					return false;
-				} ).show();
-			}
-		} );
-
-		// Filter table.
-		$( '#originals-status-filters a' ).click( function() {
-
-			// Clear the text input filter.
-			$( 'input#originals-filter' ).val( '' );
-
-			// Get the original status.
-			var originalsStatus = $( this ).prop( 'id' );
-			// Get the item class.
-			var itemClass = $( this ).prop( 'class' );
-
-			if ( itemClass === 'originals-status' ) {
-
-				if ( originalsStatus === 'originals-status-all' ) {
-					// Show all rows.
-					$( '.originals tbody' ).find( 'tr' ).show();
-				} else if ( originalsStatus === 'originals-status-active' ) {
-					// Hide all rows.
-					$( '.originals tbody' ).find( 'tr' ).hide();
-					// Show the specified status rows.
-					$( '.originals tbody' ).find( 'tr td.stats.active:not([data-text="0"])' ).parent().show();
-				} else if ( originalsStatus === 'originals-status-obsolete' ) {
-					// Hide all rows.
-					$( '.originals tbody' ).find( 'tr' ).hide();
-					// Show the specified status rows.
-					$( '.originals tbody' ).find( 'tr td.stats.obsolete:not([data-text="0"])' ).parent().show();
-				}
-			}
-
-		});
-
-		// Clear table filter.
-		$( 'button#originals-filter-clear' ).click( function() {
-			// Clear the text input filter.
-			$( 'input#originals-filter' ).val( '' );
-			// Show all rows.
-			$( '.originals tbody' ).find( 'tr' ).show();
-		});
-	} );
-</script>
-
 <?php
+
+// Load GlotPress Footer template.
 gp_tmpl_footer();

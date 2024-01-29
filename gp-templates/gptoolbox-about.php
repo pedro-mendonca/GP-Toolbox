@@ -12,14 +12,6 @@ namespace GP_Toolbox;
 // Get page title.
 gp_title( __( 'About &lt; Tools &lt; GlotPress', 'gp-toolbox' ) );
 
-// Enqueue scripts.
-gp_enqueue_scripts(
-	array(
-		'tablesorter',
-		'tools',
-	)
-);
-
 // Load GlotPress breadcrumbs.
 gp_breadcrumb(
 	array(
@@ -99,6 +91,7 @@ gp_tmpl_load( 'gptoolbox-header', $args );
 		?>
 	</p>
 </section>
-
 <?php
+
+// Load GlotPress Footer template.
 gp_tmpl_footer();

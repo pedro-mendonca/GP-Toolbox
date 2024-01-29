@@ -216,22 +216,42 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 						);
 					}
 				);
-
 			}
 
-			// Register and enqueue scripts for Tools.
-			$template_prefix = 'gptoolbox-';
+			if ( $template === 'gptoolbox-glossaries' ) {
 
-			if ( substr( $template, 0, strlen( $template_prefix ) ) === $template_prefix ) {
+				$template_args = null;
 
-				// Register and enqueue plugin scripts.
+				// Register and enqueue GlotPress project template scripts.
 				add_action(
 					'wp_enqueue_scripts',
-					function () use ( $args ) {
+					function () use ( $template_args ) {
 						self::register_plugin_scripts(
-							'tools', // Override generic template ID.
-							$args,
+							'tools-glossaries',
+							$template_args,
 							array(
+								'tablesorter',
+								'wp-i18n',
+								'wp-api',
+							)
+						);
+					}
+				);
+			}
+
+			if ( $template === 'gptoolbox-permissions' ) {
+
+				$template_args = null;
+
+				// Register and enqueue GlotPress project template scripts.
+				add_action(
+					'wp_enqueue_scripts',
+					function () use ( $template_args ) {
+						self::register_plugin_scripts(
+							'tools-permissions',
+							$template_args,
+							array(
+								'tablesorter',
 								'wp-i18n',
 								'wp-api',
 							)
@@ -292,7 +312,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 		 * @since 1.0.0
 		 *
 		 * @param string             $template       GlotPress template name.
-		 * @param array<string>      $args           GlotPress template arguments.
+		 * @param array<string>|null $args           GlotPress template arguments.
 		 * @param array<int, string> $dependencies   Array of script dependencies.
 		 *
 		 * @return void
@@ -325,16 +345,16 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 
 			wp_localize_script(
 				$script_id,
-				'gpToolbox' . ucfirst( $template ), // Eg. 'gpToolboxProject'.
+				'gpToolbox',
 				array(
-					'admin'              => self::current_user_is_glotpress_admin(),                // GlotPress Admin with manage options capability.
-					'gp_url'             => gp_url(),                                               // GlotPress base URL. Defaults to /glotpress/.
-					'gp_url_project'     => gp_url_project(),                                       // GlotPress projects base URL. Defaults to /glotpress/projects/.
-					'nonce'              => wp_create_nonce( 'wp_rest' ),                           // Authenticate in the Rest API.
-					'args'               => self::{'template_args_' . $template}( $args ),          // Template arguments.
-					'supported_statuses' => self::supported_translation_statuses(),                 // Supported translation statuses.
-					'user_locale'        => GP_locales::by_field( 'wp_locale', get_user_locale() ), // Current user Locale.
-					'user_login'         => wp_get_current_user()->user_login,                      // Current user login (username).
+					'admin'              => self::current_user_is_glotpress_admin(),                                   // GlotPress Admin with manage options capability.
+					'gp_url'             => gp_url(),                                                                  // GlotPress base URL. Defaults to /glotpress/.
+					'gp_url_project'     => gp_url_project(),                                                          // GlotPress projects base URL. Defaults to /glotpress/projects/.
+					'nonce'              => wp_create_nonce( 'wp_rest' ),                                              // Authenticate in the Rest API.
+					'args'               => ! is_null( $args ) ? self::{'template_args_' . $template}( $args ) : null, // Template arguments.
+					'supported_statuses' => self::supported_translation_statuses(),                                    // Supported translation statuses.
+					'user_locale'        => GP_locales::by_field( 'wp_locale', get_user_locale() ),                    // Current user Locale.
+					'user_login'         => wp_get_current_user()->user_login,                                         // Current user login (username).
 					/**
 					 * Filters wether to color highlight or not the translation stats counts of the translation sets on the project page.
 					 *
@@ -342,7 +362,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 					 *
 					 * @param bool $highlight_counts  True to highlight, false to don't highlight. Defaults to true.
 					 */
-					'highlight_counts'   => apply_filters( 'gp_toolbox_highlight_counts', $highlight_counts = true ),   // Wether or not to highlight the translation sets table.
+					'highlight_counts'   => apply_filters( 'gp_toolbox_highlight_counts', $highlight_counts = true ),  // Wether or not to highlight the translation sets table.
 				)
 			);
 		}

@@ -1,30 +1,30 @@
-/* global document, Intl, gpToolboxProject, wp, wpApiSettings */
+/* global document, Intl, gpToolbox, wp, wpApiSettings */
 
 jQuery( document ).ready( function( $ ) {
 	// Get User Locale.
-	var userLocale = gpToolboxProject.user_locale;
+	var userLocale = gpToolbox.user_locale;
 
 	// Get the supported translation statuses.
-	var supportedTranslationStatuses = gpToolboxProject.supported_statuses;
+	var supportedTranslationStatuses = gpToolbox.supported_statuses;
 
 	// Get the Translation Sets table.
 	var tableTranslationSets = $( 'table.gp-table.translation-sets' );
 
 	// Check if user is has GlotPress Admin previleges.
-	var glotpressAdmin = gpToolboxProject.admin;
+	var glotpressAdmin = gpToolbox.admin;
 
 	// Get the Base URL for GlotPress Projects.
-	var gpUrlProject = gpToolboxProject.gp_url_project;
+	var gpUrlProject = gpToolbox.gp_url_project;
 
 	// Get the Project.
-	var project = gpToolboxProject.args.project;
+	var project = gpToolbox.args.project;
 
 	// Set the data attrib prefix.
 	var dataPrefix = 'gptoolboxdata-';
 
 	// Get the highlight_counts setting.
 	var highlightCounts = false;
-	if ( gpToolboxProject.highlight_counts === '1' ) {
+	if ( gpToolbox.highlight_counts === '1' ) {
 		highlightCounts = true;
 	}
 
@@ -95,7 +95,7 @@ jQuery( document ).ready( function( $ ) {
 				var locale = $( this ).attr( 'gptoolboxdata-locale' );
 
 				// Get Translation Set.
-				var translationSet = gpToolboxProject.args.translation_sets[locale];
+				var translationSet = gpToolbox.args.translation_sets[locale];
 
 				// Get translation set link.
 				var url = $( this ).children( 'td:first-child' ).find( 'a' ).attr( 'href' );
@@ -220,7 +220,7 @@ jQuery( document ).ready( function( $ ) {
 			url: wpApiSettings.root + 'gp-toolbox/v1/translations/' + project.path + '/' + locale + '/' + slug + '/' + status + '/-delete',
 			type: 'POST',
 			data: {
-				_wpnonce: gpToolboxProject.nonce,
+				_wpnonce: gpToolbox.nonce,
 			},
 
 			success: function( response ) {
