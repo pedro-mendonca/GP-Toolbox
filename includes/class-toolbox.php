@@ -222,7 +222,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 
 				$template_args = null;
 
-				// Register and enqueue GlotPress project template scripts.
+				// Register and enqueue GP-Toolbox Glossaries template scripts.
 				add_action(
 					'wp_enqueue_scripts',
 					function () use ( $template_args ) {
@@ -243,12 +243,33 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 
 				$template_args = null;
 
-				// Register and enqueue GlotPress project template scripts.
+				// Register and enqueue GP-Toolbox Permissions template scripts.
 				add_action(
 					'wp_enqueue_scripts',
 					function () use ( $template_args ) {
 						self::register_plugin_scripts(
 							'tools-permissions',
+							$template_args,
+							array(
+								'tablesorter',
+								'wp-i18n',
+								'wp-api',
+							)
+						);
+					}
+				);
+			}
+
+			if ( $template === 'gptoolbox-translation-sets' ) {
+
+				$template_args = null;
+
+				// Register and enqueue GP-Toolbox Translation Sets template scripts.
+				add_action(
+					'wp_enqueue_scripts',
+					function () use ( $template_args ) {
+						self::register_plugin_scripts(
+							'tools-translation-sets',
 							$template_args,
 							array(
 								'tablesorter',
@@ -497,7 +518,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 
 			$tools_pages = array(
 				// GP Permissions tools.
-				'tools_permissions' => array(
+				'tools_permissions'      => array(
 					'url'           => '/tools/permissions/',
 					'title'         => esc_html__( 'Permissions', 'gp-toolbox' ),
 					'tools_section' => 'gptoolbox-tools-permissions',
@@ -511,18 +532,18 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 				),
 				*/
 				// GP Originals tools.
-				'tools_originals'   => array(
+				'tools_originals'        => array(
 					'url'           => '/tools/originals/',
 					'title'         => esc_html__( 'Originals', 'gp-toolbox' ),
 					'tools_section' => 'gptoolbox-tools-originals',
 				),
-				/* phpcs:ignore.
 				// GP Translation Sets tools.
 				'tools_translation-sets' => array(
 					'url'           => '/tools/translation-sets/',
 					'title'         => esc_html__( 'Translation Sets', 'gp-toolbox' ),
 					'tools_section' => 'gptoolbox-tools-translation-sets',
 				),
+				/* phpcs:ignore.
 				// GP Translations tools.
 				'tools_translations' => array(
 					'url'           => '/tools/translations/',
@@ -531,7 +552,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 				),
 				*/
 				// GP Glossaries tools.
-				'tools_glossaries'  => array(
+				'tools_glossaries'       => array(
 					'url'           => '/tools/glossaries/',
 					'title'         => esc_html__( 'Glossaries', 'gp-toolbox' ),
 					'tools_section' => 'gptoolbox-tools-glossaries',
@@ -551,7 +572,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 				),
 				*/
 				// GP About tools.
-				'tools_about'       => array(
+				'tools_about'            => array(
 					'url'   => '/tools/about/',
 					'title' => esc_html__( 'About', 'gp-toolbox' ),
 				),

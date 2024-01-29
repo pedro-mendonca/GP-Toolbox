@@ -115,16 +115,12 @@ foreach ( $gp_glossary_entries as $gp_glossary_entry ) {
 					) . '</a>',
 					count( $orphaned_glossary_entries ) > 0 ? '<a id="glossaries-unknown-orphaned-entries" class="glossaries-type" href="#glossaries">' . sprintf(
 						/* translators: %s: Number of Glossaries. */
-						// _n( '%s Unknown glossary with orphaned glossary entries.', '%s Unknown glossaries with orphaned glossary entries.', count( $orphaned_glossary_entries ), 'gp-toolbox' ),
 						_n( 'Entries from %s unknown glossary.', 'Entries from %s unknown glossaries', count( $orphaned_glossary_entries ), 'gp-toolbox' ),
 						'<strong class="glossaries-label glossaries-label-project">' . esc_html( number_format_i18n( count( $orphaned_glossary_entries ) ) ) . '</strong>'
 					) . '</a>' : ''
 				)
 			);
 
-			//if ( $unkown_type_glossaries_count > 0 ) {
-
-			//}
 			?>
 		</p>
 		<?php
