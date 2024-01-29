@@ -55,7 +55,7 @@ foreach ( $gp_glossary_entries as $gp_glossary_entry ) {
 	}
 }
 
-// TODO: Check orphaned glossary entries. Add it to the table and allow delete.
+// TODO: Allow delete orphaned entries.
 
 ?>
 <section class="gp-toolbox glossaries">
@@ -71,8 +71,9 @@ foreach ( $gp_glossary_entries as $gp_glossary_entry ) {
 		<p id="glossaries-type-filters">
 			<?php
 
-			$global_glossaries_count  = 0;
-			$project_glossaries_count = 0;
+			$global_glossaries_count      = 0;
+			$project_glossaries_count     = 0;
+			$unkown_type_glossaries_count = 0;
 
 			foreach ( $gp_glossaries as $gp_glossary ) {
 				// Try to get glossary translation set.
@@ -80,20 +81,22 @@ foreach ( $gp_glossary_entries as $gp_glossary_entry ) {
 				// Set the glossary type.
 				if ( $translation_set && is_a( $translation_set, 'GP_Translation_Set' ) && $translation_set->project_id === 0 ) {
 					++$global_glossaries_count;
-				} else {
+				} elseif ( $translation_set && is_a( $translation_set, 'GP_Translation_Set' ) && $translation_set->project_id !== 0 ) {
 					++$project_glossaries_count;
+				} else {
+					++$unkown_type_glossaries_count;
 				}
 			}
 
 			// Glossaries: All {total} originals. {global} global glossaries. {project} project glossaries.
 			echo wp_kses_post(
 				sprintf(
-					/* translators: 1: Glossaries total. 2: Global glossaries. 3: Project glossaries. */
-					__( 'Glossaries: %1$s %2$s %3$s', 'gp-toolbox' ),
+					/* translators: 1: Glossaries total. 2: Global glossaries. 3: Project glossaries. 4: Unkown type glossaries. 5: Unkown glossaries with orphaned entries. */
+					__( 'Glossaries: %1$s %2$s %3$s %4$s %5$s', 'gp-toolbox' ),
 					'<a id="glossaries-type-all" class="glossaries-type" href="#glossaries">' . sprintf(
 						/* translators: %s: Number of Glossaries. */
-						_n( '%s glossary.', 'All %s glossaries.', $global_glossaries_count + $project_glossaries_count, 'gp-toolbox' ),
-						'<strong class="glossaries-label glossaries-label-all">' . esc_html( number_format_i18n( $global_glossaries_count + $project_glossaries_count ) ) . '</strong>'
+						_n( '%s glossary.', 'All %s glossaries.', $global_glossaries_count + $project_glossaries_count + $unkown_type_glossaries_count, 'gp-toolbox' ),
+						'<strong class="glossaries-label glossaries-label-all">' . esc_html( number_format_i18n( $global_glossaries_count + $project_glossaries_count + $unkown_type_glossaries_count ) ) . '</strong>'
 					) . '</a>',
 					'<a id="glossaries-type-global" class="glossaries-type" href="#glossaries">' . sprintf(
 						/* translators: %s: Number of Glossaries. */
@@ -104,12 +107,28 @@ foreach ( $gp_glossary_entries as $gp_glossary_entry ) {
 						/* translators: %s: Number of Glossaries. */
 						_n( '%s Project glossary.', '%s Project glossaries.', $project_glossaries_count, 'gp-toolbox' ),
 						'<strong class="glossaries-label glossaries-label-project">' . esc_html( number_format_i18n( $project_glossaries_count ) ) . '</strong>'
+					) . '</a>',
+					'<a id="glossaries-set-unknown" class="glossaries-type" href="#glossaries">' . sprintf(
+						/* translators: %s: Number of Glossaries. */
+						_n( '%s Glossary of unknown translation set.', '%s Glossaries of unknown translation set.', $unkown_type_glossaries_count, 'gp-toolbox' ),
+						'<strong class="glossaries-label glossaries-label-project">' . esc_html( number_format_i18n( $unkown_type_glossaries_count ) ) . '</strong>'
+					) . '</a>',
+					'<a id="glossaries-unknown-orphaned-entries" class="glossaries-type" href="#glossaries">' . sprintf(
+						/* translators: %s: Number of Glossaries. */
+						_n( '%s Unknown glossary with orphaned glossary entries.', '%s Unknown glossaries with orphaned glossary entries.', count( $orphaned_glossary_entries ), 'gp-toolbox' ),
+						'<strong class="glossaries-label glossaries-label-project">' . esc_html( number_format_i18n( count( $orphaned_glossary_entries ) ) ) . '</strong>'
 					) . '</a>'
 				)
 			);
 			?>
 		</p>
+		<?php
+	}
 
+	// Check for glossaries and orphaned glossary entries.
+	if ( ! empty( $gp_glossaries ) || ! empty( $orphaned_glossary_entries ) ) {
+
+		?>
 		<div class="glossaries-filter">
 			<label for="glossaries-filter"><?php esc_html_e( 'Filter:', 'gp-toolbox' ); ?> <input id="glossaries-filter" type="text" placeholder="<?php esc_attr_e( 'Search', 'gp-toolbox' ); ?>" /> </label>
 			<button id="glossaries-filter-clear" class="button" style="margin-bottom: 3px;" title="<?php esc_attr_e( 'Clear search filter.', 'gp-toolbox' ); ?>"><?php esc_html_e( 'Clear', 'gp-toolbox' ); ?></button>
@@ -146,16 +165,7 @@ foreach ( $gp_glossary_entries as $gp_glossary_entry ) {
 							// Unknown translation set.
 
 							?>
-							<td class="type" data-text="">
-								<span class="unknown">
-									<?php
-									// Unknown type glossary.
-									esc_html_e( 'Unknown', 'gp-toolbox' );
-									?>
-								</span>
-							</td>
-
-							<td class="translation-set" data-text="" colspan="2">
+							<td class="translation-set unknown" data-text="" colspan="3">
 								<span class="unknown">
 									<?php
 									printf(
@@ -277,6 +287,48 @@ foreach ( $gp_glossary_entries as $gp_glossary_entry ) {
 						?>
 					</tr>
 					<?php
+				}
+
+				if ( ! empty( $orphaned_glossary_entries ) ) {
+					// Add orphaned Glossary Entries by Glossary ID.
+
+					foreach ( $orphaned_glossary_entries as $glossary_id => $orphaned_glossary_entries_by_glossary_id ) {
+						?>
+						<tr gptoolboxdata-glossary="<?php echo esc_attr( strval( $glossary_id ) ); ?>">
+
+							<td class="id unknown" data-text="" colspan="4">
+									<span class="unknown">
+									<?php
+									echo wp_kses_post(
+										sprintf(
+											/* translators: 1: Known identifier data. 2: Glossary entries count. */
+											_n(
+												'Unknown glossary (%1$s) with %2$d orphaned glossary entry',
+												'Unknown glossary (%1$s) with %2$d orphaned glossary entries',
+												count( $orphaned_glossary_entries_by_glossary_id ),
+												'gp-toolbox'
+											),
+											sprintf(
+												/* translators: %d ID number. */
+												esc_html__( 'ID #%d', 'gp-toolbox' ),
+												esc_html( $glossary_id )
+											),
+											esc_html( number_format_i18n( count( $orphaned_glossary_entries_by_glossary_id ) ) )
+										)
+									);
+									?>
+								</span>
+							</td>
+
+							<td class="entries">
+								<?php
+								echo esc_html( number_format_i18n( count( $orphaned_glossary_entries_by_glossary_id ) ) );
+								?>
+							</td>
+
+						</tr>
+						<?php
+					}
 				}
 				?>
 			</tbody>

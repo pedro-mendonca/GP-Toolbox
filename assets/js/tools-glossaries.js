@@ -79,6 +79,24 @@ jQuery( document ).ready( function( $ ) {
 				$( '.glossaries thead' ).find( 'th.gp-column-translation-set' ).show();
 				// Show the specified status rows.
 				$( '.glossaries tbody' ).find( 'tr td.type.project' ).parent().show();
+			} else if ( glossaryType === 'glossaries-set-unknown' ) {
+				// Hide all rows.
+				$( '.glossaries tbody' ).find( 'tr' ).hide();
+				// Shrink Locale header column.
+				$( '.glossaries thead' ).find( 'th.gp-column-locale' ).attr( 'colspan', 1 );
+				// Show Project header column.
+				$( '.glossaries thead' ).find( 'th.gp-column-translation-set' ).show();
+				// Show the specified status rows.
+				$( '.glossaries tbody' ).find( 'tr td.translation-set.unknown' ).parent().show();
+			} else if ( glossaryType === 'glossaries-unknown-orphaned-entries' ) {
+				// Hide all rows.
+				$( '.glossaries tbody' ).find( 'tr' ).hide();
+				// Shrink Locale header column.
+				$( '.glossaries thead' ).find( 'th.gp-column-locale' ).attr( 'colspan', 1 );
+				// Show Project header column.
+				$( '.glossaries thead' ).find( 'th.gp-column-translation-set' ).show();
+				// Show the specified status rows.
+				$( '.glossaries tbody' ).find( 'tr td.id.unknown' ).parent().show();
 			}
 		}
 	} );

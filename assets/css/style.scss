@@ -228,7 +228,7 @@ td.stats {
 	text-align: center;
 }
 
-table.gp-toolbox.glossaries td.id,
+table.gp-toolbox.glossaries td.id:not(.unknown),
 table.gp-toolbox.glossaries td.entries {
 	text-align: center;
 }
@@ -247,4 +247,9 @@ table.gp-toolbox.glossaries td.entries a {
 		text-decoration-thickness: 0.125rem;
 	}
 
+}
+
+table.gp-table tbody td,
+table.gp-table tbody th {
+	padding: 0.5em 2em;
 }
