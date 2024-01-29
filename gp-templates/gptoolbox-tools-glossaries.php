@@ -13,10 +13,9 @@ namespace GP_Toolbox;
 <p class="descrtiption">
 	<?php esc_html_e( 'Overview of all Global and Project Glossaries.', 'gp-toolbox' ); ?>
 </p>
-<h4 class="features"><?php esc_html_e( 'Features', 'gp-toolbox' ); ?></h4>
 <ul>
-	<li><?php esc_html_e( 'Find Glossaries for unknown Translation Sets or Projects. (e.g. Related Translation Set or Project were deleted)', 'gp-toolbox' ); ?></li>
-	<li><?php esc_html_e( 'Find obsolete Glossaries.', 'gp-toolbox' ); ?></li>
+	<li><?php esc_html_e( 'Find Glossaries of unknown Translation Sets or Projects. (e.g. Related Translation Set or Project were deleted)', 'gp-toolbox' ); ?></li>
+	<li><?php esc_html_e( 'Find Glossary Entries of unknown Glossaries. (e.g. Related Glossary was deleted)', 'gp-toolbox' ); ?></li>
 </ul>
 
 <?php
