@@ -496,13 +496,6 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 		public static function tools_pages() {
 
 			$tools_pages = array(
-				// Main page.
-				/* phpcs:ignore.
-				'tools' => array(
-					'url'           => '/tools/',
-					'title'         => esc_html__( 'Tools', 'gp-toolbox' ),
-				),
-				*/
 				// GP Permissions tools.
 				'tools_permissions' => array(
 					'url'           => '/tools/permissions/',
