@@ -19,7 +19,7 @@ jQuery( document ).ready( function( $ ) {
 	// Set the data attrib prefix.
 	var dataPrefix = 'gptoolboxdata-';
 
-	// Set permission tables rows.
+	// Set tables rows.
 	var permissionValidatorsRows = $( '.permission-validator tbody' ).find( 'tr' );
 	var permissionAdminsRows = $( '.permission-admin tbody' ).find( 'tr' );
 
