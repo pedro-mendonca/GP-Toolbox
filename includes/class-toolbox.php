@@ -544,12 +544,6 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 					'tools_section' => 'gptoolbox-tools-glossaries',
 				),
 				/* phpcs:ignore
-				// GP Glossary Entries tools.
-				'tools_glossary-entries' => array(
-					'url'           => '/tools/glossary-entries/',
-					'title'         => esc_html__( 'Glossary Entries', 'gp-toolbox' ),
-					'tools_section' => 'gptoolbox-tools-glossary-entries',
-				),
 				// GP Meta tools.
 				'tools_meta' => array(
 					'url'           => '/tools/meta/',
