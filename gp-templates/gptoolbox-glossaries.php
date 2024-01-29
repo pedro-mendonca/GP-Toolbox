@@ -95,8 +95,8 @@ foreach ( $gp_glossary_entries as $gp_glossary_entry ) {
 					__( 'Glossaries: %1$s %2$s %3$s %4$s %5$s', 'gp-toolbox' ),
 					'<a id="glossaries-type-all" class="glossaries-type" href="#glossaries">' . sprintf(
 						/* translators: %s: Number of Glossaries. */
-						_n( '%s glossary.', 'All %s glossaries.', $global_glossaries_count + $project_glossaries_count + $unkown_type_glossaries_count, 'gp-toolbox' ),
-						'<strong class="glossaries-label glossaries-label-all">' . esc_html( number_format_i18n( $global_glossaries_count + $project_glossaries_count + $unkown_type_glossaries_count ) ) . '</strong>'
+						_n( '%s glossary.', 'All %s glossaries.', $global_glossaries_count + $project_glossaries_count + $unkown_type_glossaries_count + count( $orphaned_glossary_entries ), 'gp-toolbox' ),
+						'<strong class="glossaries-label glossaries-label-all">' . esc_html( number_format_i18n( $global_glossaries_count + $project_glossaries_count + $unkown_type_glossaries_count + count( $orphaned_glossary_entries ) ) ) . '</strong>'
 					) . '</a>',
 					'<a id="glossaries-type-global" class="glossaries-type" href="#glossaries">' . sprintf(
 						/* translators: %s: Number of Glossaries. */
@@ -311,7 +311,7 @@ foreach ( $gp_glossary_entries as $gp_glossary_entry ) {
 											sprintf(
 												/* translators: %d ID number. */
 												esc_html__( 'ID #%d', 'gp-toolbox' ),
-												esc_html( $glossary_id )
+												esc_html( strval( $glossary_id ) )
 											),
 											esc_html( number_format_i18n( count( $orphaned_glossary_entries_by_glossary_id ) ) )
 										)
