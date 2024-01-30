@@ -66,6 +66,11 @@ jQuery( document ).ready( function( $ ) {
 				$( gpToolboxTable ).find( 'tbody tr' ).hide();
 				// Show the specified status rows.
 				$( gpToolboxTable ).find( 'tbody tr td.stats.obsolete:not([data-text="0"])' ).parent().show();
+			} else if ( originalsStatus === 'originals-orphaned' ) {
+				// Hide all rows.
+				$( gpToolboxTable ).find( 'tbody tr' ).hide();
+				// Show the specified status rows.
+				$( gpToolboxTable ).find( 'tbody tr td.project[data-text=""]' ).parent().show();
 			}
 		}
 	} );

@@ -11,7 +11,7 @@ namespace GP_Toolbox;
 
 ?>
 <p class="descrtiption">
-	<?php esc_html_e( 'Overview of all Originals for each Project.', 'gp-toolbox' ); ?>
+	<?php esc_html_e( 'Overview of all active and obsolete Originals for each Project.', 'gp-toolbox' ); ?>
 </p>
 <ul>
 	<li><?php esc_html_e( 'Find Originals for unknown Projects. (e.g. Related Project was deleted)', 'gp-toolbox' ); ?></li>
