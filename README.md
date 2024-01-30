@@ -16,7 +16,7 @@ This set of tools extends the functionality of GlotPress, bringing to light any 
 
 ## Features
 
-* Project page:
+* GlotPress project page:
   * Adds 'Old' and 'Rejected' columns to the project table of Translation Sets.
   * Button to quickly and permanently delete 'Old' and 'Rejected' translations.
 * Tools:
