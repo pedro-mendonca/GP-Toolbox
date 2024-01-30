@@ -104,7 +104,7 @@ foreach ( $gp_glossary_entries as $gp_glossary_entry ) {
 					) . '</a>',
 					'<a id="glossaries-type-global" class="glossaries-type" href="#glossaries">' . sprintf(
 						/* translators: %s: Number of Glossaries. */
-						_n( '%s Global glossary original.', '%s Global glossaries.', $global_glossaries_count, 'gp-toolbox' ),
+						_n( '%s Global glossary.', '%s Global glossaries.', $global_glossaries_count, 'gp-toolbox' ),
 						'<strong class="glossaries-label glossaries-label-global">' . esc_html( number_format_i18n( $global_glossaries_count ) ) . '</strong>'
 					) . '</a>',
 					'<a id="glossaries-type-project" class="glossaries-type" href="#glossaries">' . sprintf(
@@ -119,7 +119,7 @@ foreach ( $gp_glossary_entries as $gp_glossary_entry ) {
 					) . '</a>',
 					count( $orphaned_glossary_entries ) > 0 ? '<a id="glossaries-unknown-orphaned-entries" class="glossaries-type" href="#glossaries">' . sprintf(
 						/* translators: %s: Number of Glossaries. */
-						_n( 'Entries from %s unknown glossary.', 'Entries from %s unknown glossaries', count( $orphaned_glossary_entries ), 'gp-toolbox' ),
+						_n( 'Entries from %s unknown glossary.', 'Entries from %s unknown glossaries.', count( $orphaned_glossary_entries ), 'gp-toolbox' ),
 						'<strong class="glossaries-label glossaries-label-project">' . esc_html( number_format_i18n( count( $orphaned_glossary_entries ) ) ) . '</strong>'
 					) . '</a>' : ''
 				)

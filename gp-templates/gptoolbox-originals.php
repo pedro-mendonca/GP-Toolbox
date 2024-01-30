@@ -127,7 +127,7 @@ foreach ( $gp_originals as $gp_original ) {
 					) . '</a>',
 					count( $orphaned_originals ) > 0 ? '<a id="originals-orphaned" class="originals-status" href="#originals">' . sprintf(
 						/* translators: %s: Number of Projects. */
-						_n( 'Originals from %s unknown project.', 'Originals from %s unknown projects', count( $orphaned_originals ), 'gp-toolbox' ),
+						_n( 'Originals from %s unknown project.', 'Originals from %s unknown projects.', count( $orphaned_originals ), 'gp-toolbox' ),
 						'<strong class="originals-label originals-label-orphaned">' . esc_html( number_format_i18n( count( $orphaned_originals ) ) ) . '</strong>'
 					) . '</a>' : ''
 				)
