@@ -35,8 +35,14 @@ gp_tmpl_load( 'gptoolbox-header', $args );
 ?>
 <div class="clear"></div>
 
-<p>
+<p class="gptoolbox-description">
 	<?php esc_html_e( 'Overview of all Administrators and Validators for each Project and Translation Set.', 'gp-toolbox' ); ?>
+	<br>
+	<?php echo wp_kses_post( __( 'The Permissions can be either <code>Admin</code> or <code>Validator</code>. Admins can administer GlotPress, and Validators can create, edit and approve translations for the specified Translation Sets.', 'gp-toolbox' ) ); ?>
+	<br>
+	<?php echo wp_kses_post( __( 'Each Permission belongs to a User, identified by <code>user_id</code>. If there is no User in the WordPress database with the same ID, then the Permission is orphaned.', 'gp-toolbox' ) ); ?>
+	<br>
+	<?php echo wp_kses_post( __( 'Each Validator Permission has a specified <code>project|locale|set-slug</code>. If there is no Project or Translation Set in the database with the same IDs, then the Permission is orphaned.', 'gp-toolbox' ) ); ?>
 </p>
 
 <?php

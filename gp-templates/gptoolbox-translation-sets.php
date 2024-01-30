@@ -36,8 +36,10 @@ gp_tmpl_load( 'gptoolbox-header', $args );
 ?>
 <div class="clear"></div>
 
-<p>
+<p class="gptoolbox-description">
 	<?php esc_html_e( 'Overview of all Translation Sets.', 'gp-toolbox' ); ?>
+	<br>
+	<?php echo wp_kses_post( __( 'Each Translation Set belongs to a Project, identified by <code>project_id</code>. If there is no Project in the database with the same ID, then the Translation Set is orphaned.', 'gp-toolbox' ) ); ?>
 </p>
 
 <?php

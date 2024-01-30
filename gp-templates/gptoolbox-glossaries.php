@@ -35,8 +35,12 @@ gp_tmpl_load( 'gptoolbox-header', $args );
 ?>
 <div class="clear"></div>
 
-<p>
+<p class="gptoolbox-description">
 	<?php esc_html_e( 'Overview of all Global and Project Glossaries.', 'gp-toolbox' ); ?>
+	<br>
+	<?php echo wp_kses_post( __( 'The scope of Glossaries can be either <code>global</code> or <code>project</code>.', 'gp-toolbox' ) ); ?>
+	<br>
+	<?php echo wp_kses_post( __( 'Each Glossary belongs to a Translation Set, identified by <code>translation_set_id</code>. If there is no Translation Set in the database with the same ID, then the Glossary is orphaned.', 'gp-toolbox' ) ); ?>
 </p>
 
 <?php

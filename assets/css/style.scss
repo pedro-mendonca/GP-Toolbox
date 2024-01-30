@@ -254,3 +254,44 @@ table.gp-table tbody td,
 table.gp-table tbody th {
 	padding: 0.5em 2em;
 }
+
+.gptoolbox-description {
+
+	span.translation-status,
+	code {
+		padding: 0 4px;
+	}
+
+	span.translation-status {
+
+		&.current {
+			background-color: var(--gp-color-status-current-subtle);
+		}
+
+		&.fuzzy {
+			background-color: var(--gp-color-status-fuzzy-subtle);
+		}
+
+		&.waiting {
+			background-color: var(--gp-color-status-waiting-subtle);
+		}
+
+		&.old {
+			background-color: var(--gp-color-status-old-subtle);
+		}
+
+		&.rejected {
+			background-color: var(--gp-color-status-rejected-subtle);
+		}
+
+		&.changesrequested {
+			background-color: var(--gp-color-status-changesrequested-subtle);
+		}
+
+	}
+
+	code {
+		background-color: var(--gp-color-primary-50);
+	}
+
+}
