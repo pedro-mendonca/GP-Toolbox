@@ -24,6 +24,7 @@ This set of tools extends the functionality of GlotPress, bringing to light any 
   * Permissions - Overview of Admins and Validators, quick delete, duplicates check.
   * Originals - Overview of all Originals for each Project.
   * Glossaries - Overview of Global Glossaries, Project Glossaries and Glossary entries.
+  * Translation Sets - Overview of all Translation Sets.
 
 == Requirements ==
 
@@ -40,8 +41,9 @@ Sure! You are welcome to report any issues or add feature suggestions on the [Gi
 
 = Unreleased =
 *   Initial release.
-*   Columns for Old and Rejected translations in Project page.
+*   Add columns for Old and Rejected translations in GlotPress Project page.
 *   Tools overview page.
 *   Permissions tools page.
 *   Originals tools page.
 *   Glossary tools page.
+*   Translation Sets tools page.
