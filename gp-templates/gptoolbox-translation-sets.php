@@ -75,7 +75,7 @@ foreach ( $gp_translation_sets as $gp_translation_set ) {
 			<button id="translation-sets-filter-clear" class="button" style="margin-bottom: 3px;" title="<?php esc_attr_e( 'Clear search filter.', 'gp-toolbox' ); ?>"><?php esc_html_e( 'Clear', 'gp-toolbox' ); ?></button>
 		</div>
 
-		<table class="gp-table gp-toolbox translation-sets">
+		<table class="gp-table gp-toolbox tools-translation-sets">
 			<thead>
 				<tr>
 					<th class="gp-column-id"><?php esc_html_e( 'ID', 'gp-toolbox' ); ?></th>

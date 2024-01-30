@@ -1,11 +1,14 @@
 /* global document */
 
 jQuery( document ).ready( function( $ ) {
+	// Set table.
+	var gpToolboxTable = $( 'table.gp-table.gp-toolbox.tools-translation-sets' );
+
 	// Set tables rows.
-	var rows = $( '.translation-sets tbody' ).find( 'tr' );
+	var rows = $( gpToolboxTable ).find( 'tbody tr' );
 
 	// Configure Tablesorter.
-	$( '.translation-sets' ).tablesorter( {
+	$( gpToolboxTable ).tablesorter( {
 		theme: 'glotpress',
 		sortList: [
 			[ 1, 0 ],
@@ -44,6 +47,6 @@ jQuery( document ).ready( function( $ ) {
 		// Clear the text input filter.
 		$( 'input#translation-sets-filter' ).val( '' );
 		// Show all rows.
-		$( '.translation-sets tbody' ).find( 'tr' ).show();
+		$( gpToolboxTable ).find( 'tbody tr' ).show();
 	} );
 } );

@@ -106,7 +106,7 @@ foreach ( $gp_permissions as $gp_permission ) {
 			<button id="permission-admin-filter-clear" class="button" style="margin-bottom: 3px;" title="<?php esc_attr_e( 'Clear search filter.', 'gp-toolbox' ); ?>"><?php esc_html_e( 'Clear', 'gp-toolbox' ); ?></button>
 		</div>
 
-		<table class="gp-table gp-toolbox permission-admin">
+		<table class="gp-table gp-toolbox tools-permission-admin">
 			<thead>
 				<tr>
 					<th class="gp-column-id"><?php esc_html_e( 'ID', 'gp-toolbox' ); ?></th>
@@ -217,7 +217,7 @@ foreach ( $gp_permissions as $gp_permission ) {
 			<button id="permission-validator-filter-clear" class="button" style="margin-bottom: 3px;" title="<?php esc_attr_e( 'Clear search filter.', 'gp-toolbox' ); ?>"><?php esc_html_e( 'Clear', 'gp-toolbox' ); ?></button>
 		</div>
 
-		<table class="gp-table gp-toolbox permission-validator">
+		<table class="gp-table gp-toolbox tools-permission-validator">
 			<thead>
 				<tr>
 					<th class="gp-column-id"><?php esc_html_e( 'ID', 'gp-toolbox' ); ?></th>

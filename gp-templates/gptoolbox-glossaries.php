@@ -135,7 +135,7 @@ foreach ( $gp_glossary_entries as $gp_glossary_entry ) {
 			<button id="glossaries-filter-clear" class="button" style="margin-bottom: 3px;" title="<?php esc_attr_e( 'Clear search filter.', 'gp-toolbox' ); ?>"><?php esc_html_e( 'Clear', 'gp-toolbox' ); ?></button>
 		</div>
 
-		<table class="gp-table gp-toolbox glossaries">
+		<table class="gp-table gp-toolbox tools-glossaries">
 			<thead>
 				<tr>
 					<th class="gp-column-id"><?php esc_html_e( 'ID', 'gp-toolbox' ); ?></th>

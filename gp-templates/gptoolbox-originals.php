@@ -122,7 +122,7 @@ foreach ( $gp_originals as $gp_original ) {
 			<button id="originals-filter-clear" class="button" style="margin-bottom: 3px;" title="<?php esc_attr_e( 'Clear search filter.', 'gp-toolbox' ); ?>"><?php esc_html_e( 'Clear', 'gp-toolbox' ); ?></button>
 		</div>
 
-		<table id="originals" class="gp-table gp-toolbox originals">
+		<table id="originals" class="gp-table gp-toolbox tools-originals">
 			<thead>
 				<tr>
 					<th class="gp-column-project"><?php esc_html_e( 'Project', 'gp-toolbox' ); ?></th>

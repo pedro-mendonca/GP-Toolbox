@@ -1,11 +1,14 @@
 /* global document */
 
 jQuery( document ).ready( function( $ ) {
+	// Set table.
+	var gpToolboxTable = $( 'table.gp-table.gp-toolbox.tools-glossaries' );
+
 	// Set tables rows.
-	var glossariesRows = $( '.glossaries tbody' ).find( 'tr' );
+	var glossariesRows = $( gpToolboxTable ).find( 'tbody tr' );
 
 	// Configure Tablesorter.
-	$( '.glossaries' ).tablesorter( {
+	$( gpToolboxTable ).tablesorter( {
 		theme: 'glotpress',
 		sortList: [
 			[ 2, 0 ], // Sort by Locale.
@@ -56,47 +59,47 @@ jQuery( document ).ready( function( $ ) {
 		if ( itemClass === 'glossaries-type' ) {
 			if ( glossaryType === 'glossaries-type-all' ) {
 				// Show all rows.
-				$( '.glossaries tbody' ).find( 'tr' ).show();
+				$( gpToolboxTable ).find( 'tbody tr' ).show();
 				// Shrink Locale header column.
-				$( '.glossaries thead' ).find( 'th.gp-column-locale' ).attr( 'colspan', 1 );
+				$( gpToolboxTable ).find( 'thead th.gp-column-locale' ).attr( 'colspan', 1 );
 				// Show Project header column.
-				$( '.glossaries thead' ).find( 'th' ).show();
+				$( gpToolboxTable ).find( 'thead th' ).show();
 			} else if ( glossaryType === 'glossaries-type-global' ) {
 				// Hide all rows.
-				$( '.glossaries tbody' ).find( 'tr' ).hide();
+				$( gpToolboxTable ).find( 'tbody tr' ).hide();
 				// Enlarge Locale header column.
-				$( '.glossaries thead' ).find( 'th.gp-column-locale' ).attr( 'colspan', 2 );
+				$( gpToolboxTable ).find( 'thead th.gp-column-locale' ).attr( 'colspan', 2 );
 				// Hide Project header column.
-				$( '.glossaries thead' ).find( 'th.gp-column-translation-set' ).hide();
+				$( gpToolboxTable ).find( 'thead th.gp-column-translation-set' ).hide();
 				// Show the specified status rows.
-				$( '.glossaries tbody' ).find( 'tr td.type.global' ).parent().show();
+				$( gpToolboxTable ).find( 'tbody tr td.type.global' ).parent().show();
 			} else if ( glossaryType === 'glossaries-type-project' ) {
 				// Hide all rows.
-				$( '.glossaries tbody' ).find( 'tr' ).hide();
+				$( gpToolboxTable ).find( 'tbody tr' ).hide();
 				// Shrink Locale header column.
-				$( '.glossaries thead' ).find( 'th.gp-column-locale' ).attr( 'colspan', 1 );
+				$( gpToolboxTable ).find( 'thead th.gp-column-locale' ).attr( 'colspan', 1 );
 				// Show Project header column.
-				$( '.glossaries thead' ).find( 'th.gp-column-translation-set' ).show();
+				$( gpToolboxTable ).find( 'thead th.gp-column-translation-set' ).show();
 				// Show the specified status rows.
-				$( '.glossaries tbody' ).find( 'tr td.type.project' ).parent().show();
+				$( gpToolboxTable ).find( 'tbody tr td.type.project' ).parent().show();
 			} else if ( glossaryType === 'glossaries-set-unknown' ) {
 				// Hide all rows.
-				$( '.glossaries tbody' ).find( 'tr' ).hide();
+				$( gpToolboxTable ).find( 'tbody tr' ).hide();
 				// Shrink Locale header column.
-				$( '.glossaries thead' ).find( 'th.gp-column-locale' ).attr( 'colspan', 1 );
+				$( gpToolboxTable ).find( 'thead th.gp-column-locale' ).attr( 'colspan', 1 );
 				// Show Project header column.
-				$( '.glossaries thead' ).find( 'th.gp-column-translation-set' ).show();
+				$( gpToolboxTable ).find( 'thead th.gp-column-translation-set' ).show();
 				// Show the specified status rows.
-				$( '.glossaries tbody' ).find( 'tr td.translation-set.unknown' ).parent().show();
+				$( gpToolboxTable ).find( 'tbody tr td.translation-set.unknown' ).parent().show();
 			} else if ( glossaryType === 'glossaries-unknown-orphaned-entries' ) {
 				// Hide all rows.
-				$( '.glossaries tbody' ).find( 'tr' ).hide();
+				$( gpToolboxTable ).find( 'tbody tr' ).hide();
 				// Shrink Locale header column.
-				$( '.glossaries thead' ).find( 'th.gp-column-locale' ).attr( 'colspan', 1 );
+				$( gpToolboxTable ).find( 'thead th.gp-column-locale' ).attr( 'colspan', 1 );
 				// Show Project header column.
-				$( '.glossaries thead' ).find( 'th.gp-column-translation-set' ).show();
+				$( gpToolboxTable ).find( 'thead th.gp-column-translation-set' ).show();
 				// Show the specified status rows.
-				$( '.glossaries tbody' ).find( 'tr td.id.unknown' ).parent().show();
+				$( gpToolboxTable ).find( 'tbody tr td.id.unknown' ).parent().show();
 			}
 		}
 	} );
@@ -106,6 +109,6 @@ jQuery( document ).ready( function( $ ) {
 		// Clear the text input filter.
 		$( 'input#glossaries-filter' ).val( '' );
 		// Show all rows.
-		$( '.glossaries tbody' ).find( 'tr' ).show();
+		$( gpToolboxTable ).find( 'tbody tr' ).show();
 	} );
 } );
