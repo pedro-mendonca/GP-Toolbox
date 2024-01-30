@@ -199,7 +199,7 @@ jQuery( document ).ready( function( $ ) {
 	$( '.permission-validator' ).tablesorter( {
 		theme: 'glotpress',
 		sortList: [
-			[ 1, 2 ],
+			[ 1, 0 ],
 			[ 2, 0 ],
 			[ 3, 0 ],
 		],

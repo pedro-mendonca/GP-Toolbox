@@ -125,26 +125,35 @@ foreach ( $gp_permissions as $gp_permission ) {
 					?>
 					<tr gptoolboxdata-permission="<?php echo esc_attr( strval( $permission_id ) ); ?>">
 						<td class="id"><?php echo esc_html( strval( $permission_id ) ); ?></td>
-						<td class="user">
+
 							<?php
 							if ( $user ) {
 								?>
-								<a href="<?php echo esc_url( gp_url_profile( $user->user_nicename ) ); ?>"><?php echo esc_html( $user->user_login ); ?></a>
+								<td class="user" data-text="<?php echo esc_attr( $user->user_login ); ?>">
+									<a href="<?php echo esc_url( gp_url_profile( $user->user_nicename ) ); ?>"><?php echo esc_html( $user->user_login ); ?></a>
+								</td>
 								<?php
 							} else {
-								echo '<span class="unknown">'
-								. sprintf(
-									/* translators: Known identifier data. */
-									esc_html__( 'Unknown (%s)', 'gp-toolbox' ),
-									sprintf(
-										/* translators: %d ID number. */
-										esc_html__( 'ID #%d', 'gp-toolbox' ),
-										esc_html( $user_id )
-									)
-								) . '</span>';
+								?>
+								<td class="user" data-text="">
+									<span class="unknown" data-text="">
+										<?php
+										printf(
+											/* translators: Known identifier data. */
+											esc_html__( 'Unknown user (%s)', 'gp-toolbox' ),
+											sprintf(
+												/* translators: %d ID number. */
+												esc_html__( 'ID #%d', 'gp-toolbox' ),
+												esc_html( strval( $user_id ) )
+											)
+										);
+										?>
+									</span>
+								</td>
+								<?php
 							}
 							?>
-						</td>
+
 						<td class="action">
 							<div class="progress-notice" style="display: none;"></div>
 							<button class="delete"><span class="dashicons dashicons-trash"></span></button>
@@ -246,16 +255,18 @@ foreach ( $gp_permissions as $gp_permission ) {
 							<tr class="<?php echo esc_attr( $class ); ?>" gptoolboxdata-permission="<?php echo esc_attr( $permission_id ); ?>">
 
 								<td class="id"><?php echo esc_html( $permission_id ); ?></td>
+								<?php
 
-								<td class="user">
-									<?php
-									if ( $user ) {
-										?>
+								if ( $user ) {
+									?>
+									<td class="user" data-text="<?php echo esc_attr( $user->user_login ); ?>">
 										<a href="<?php echo esc_url( gp_url_profile( $user->user_nicename ) ); ?>"><?php echo esc_html( $user->user_login ); ?></a>
-										<?php
-									} else {
-										?>
-										<span class="unknown">
+									</td>
+									<?php
+								} else {
+									?>
+									<td class="user" data-text="">
+										<span class="unknown" data-text="">
 											<?php
 											printf(
 												/* translators: Known identifier data. */
@@ -268,12 +279,9 @@ foreach ( $gp_permissions as $gp_permission ) {
 											);
 											?>
 										</span>
-										<?php
-									}
-									?>
-								</td>
-
-								<?php
+									</td>
+									<?php
+								}
 
 								if ( $permission_type === 'project|locale|set-slug' ) {
 
@@ -324,19 +332,20 @@ foreach ( $gp_permissions as $gp_permission ) {
 											<?php
 										} else {
 											?>
-											<td class="translation-set">
-												<?php
-												echo '<span class="unknown" data-text="">'
-												. sprintf(
-													/* translators: Known identifier data. */
-													esc_html__( 'Unknown translation set (%s)', 'gp-toolbox' ),
-													sprintf(
-														'%s/%s',
-														esc_html( $set_locale ),
-														esc_html( $set_slug )
-													)
-												) . '</span>';
-												?>
+											<td class="translation-set" data-text="">
+												<span class="unknown">
+													<?php
+													printf(
+														/* translators: Known identifier data. */
+														esc_html__( 'Unknown translation set (%s)', 'gp-toolbox' ),
+														sprintf(
+															'%s/%s',
+															esc_html( $set_locale ),
+															esc_html( $set_slug )
+														)
+													);
+													?>
+												</span>
 											</td>
 											<?php
 										}
