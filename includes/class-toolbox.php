@@ -260,6 +260,27 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 				);
 			}
 
+			if ( $template === 'gptoolbox-originals' ) {
+
+				$template_args = null;
+
+				// Register and enqueue GP-Toolbox Permissions template scripts.
+				add_action(
+					'wp_enqueue_scripts',
+					function () use ( $template_args ) {
+						self::register_plugin_scripts(
+							'tools-originals',
+							$template_args,
+							array(
+								'tablesorter',
+								'wp-i18n',
+								'wp-api',
+							)
+						);
+					}
+				);
+			}
+
 			if ( $template === 'gptoolbox-translation-sets' ) {
 
 				$template_args = null;
