@@ -20,8 +20,8 @@ jQuery( document ).ready( function( $ ) {
 	var dataPrefix = 'gptoolboxdata-';
 
 	// Set tables rows.
-	var permissionValidatorsRows = $( '.permission-validator tbody' ).find( 'tr' );
-	var permissionAdminsRows = $( '.permission-admin tbody' ).find( 'tr' );
+	var permissionAdminsRows = $( gpToolboxTablePermissionAdmin ).find( 'tbody tr' );
+	var permissionValidatorsRows = $( gpToolboxTablePermissionValidator ).find( 'tbody tr' );
 
 	// Check if the Permission Validators table exist.
 	if ( gpToolboxTablePermissionAdmin.length ) {
@@ -75,7 +75,7 @@ jQuery( document ).ready( function( $ ) {
 	 */
 	function permissionDelete( permissionType, permissionID ) {
 		// Find the table cell from any permissions table.
-		var tr = $( 'table.gp-toolbox.permission-' + permissionType ).find( 'tbody tr[' + dataPrefix + 'permission="' + permissionID + '"]' );
+		var tr = $( 'table.gp-table.gp-toolbox.tools-permission-' + permissionType ).find( 'tbody tr[' + dataPrefix + 'permission="' + permissionID + '"]' );
 		var td = $( tr ).find( 'td.action' );
 
 		var notice = $( td ).find( 'div.progress-notice' );
@@ -128,7 +128,7 @@ jQuery( document ).ready( function( $ ) {
 						// Hide table filter.
 						$( 'div.permission-' + permissionType + '-filter' ).fadeOut();
 						// Hide table.
-						$( 'table.gp-toolbox.permission-' + permissionType ).fadeOut();
+						$( 'table.gp-table.gp-toolbox.tools-permission-' + permissionType ).fadeOut();
 					}
 
 					console.log( response.message );
