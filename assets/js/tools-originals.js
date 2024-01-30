@@ -1,11 +1,14 @@
 /* global document */
 
 jQuery( document ).ready( function( $ ) {
+	// Set table.
+	var gpToolboxTable = $( 'table.gp-table.gp-toolbox.tools-originals' );
+
 	// Set tables rows.
-	var rows = $( '.originals tbody' ).find( 'tr' );
+	var rows = $( gpToolboxTable ).find( 'tbody tr' );
 
 	// Configure Tablesorter.
-	$( '.originals' ).tablesorter( {
+	$( gpToolboxTable ).tablesorter( {
 		theme: 'glotpress',
 		sortList: [
 			[ 0, 0 ],
@@ -52,17 +55,17 @@ jQuery( document ).ready( function( $ ) {
 		if ( itemClass === 'originals-status' ) {
 			if ( originalsStatus === 'originals-status-all' ) {
 				// Show all rows.
-				$( '.originals tbody' ).find( 'tr' ).show();
+				$( gpToolboxTable ).find( 'tbody tr' ).show();
 			} else if ( originalsStatus === 'originals-status-active' ) {
 				// Hide all rows.
-				$( '.originals tbody' ).find( 'tr' ).hide();
+				$( gpToolboxTable ).find( 'tbody tr' ).hide();
 				// Show the specified status rows.
-				$( '.originals tbody' ).find( 'tr td.stats.active:not([data-text="0"])' ).parent().show();
+				$( gpToolboxTable ).find( 'tbody tr td.stats.active:not([data-text="0"])' ).parent().show();
 			} else if ( originalsStatus === 'originals-status-obsolete' ) {
 				// Hide all rows.
-				$( '.originals tbody' ).find( 'tr' ).hide();
+				$( gpToolboxTable ).find( 'tbody tr' ).hide();
 				// Show the specified status rows.
-				$( '.originals tbody' ).find( 'tr td.stats.obsolete:not([data-text="0"])' ).parent().show();
+				$( gpToolboxTable ).find( 'tbody tr td.stats.obsolete:not([data-text="0"])' ).parent().show();
 			}
 		}
 	} );
@@ -72,6 +75,6 @@ jQuery( document ).ready( function( $ ) {
 		// Clear the text input filter.
 		$( 'input#originals-filter' ).val( '' );
 		// Show all rows.
-		$( '.originals tbody' ).find( 'tr' ).show();
+		$( gpToolboxTable ).find( 'tbody tr' ).show();
 	} );
 } );

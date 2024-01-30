@@ -113,13 +113,14 @@ foreach ( $gp_glossary_entries as $gp_glossary_entry ) {
 						_n( '%s Glossary of unknown translation set.', '%s Glossaries of unknown translation set.', $unkown_type_glossaries_count, 'gp-toolbox' ),
 						'<strong class="glossaries-label glossaries-label-project">' . esc_html( number_format_i18n( $unkown_type_glossaries_count ) ) . '</strong>'
 					) . '</a>',
-					'<a id="glossaries-unknown-orphaned-entries" class="glossaries-type" href="#glossaries">' . sprintf(
+					count( $orphaned_glossary_entries ) > 0 ? '<a id="glossaries-unknown-orphaned-entries" class="glossaries-type" href="#glossaries">' . sprintf(
 						/* translators: %s: Number of Glossaries. */
-						_n( '%s Unknown glossary with orphaned glossary entries.', '%s Unknown glossaries with orphaned glossary entries.', count( $orphaned_glossary_entries ), 'gp-toolbox' ),
+						_n( 'Entries from %s unknown glossary.', 'Entries from %s unknown glossaries', count( $orphaned_glossary_entries ), 'gp-toolbox' ),
 						'<strong class="glossaries-label glossaries-label-project">' . esc_html( number_format_i18n( count( $orphaned_glossary_entries ) ) ) . '</strong>'
-					) . '</a>'
+					) . '</a>' : ''
 				)
 			);
+
 			?>
 		</p>
 		<?php
@@ -134,7 +135,7 @@ foreach ( $gp_glossary_entries as $gp_glossary_entry ) {
 			<button id="glossaries-filter-clear" class="button" style="margin-bottom: 3px;" title="<?php esc_attr_e( 'Clear search filter.', 'gp-toolbox' ); ?>"><?php esc_html_e( 'Clear', 'gp-toolbox' ); ?></button>
 		</div>
 
-		<table class="gp-table gp-toolbox glossaries">
+		<table class="gp-table gp-toolbox tools-glossaries">
 			<thead>
 				<tr>
 					<th class="gp-column-id"><?php esc_html_e( 'ID', 'gp-toolbox' ); ?></th>
@@ -301,19 +302,19 @@ foreach ( $gp_glossary_entries as $gp_glossary_entry ) {
 									<?php
 									echo wp_kses_post(
 										sprintf(
-											/* translators: 1: Known identifier data. 2: Glossary entries count. */
+											/* translators: 1: Glossary entries count. 2: Known identifier data. */
 											_n(
-												'Unknown glossary (%1$s) with %2$d orphaned glossary entry',
-												'Unknown glossary (%1$s) with %2$d orphaned glossary entries',
+												'%1$d orphaned glossary entry from unknown glossary (%2$s)',
+												'%1$d orphaned glossary entries from unknown glossary (%2$s)',
 												count( $orphaned_glossary_entries_by_glossary_id ),
 												'gp-toolbox'
 											),
+											esc_html( number_format_i18n( count( $orphaned_glossary_entries_by_glossary_id ) ) ),
 											sprintf(
 												/* translators: %d ID number. */
 												esc_html__( 'ID #%d', 'gp-toolbox' ),
 												esc_html( strval( $glossary_id ) )
-											),
-											esc_html( number_format_i18n( count( $orphaned_glossary_entries_by_glossary_id ) ) )
+											)
 										)
 									);
 									?>

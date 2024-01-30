@@ -8,10 +8,10 @@ jQuery( document ).ready( function( $ ) {
 	var userLocale = gpToolbox.user_locale;
 
 	// Get the Admin permissions table.
-	var tablePermissionAdmin = $( 'table.gp-table.permission-admin' );
+	var gpToolboxTablePermissionAdmin = $( 'table.gp-table.gp-toolbox.tools-permission-admin' );
 
 	// Get the Validator permissions table.
-	var tablePermissionValidator = $( 'table.gp-table.permission-validator' );
+	var gpToolboxTablePermissionValidator = $( 'table.gp-table.gp-toolbox.tools-permission-validator' );
 
 	// Check if user is has GlotPress Admin previleges.
 	var glotpressAdmin = gpToolbox.admin;
@@ -24,9 +24,9 @@ jQuery( document ).ready( function( $ ) {
 	var permissionAdminsRows = $( '.permission-admin tbody' ).find( 'tr' );
 
 	// Check if the Permission Validators table exist.
-	if ( tablePermissionAdmin.length ) {
+	if ( gpToolboxTablePermissionAdmin.length ) {
 		// Capture button click.
-		$( tablePermissionAdmin ).children( 'tbody' ).children( 'tr' ).each(
+		$( gpToolboxTablePermissionAdmin ).children( 'tbody' ).children( 'tr' ).each(
 			function() {
 				var permissionID = $( this ).attr( 'gptoolboxdata-permission' );
 
@@ -48,9 +48,9 @@ jQuery( document ).ready( function( $ ) {
 	}
 
 	// Check if the Permission Validators table exist.
-	if ( tablePermissionValidator.length ) {
+	if ( gpToolboxTablePermissionValidator.length ) {
 		// Capture button click.
-		$( tablePermissionValidator ).children( 'tbody' ).children( 'tr' ).each(
+		$( gpToolboxTablePermissionValidator ).children( 'tbody' ).children( 'tr' ).each(
 			function() {
 				var permissionID = $( this ).attr( 'gptoolboxdata-permission' );
 
@@ -162,7 +162,7 @@ jQuery( document ).ready( function( $ ) {
 	}
 
 	// Configure Tablesorter.
-	$( '.permission-admin' ).tablesorter( {
+	$( gpToolboxTablePermissionAdmin ).tablesorter( {
 		theme: 'glotpress',
 		sortList: [
 			[ 1, 0 ],
@@ -196,10 +196,10 @@ jQuery( document ).ready( function( $ ) {
 	} );
 
 	// Configure Tablesorter.
-	$( '.permission-validator' ).tablesorter( {
+	$( gpToolboxTablePermissionValidator ).tablesorter( {
 		theme: 'glotpress',
 		sortList: [
-			[ 1, 2 ],
+			[ 1, 0 ],
 			[ 2, 0 ],
 			[ 3, 0 ],
 		],
@@ -236,7 +236,7 @@ jQuery( document ).ready( function( $ ) {
 		// Clear the text input filter.
 		$( 'input#permission-admin-filter' ).val( '' );
 		// Show all rows.
-		$( '.permission-admin tbody' ).find( 'tr' ).show();
+		$( gpToolboxTablePermissionAdmin ).find( 'tbody tr' ).show();
 	} );
 
 	// Clear table filter.
@@ -244,6 +244,6 @@ jQuery( document ).ready( function( $ ) {
 		// Clear the text input filter.
 		$( 'input#permission-validator-filter' ).val( '' );
 		// Show all rows.
-		$( '.permission-validator tbody' ).find( 'tr' ).show();
+		$( gpToolboxTablePermissionValidator ).find( 'tbody tr' ).show();
 	} );
 } );

@@ -47,15 +47,16 @@ table {
 
 		}
 
-		&.gp-toolbox.permission-admin,
-		&.gp-toolbox.permission-validator,
-		&.gp-toolbox.permission-other,
-		&.gp-toolbox.originals,
-		&.gp-toolbox.glossaries {
+		&.gp-toolbox.tools-permission-admin,
+		&.gp-toolbox.tools-permission-validator,
+		&.gp-toolbox.tools-permission-other,
+		&.gp-toolbox.tools-originals,
+		&.gp-toolbox.tools-translation-sets,
+		&.gp-toolbox.tools-glossaries {
 			width: auto;
 		}
 
-		&.translation-sets {
+		&.tools-translation-sets {
 
 			tbody {
 
@@ -147,7 +148,7 @@ table {
 
 		}
 
-		&.permission-validator {
+		&.tools-permission-validator {
 
 			tr {
 
@@ -228,12 +229,12 @@ td.stats {
 	text-align: center;
 }
 
-table.gp-toolbox.glossaries td.id:not(.unknown),
-table.gp-toolbox.glossaries td.entries {
+table.gp-toolbox.tools-glossaries td.id:not(.unknown),
+table.gp-toolbox.tools-glossaries td.entries {
 	text-align: center;
 }
 
-table.gp-toolbox.glossaries td.entries a {
+table.gp-toolbox.tools-glossaries td.entries a {
 	text-decoration: none;
 	color: var(--gp-color-fg-default);
 	font-weight: 600;
