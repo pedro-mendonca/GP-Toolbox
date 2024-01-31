@@ -92,7 +92,7 @@ foreach ( $gp_originals as $original ) {
 	$gp_originals_by_status[ $original->status ][ $original->id ] = $original;
 
 	// Originals of unknown projects.
-	if ( ! array_key_exists( $original->project_id, $gp_projects ) ) {
+	if ( ! isset( $gp_projects[ $original->project_id ] ) ) {
 		$orphaned_originals[ $original->project_id ][ $original->id ] = $original;
 	}
 }
@@ -162,7 +162,7 @@ foreach ( $gp_originals as $original ) {
 
 				foreach ( $gp_originals_by_project as $project_id => $statuses ) {
 
-					$project = $gp_projects[ $project_id ];
+					$project = $gp_projects[ $project_id ] ?? false;
 
 					$active_count   = isset( $statuses['+active'] ) ? count( $statuses['+active'] ) : 0;
 					$obsolete_count = isset( $statuses['-obsolete'] ) ? count( $statuses['-obsolete'] ) : 0;

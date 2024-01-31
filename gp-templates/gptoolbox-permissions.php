@@ -316,9 +316,9 @@ foreach ( $gp_permissions as $permission_id => $permission ) {
 									$translation_set_locale     = $data[1];
 									$translation_set_slug       = $data[2];
 
-									$project = array_key_exists( $translation_set_project_id, $gp_projects ) ? $gp_projects[ $translation_set_project_id ] : false;
+									$project = $gp_projects[ $translation_set_project_id ] ?? false;
 
-									$translation_set = array_key_exists( $current_permission_value, $gp_translation_sets_by_project_id_and_locale_and_slug ) ? $gp_translation_sets_by_project_id_and_locale_and_slug[ $current_permission_value ] : false;
+									$translation_set = $gp_translation_sets_by_project_id_and_locale_and_slug[ $current_permission_value ] ?? false;
 
 									if ( ! $project ) {
 										?>

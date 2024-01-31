@@ -58,7 +58,7 @@ foreach ( GP::$project->all() as $project ) {
 
 $orphaned_translation_sets = array();
 foreach ( $gp_translation_sets as $translation_set ) {
-	if ( ! array_key_exists( $translation_set->project_id, $gp_projects ) ) {
+	if ( ! isset( $gp_projects[ $translation_set->project_id ] ) ) {
 		$orphaned_translation_sets[ $translation_set->project_id ][ $translation_set->id ] = $translation_set;
 	}
 }
@@ -113,7 +113,7 @@ foreach ( $gp_translation_sets as $translation_set ) {
 						<?php
 
 						// Get translation set project.
-						$project = array_key_exists( $translation_set->project_id, $gp_projects ) ? $gp_projects[ $translation_set->project_id ] : false;
+						$project = $gp_projects[ $translation_set->project_id ] ?? false;
 
 						// Check if project is known. Double check for GP_Project object.
 						if ( ! $project ) {

@@ -58,7 +58,7 @@ foreach ( GP::$glossary_entry->all() as $glossary_entry ) {
 	$gp_glossary_entries[ $glossary_entry->id ] = $glossary_entry;
 
 	// Set orphaned glossary entries.
-	if ( ! array_key_exists( $glossary_entry->glossary_id, $gp_glossaries ) ) {
+	if ( ! isset( $gp_glossaries[ $glossary_entry->glossary_id ] ) ) {
 		$orphaned_glossary_entries[ $glossary_entry->glossary_id ][ $glossary_entry->id ] = $glossary_entry;
 	}
 }
@@ -97,7 +97,7 @@ foreach ( GP::$project->all() as $project ) {
 
 			foreach ( $gp_glossaries as $glossary ) {
 				// Try to get glossary translation set.
-				$translation_set = array_key_exists( $glossary->translation_set_id, $gp_translation_sets ) ? $gp_translation_sets[ $glossary->translation_set_id ] : false;
+				$translation_set = $gp_translation_sets[ $glossary->translation_set_id ] ?? false;
 
 				// Set the glossary type.
 				if ( $translation_set && $translation_set->project_id === 0 ) {
@@ -173,7 +173,7 @@ foreach ( GP::$project->all() as $project ) {
 				foreach ( $gp_glossaries as $glossary ) {
 
 					// Try to get glossary translation set.
-					$translation_set = array_key_exists( $glossary->translation_set_id, $gp_translation_sets ) ? $gp_translation_sets[ $glossary->translation_set_id ] : false;
+					$translation_set = $gp_translation_sets[ $glossary->translation_set_id ] ?? false;
 
 					// Check wether is a Global or Project glossary.
 					$glossary_type = ( $translation_set && $translation_set->project_id === 0 ) ? 'global' : 'project';
@@ -248,7 +248,7 @@ foreach ( GP::$project->all() as $project ) {
 							</td>
 							<?php
 
-							$project = array_key_exists( $translation_set->project_id, $gp_translation_sets ) ? $gp_translation_sets[ $translation_set->project_id ] : false;
+							$project = $gp_translation_sets[ $translation_set->project_id ] ?? false;
 
 							if ( ! $project ) {
 								// Unknown project.
