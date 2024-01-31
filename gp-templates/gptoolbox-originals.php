@@ -38,10 +38,23 @@ gp_tmpl_load( 'gptoolbox-header', $args );
 
 <p class="gptoolbox-description">
 	<?php esc_html_e( 'Overview of all Originals for each Project.', 'gp-toolbox' ); ?>
+</p>
+
+<p class="gptoolbox-description">
+	<?php echo wp_kses_post( __( 'Each Original has a parent <code>project_id</code>. If there is no parent Project in the database with the same ID, then the Original is orphaned.', 'gp-toolbox' ) ); ?>
 	<br>
-	<?php echo wp_kses_post( __( 'The Originals <code>status</code> can be either <code>+active</code> or <code>-obsolete</code>.', 'gp-toolbox' ) ); ?>
-	<br>
-	<?php echo wp_kses_post( __( 'Each Original belongs to a Project, identified by <code>project_id</code>. If there is no Project in the database with the same ID, then the Original is orphaned.', 'gp-toolbox' ) ); ?>
+	<?php
+	echo wp_kses_post(
+		wp_sprintf(
+			/* translators: %l: List of originals statuses. */
+			esc_html__( 'The Originals can have one of the following statuses: %l.', 'gp-toolbox' ),
+			array(
+				'<code>+active</code>',
+				'<code>-obsolete</code>',
+			)
+		)
+	);
+	?>
 </p>
 
 <?php
