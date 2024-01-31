@@ -11,16 +11,17 @@ namespace GP_Toolbox;
 
 use GP;
 
-// Get page title.
-gp_title( __( 'Permissions &lt; Tools &lt; GlotPress', 'gp-toolbox' ) );
-
-// Load GlotPress breadcrumbs.
-gp_breadcrumb(
-	array(
-		gp_link_get( gp_url( '/tools/' ), esc_html__( 'Tools', 'gp-toolbox' ) ),
-		gp_link_get( gp_url( '/tools/permissions/' ), esc_html__( 'Permissions', 'gp-toolbox' ) ),
-	)
+// Set the page breadcrumbs.
+$breadcrumbs = array(
+	'/tools/'             => esc_html__( 'Tools', 'gp-toolbox' ),
+	'/tools/permissions/' => esc_html__( 'Permissions', 'gp-toolbox' ),
 );
+
+// Get GlotPress page title.
+Toolbox::page_title( $breadcrumbs );
+
+// Get GlotPress breadcrumbs.
+Toolbox::page_breadcrumbs( $breadcrumbs );
 
 // Load GlotPress Header template.
 gp_tmpl_header();
@@ -316,9 +317,9 @@ foreach ( $gp_permissions as $permission_id => $permission ) {
 									$translation_set_locale     = $data[1];
 									$translation_set_slug       = $data[2];
 
-									$project = array_key_exists( $translation_set_project_id, $gp_projects ) ? $gp_projects[ $translation_set_project_id ] : false;
+									$project = $gp_projects[ $translation_set_project_id ] ?? false;
 
-									$translation_set = array_key_exists( $current_permission_value, $gp_translation_sets_by_project_id_and_locale_and_slug ) ? $gp_translation_sets_by_project_id_and_locale_and_slug[ $current_permission_value ] : false;
+									$translation_set = $gp_translation_sets_by_project_id_and_locale_and_slug[ $current_permission_value ] ?? false;
 
 									if ( ! $project ) {
 										?>

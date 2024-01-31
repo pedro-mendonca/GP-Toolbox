@@ -11,16 +11,17 @@ namespace GP_Toolbox;
 
 use GP;
 
-// Get page title.
-gp_title( __( 'Originals &lt; Tools &lt; GlotPress', 'gp-toolbox' ) );
-
-// Load GlotPress breadcrumbs.
-gp_breadcrumb(
-	array(
-		gp_link_get( gp_url( '/tools/' ), esc_html__( 'Tools', 'gp-toolbox' ) ),
-		gp_link_get( gp_url( '/tools/originals/' ), esc_html__( 'Originals', 'gp-toolbox' ) ),
-	)
+// Set the page breadcrumbs.
+$breadcrumbs = array(
+	'/tools/'           => esc_html__( 'Tools', 'gp-toolbox' ),
+	'/tools/originals/' => esc_html__( 'Originals', 'gp-toolbox' ),
 );
+
+// Get GlotPress page title.
+Toolbox::page_title( $breadcrumbs );
+
+// Get GlotPress breadcrumbs.
+Toolbox::page_breadcrumbs( $breadcrumbs );
 
 // Load GlotPress Header template.
 gp_tmpl_header();
@@ -37,10 +38,23 @@ gp_tmpl_load( 'gptoolbox-header', $args );
 
 <p class="gptoolbox-description">
 	<?php esc_html_e( 'Overview of all Originals for each Project.', 'gp-toolbox' ); ?>
+</p>
+
+<p class="gptoolbox-description">
+	<?php echo wp_kses_post( __( 'Each Original has a parent <code>project_id</code>. If there is no parent Project in the database with the same ID, then the Original is orphaned.', 'gp-toolbox' ) ); ?>
 	<br>
-	<?php echo wp_kses_post( __( 'The Originals <code>status</code> can be either <code>+active</code> or <code>-obsolete</code>.', 'gp-toolbox' ) ); ?>
-	<br>
-	<?php echo wp_kses_post( __( 'Each Original belongs to a Project, identified by <code>project_id</code>. If there is no Project in the database with the same ID, then the Original is orphaned.', 'gp-toolbox' ) ); ?>
+	<?php
+	echo wp_kses_post(
+		wp_sprintf(
+			/* translators: %l: List of originals statuses. */
+			esc_html__( 'The Originals can have one of the following statuses: %l.', 'gp-toolbox' ),
+			array(
+				'<code>+active</code>',
+				'<code>-obsolete</code>',
+			)
+		)
+	);
+	?>
 </p>
 
 <?php
@@ -92,7 +106,7 @@ foreach ( $gp_originals as $original ) {
 	$gp_originals_by_status[ $original->status ][ $original->id ] = $original;
 
 	// Originals of unknown projects.
-	if ( ! array_key_exists( $original->project_id, $gp_projects ) ) {
+	if ( ! isset( $gp_projects[ $original->project_id ] ) ) {
 		$orphaned_originals[ $original->project_id ][ $original->id ] = $original;
 	}
 }
@@ -162,7 +176,7 @@ foreach ( $gp_originals as $original ) {
 
 				foreach ( $gp_originals_by_project as $project_id => $statuses ) {
 
-					$project = $gp_projects[ $project_id ];
+					$project = $gp_projects[ $project_id ] ?? false;
 
 					$active_count   = isset( $statuses['+active'] ) ? count( $statuses['+active'] ) : 0;
 					$obsolete_count = isset( $statuses['-obsolete'] ) ? count( $statuses['-obsolete'] ) : 0;

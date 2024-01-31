@@ -608,5 +608,55 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 			 */
 			return apply_filters( 'gp_toolbox_tools_pages', $tools_pages );
 		}
+
+
+		/**
+		 * Get the page title.
+		 *
+		 * @since 1.0.0
+		 *
+		 * @param array<string, string> $breadcrumbs  Array breadcrumbs to produce the page title.
+		 * @param string                $separator    Separator of title items. Defaults to < as in GlotPress core.
+		 *
+		 * @return string   Page title, filterable by gp_title().
+		 */
+		public static function page_title( $breadcrumbs, $separator = ' &lt; ' ) {
+
+			// Reverse items order.
+			$breadcrumbs = array_reverse( $breadcrumbs );
+
+			// Add main GlotPress item to breadcrumbs ending.
+			array_push(
+				$breadcrumbs,
+				esc_html__( 'GlotPress', 'gp-toolbox' )
+			);
+
+			return gp_title(
+				esc_html(
+					implode( $separator, $breadcrumbs )
+				)
+			);
+		}
+
+
+		/**
+		 * Get the page breadcrumbs.
+		 *
+		 * @since 1.0.0
+		 *
+		 * @param array<string, string> $breadcrumbs  Array of breadcrumbs to produce the page breadcrumbs.
+		 *
+		 * @return string   Page breadcrumbs, filterable by gp_breadcrumb().
+		 */
+		public static function page_breadcrumbs( $breadcrumbs ) {
+
+			$result = array();
+
+			foreach ( $breadcrumbs as $url => $title ) {
+				$result[] = gp_link_get( gp_url( $url ), esc_html( $title ) );
+			}
+
+			return gp_breadcrumb( $result );
+		}
 	}
 }

@@ -12,16 +12,17 @@ namespace GP_Toolbox;
 use GP;
 use GP_Locales;
 
-// Get page title.
-gp_title( __( 'Translation Sets &lt; Tools &lt; GlotPress', 'gp-toolbox' ) );
-
-// Load GlotPress breadcrumbs.
-gp_breadcrumb(
-	array(
-		gp_link_get( gp_url( '/tools/' ), esc_html__( 'Tools', 'gp-toolbox' ) ),
-		gp_link_get( gp_url( '/tools/translation-sets/' ), esc_html__( 'Translation Sets', 'gp-toolbox' ) ),
-	)
+// Set the page breadcrumbs.
+$breadcrumbs = array(
+	'/tools/'                  => esc_html__( 'Tools', 'gp-toolbox' ),
+	'/tools/translation-sets/' => esc_html__( 'Translation Sets', 'gp-toolbox' ),
 );
+
+// Get GlotPress page title.
+Toolbox::page_title( $breadcrumbs );
+
+// Get GlotPress breadcrumbs.
+Toolbox::page_breadcrumbs( $breadcrumbs );
 
 // Load GlotPress Header template.
 gp_tmpl_header();
@@ -38,8 +39,12 @@ gp_tmpl_load( 'gptoolbox-header', $args );
 
 <p class="gptoolbox-description">
 	<?php esc_html_e( 'Overview of all Translation Sets.', 'gp-toolbox' ); ?>
-	<br>
-	<?php echo wp_kses_post( __( 'Each Translation Set belongs to a Project, identified by <code>project_id</code>. If there is no Project in the database with the same ID, then the Translation Set is orphaned.', 'gp-toolbox' ) ); ?>
+</p>
+
+<p class="gptoolbox-description">
+	<?php
+	echo wp_kses_post( __( 'Each Translation Set has a parent <code>project_id</code>. If there is no parent Project in the database with the same ID, then the Translation Set is orphaned.', 'gp-toolbox' ) );
+	?>
 </p>
 
 <?php
@@ -58,7 +63,7 @@ foreach ( GP::$project->all() as $project ) {
 
 $orphaned_translation_sets = array();
 foreach ( $gp_translation_sets as $translation_set ) {
-	if ( ! array_key_exists( $translation_set->project_id, $gp_projects ) ) {
+	if ( ! isset( $gp_projects[ $translation_set->project_id ] ) ) {
 		$orphaned_translation_sets[ $translation_set->project_id ][ $translation_set->id ] = $translation_set;
 	}
 }
@@ -113,7 +118,7 @@ foreach ( $gp_translation_sets as $translation_set ) {
 						<?php
 
 						// Get translation set project.
-						$project = array_key_exists( $translation_set->project_id, $gp_projects ) ? $gp_projects[ $translation_set->project_id ] : false;
+						$project = $gp_projects[ $translation_set->project_id ] ?? false;
 
 						// Check if project is known. Double check for GP_Project object.
 						if ( ! $project ) {

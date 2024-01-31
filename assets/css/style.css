@@ -46,77 +46,77 @@ table.gp-table.gp-toolbox.tools-glossaries {
 	width: auto;
 }
 
-table.gp-table.tools-translation-sets tbody tr td.stats:not(.percent) {
+table.gp-table.translation-sets tbody tr td.stats:not(.percent) {
 	background-color: var(--gp-color-secondary-100);
 }
 
-table.gp-table.tools-translation-sets tbody tr td.stats:not(.percent).highlight a {
+table.gp-table.translation-sets tbody tr td.stats:not(.percent).highlight a {
 	opacity: 1;
 }
 
-table.gp-table.tools-translation-sets tbody tr td.stats:not(.percent).highlight.translated {
+table.gp-table.translation-sets tbody tr td.stats:not(.percent).highlight.translated {
 	background-color: var(--gp-color-status-current-subtle);
 }
 
-table.gp-table.tools-translation-sets tbody tr td.stats:not(.percent).highlight.fuzzy {
+table.gp-table.translation-sets tbody tr td.stats:not(.percent).highlight.fuzzy {
 	background-color: var(--gp-color-status-fuzzy-subtle);
 }
 
-table.gp-table.tools-translation-sets tbody tr td.stats:not(.percent).highlight.untranslated {
+table.gp-table.translation-sets tbody tr td.stats:not(.percent).highlight.untranslated {
 	background-color: inherit;
 }
 
-table.gp-table.tools-translation-sets tbody tr td.stats:not(.percent).highlight.waiting {
+table.gp-table.translation-sets tbody tr td.stats:not(.percent).highlight.waiting {
 	background-color: var(--gp-color-status-waiting-subtle);
 }
 
-table.gp-table.tools-translation-sets tbody tr td.stats:not(.percent).highlight.old {
+table.gp-table.translation-sets tbody tr td.stats:not(.percent).highlight.old {
 	background-color: var(--gp-color-status-old-subtle);
 }
 
-table.gp-table.tools-translation-sets tbody tr td.stats:not(.percent).highlight.rejected {
+table.gp-table.translation-sets tbody tr td.stats:not(.percent).highlight.rejected {
 	background-color: var(--gp-color-status-rejected-subtle);
 }
 
-table.gp-table.tools-translation-sets tbody tr td.stats:not(.percent).highlight.changesrequested {
+table.gp-table.translation-sets tbody tr td.stats:not(.percent).highlight.changesrequested {
 	background-color: var(--gp-color-status-changesrequested-subtle);
 }
 
-table.gp-table.tools-translation-sets tbody tr td.stats.old div.progress-notice,
-table.gp-table.tools-translation-sets tbody tr td.stats.rejected div.progress-notice,
-table.gp-table.tools-translation-sets tbody tr td.stats.changesrequested div.progress-notice {
+table.gp-table.translation-sets tbody tr td.stats.old div.progress-notice,
+table.gp-table.translation-sets tbody tr td.stats.rejected div.progress-notice,
+table.gp-table.translation-sets tbody tr td.stats.changesrequested div.progress-notice {
 	font-size: 0.75em;
 	font-style: italic;
 }
 
-table.gp-table.tools-translation-sets tbody tr td.stats.old a,
-table.gp-table.tools-translation-sets tbody tr td.stats.old button,
-table.gp-table.tools-translation-sets tbody tr td.stats.rejected a,
-table.gp-table.tools-translation-sets tbody tr td.stats.rejected button,
-table.gp-table.tools-translation-sets tbody tr td.stats.changesrequested a,
-table.gp-table.tools-translation-sets tbody tr td.stats.changesrequested button {
+table.gp-table.translation-sets tbody tr td.stats.old a,
+table.gp-table.translation-sets tbody tr td.stats.old button,
+table.gp-table.translation-sets tbody tr td.stats.rejected a,
+table.gp-table.translation-sets tbody tr td.stats.rejected button,
+table.gp-table.translation-sets tbody tr td.stats.changesrequested a,
+table.gp-table.translation-sets tbody tr td.stats.changesrequested button {
 	display: inline-block;
 }
 
-table.gp-table.tools-translation-sets tbody tr td.stats.old a.hidden,
-table.gp-table.tools-translation-sets tbody tr td.stats.old button.hidden,
-table.gp-table.tools-translation-sets tbody tr td.stats.rejected a.hidden,
-table.gp-table.tools-translation-sets tbody tr td.stats.rejected button.hidden,
-table.gp-table.tools-translation-sets tbody tr td.stats.changesrequested a.hidden,
-table.gp-table.tools-translation-sets tbody tr td.stats.changesrequested button.hidden {
+table.gp-table.translation-sets tbody tr td.stats.old a.hidden,
+table.gp-table.translation-sets tbody tr td.stats.old button.hidden,
+table.gp-table.translation-sets tbody tr td.stats.rejected a.hidden,
+table.gp-table.translation-sets tbody tr td.stats.rejected button.hidden,
+table.gp-table.translation-sets tbody tr td.stats.changesrequested a.hidden,
+table.gp-table.translation-sets tbody tr td.stats.changesrequested button.hidden {
 	display: none;
 }
 
-table.gp-table.tools-translation-sets tbody tr td.stats.old a,
-table.gp-table.tools-translation-sets tbody tr td.stats.rejected a,
-table.gp-table.tools-translation-sets tbody tr td.stats.changesrequested a {
+table.gp-table.translation-sets tbody tr td.stats.old a,
+table.gp-table.translation-sets tbody tr td.stats.rejected a,
+table.gp-table.translation-sets tbody tr td.stats.changesrequested a {
 	padding: 0 1rem;
 	width: 100%;
 }
 
-table.gp-table.tools-translation-sets tbody tr td.stats.old button.delete,
-table.gp-table.tools-translation-sets tbody tr td.stats.rejected button.delete,
-table.gp-table.tools-translation-sets tbody tr td.stats.changesrequested button.delete {
+table.gp-table.translation-sets tbody tr td.stats.old button.delete,
+table.gp-table.translation-sets tbody tr td.stats.rejected button.delete,
+table.gp-table.translation-sets tbody tr td.stats.changesrequested button.delete {
 	position: absolute;
 	translate: -1rem;
 }
