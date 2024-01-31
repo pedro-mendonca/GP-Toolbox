@@ -45,13 +45,21 @@ gp_tmpl_load( 'gptoolbox-header', $args );
 <?php
 
 // Get GlotPress translation sets.
-$gp_translation_sets = GP::$translation_set->all();
+$gp_translation_sets = array();
+foreach ( GP::$translation_set->all() as $translation_set ) {
+	$gp_translation_sets[ $translation_set->id ] = $translation_set;
+}
+
+// Get GlotPress projects.
+$gp_projects = array();
+foreach ( GP::$project->all() as $project ) {
+	$gp_projects[ $project->id ] = $project;
+}
 
 $orphaned_translation_sets = array();
-foreach ( $gp_translation_sets as $gp_translation_set ) {
-	$project_exist = GP::$project->get( $gp_translation_set->project_id );
-	if ( ! $project_exist ) {
-		$orphaned_translation_sets[ $gp_translation_set->project_id ][ $gp_translation_set->id ] = $gp_translation_set;
+foreach ( $gp_translation_sets as $translation_set ) {
+	if ( ! array_key_exists( $translation_set->project_id, $gp_projects ) ) {
+		$orphaned_translation_sets[ $translation_set->project_id ][ $translation_set->id ] = $translation_set;
 	}
 }
 
@@ -90,25 +98,25 @@ foreach ( $gp_translation_sets as $gp_translation_set ) {
 			<tbody>
 				<?php
 
-				foreach ( $gp_translation_sets as $gp_translation_set ) {
+				foreach ( $gp_translation_sets as $translation_set ) {
 
-					if ( $gp_translation_set->project_id === 0 ) {
+					if ( $translation_set->project_id === 0 ) {
 						// Don't show Locale Glossary virtual projects with ID '0'.
 						continue;
 					}
 
 					?>
-					<tr gptoolboxdata-translation-set="<?php echo esc_attr( strval( $gp_translation_set->id ) ); ?>">
-						<td class="id"><?php echo esc_html( strval( $gp_translation_set->id ) ); ?></td>
-						<td class="name"><?php echo esc_html( strval( $gp_translation_set->name ) ); ?></td>
-						<td class="slug"><?php echo esc_html( strval( $gp_translation_set->slug ) ); ?></td>
+					<tr gptoolboxdata-translation-set="<?php echo esc_attr( strval( $translation_set->id ) ); ?>">
+						<td class="id"><?php echo esc_html( strval( $translation_set->id ) ); ?></td>
+						<td class="name"><?php echo esc_html( strval( $translation_set->name ) ); ?></td>
+						<td class="slug"><?php echo esc_html( strval( $translation_set->slug ) ); ?></td>
 						<?php
 
 						// Get translation set project.
-						$project = GP::$project->get( $gp_translation_set->project_id );
+						$project = array_key_exists( $translation_set->project_id, $gp_projects ) ? $gp_projects[ $translation_set->project_id ] : false;
 
 						// Check if project is known. Double check for GP_Project object.
-						if ( ! $project || ! is_a( $project, 'GP_Project' ) ) {
+						if ( ! $project ) {
 							// Unknown project.
 
 							?>
@@ -121,7 +129,7 @@ foreach ( $gp_translation_sets as $gp_translation_set ) {
 										sprintf(
 											/* translators: %d ID number. */
 											esc_html__( 'ID #%d', 'gp-toolbox' ),
-											esc_html( $gp_translation_set->project_id )
+											esc_html( $translation_set->project_id )
 										)
 									);
 									?>
@@ -143,7 +151,7 @@ foreach ( $gp_translation_sets as $gp_translation_set ) {
 						<td class="set-locale">
 							<?php
 							// Get translation set locale.
-							$translation_set_locale = GP_Locales::by_slug( $gp_translation_set->locale );
+							$translation_set_locale = GP_Locales::by_slug( $translation_set->locale );
 
 							gp_link( gp_url_join( gp_url( '/languages' ), $translation_set_locale->slug ), $translation_set_locale->slug );
 							?>

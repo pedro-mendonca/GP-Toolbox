@@ -46,7 +46,16 @@ gp_tmpl_load( 'gptoolbox-header', $args );
 <?php
 
 // Get GlotPress originals.
-$gp_originals = GP::$original->all();
+$gp_originals = array();
+foreach ( GP::$original->all() as $original ) {
+	$gp_originals[ $original->id ] = $original;
+}
+
+// Get GlotPress projects.
+$gp_projects = array();
+foreach ( GP::$project->all() as $project ) {
+	$gp_projects[ $project->id ] = $project;
+}
 
 // TODO: Reponse if empty.
 
@@ -74,18 +83,17 @@ $gp_originals_by_status = array(
 // Originals of unknown projects.
 $orphaned_originals = array();
 
-foreach ( $gp_originals as $gp_original ) {
+foreach ( $gp_originals as $original ) {
 
 	// Originals by project.
-	$gp_originals_by_project[ $gp_original->project_id ][ $gp_original->status ][ $gp_original->id ] = $gp_original;
+	$gp_originals_by_project[ $original->project_id ][ $original->status ][ $original->id ] = $original;
 
 	// Originals by status.
-	$gp_originals_by_status[ $gp_original->status ][ $gp_original->id ] = $gp_original;
+	$gp_originals_by_status[ $original->status ][ $original->id ] = $original;
 
 	// Originals of unknown projects.
-	$project_exist = GP::$project->get( $gp_original->project_id );
-	if ( ! $project_exist ) {
-		$orphaned_originals[ $gp_original->project_id ][ $gp_original->id ] = $gp_original;
+	if ( ! array_key_exists( $original->project_id, $gp_projects ) ) {
+		$orphaned_originals[ $original->project_id ][ $original->id ] = $original;
 	}
 }
 
@@ -154,7 +162,7 @@ foreach ( $gp_originals as $gp_original ) {
 
 				foreach ( $gp_originals_by_project as $project_id => $statuses ) {
 
-					$project = GP::$project->get( intval( $project_id ) );
+					$project = $gp_projects[ $project_id ];
 
 					$active_count   = isset( $statuses['+active'] ) ? count( $statuses['+active'] ) : 0;
 					$obsolete_count = isset( $statuses['-obsolete'] ) ? count( $statuses['-obsolete'] ) : 0;
