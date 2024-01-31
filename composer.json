@@ -44,8 +44,8 @@
   "config": {
     "allow-plugins": {
       "dealerdirect/phpcodesniffer-composer-installer": true,
-      "phpstan/extension-installer": true,
-      "ergebnis/composer-normalize": true
+      "ergebnis/composer-normalize": true,
+      "phpstan/extension-installer": true
     },
     "optimize-autoloader": true
   },
@@ -54,14 +54,14 @@
       "@lint",
       "@compile"
     ],
-    "compat:php": "phpcs -v --standard=phpcompat.xml.dist",
-    "format:php": "phpcbf -v --standard=phpcs.xml.dist",
-    "compile": [
-			"@compile:js",
-      "@build:css"
-		],
-		"compile:js": "npm run compile:js",
     "build:css": "npm run build:css",
+    "compat:php": "phpcs -v --standard=phpcompat.xml.dist",
+    "compile": [
+      "@compile:js",
+      "@build:css"
+    ],
+    "compile:js": "npm run compile:js",
+    "format:php": "phpcbf -v --standard=phpcs.xml.dist",
     "lint": [
       "@lint:php",
       "@compat:php",

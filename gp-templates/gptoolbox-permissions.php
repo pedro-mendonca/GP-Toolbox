@@ -47,7 +47,26 @@ gp_tmpl_load( 'gptoolbox-header', $args );
 
 <?php
 // Get GlotPress permissions.
-$gp_permissions = GP::$permission->all();
+$gp_permissions = array();
+foreach ( GP::$permission->all() as $permission ) {
+	$gp_permissions[ $permission->id ] = $permission;
+}
+
+// Get GlotPress translation sets.
+$gp_translation_sets                                   = array();
+$gp_translation_sets_by_project_id_and_locale_and_slug = array();
+foreach ( GP::$translation_set->all() as $translation_set ) {
+	$gp_translation_sets[ $translation_set->id ] = $translation_set;
+
+	// Translation Sets by Project ID, slug and locale, matching the Validator data values in the DB. This avoids querying the DB for every Project Permission.
+	$gp_translation_sets_by_project_id_and_locale_and_slug[ $translation_set->project_id . '|' . $translation_set->locale . '|' . $translation_set->slug ] = $translation_set;
+}
+
+// Get GlotPress projects.
+$gp_projects = array();
+foreach ( GP::$project->all() as $project ) {
+	$gp_projects[ $project->id ] = $project;
+}
 
 // GlotPress core permissions.
 $gp_permission_types = array(
@@ -64,12 +83,12 @@ $gp_permission_types = array(
 // Organize permissions by type.
 $gp_toolbox_permissions_by_type = array();
 
-foreach ( $gp_permissions as $gp_permission ) {
+foreach ( $gp_permissions as $permission_id => $permission ) {
 
-	if ( $gp_permission->action === 'admin' ) {
-		$gp_toolbox_permissions_by_type['admin'][ $gp_permission->id ] = $gp_permission->user_id;
+	if ( $permission->action === 'admin' ) {
+		$gp_toolbox_permissions_by_type['admin'][ $permission_id ] = $permission->user_id;
 	} else {
-		$gp_toolbox_permissions_by_type[ $gp_permission->action ][ $gp_permission->user_id ][ $gp_permission->object_type ][ $gp_permission->id ] = $gp_permission->object_id;
+		$gp_toolbox_permissions_by_type[ $permission->action ][ $permission->user_id ][ $permission->object_type ][ $permission_id ] = $permission->object_id;
 	}
 }
 
@@ -293,13 +312,13 @@ foreach ( $gp_permissions as $gp_permission ) {
 
 									$data = explode( '|', $current_permission_value );
 
-									$set_project_id = $data[0];
-									$set_locale     = $data[1];
-									$set_slug       = $data[2];
+									$translation_set_project_id = $data[0];
+									$translation_set_locale     = $data[1];
+									$translation_set_slug       = $data[2];
 
-									$project = GP::$project->get( intval( $set_project_id ) );
+									$project = array_key_exists( $translation_set_project_id, $gp_projects ) ? $gp_projects[ $translation_set_project_id ] : false;
 
-									$translation_set = GP::$translation_set->by_project_id_slug_and_locale( $set_project_id, $set_slug, $set_locale );
+									$translation_set = array_key_exists( $current_permission_value, $gp_translation_sets_by_project_id_and_locale_and_slug ) ? $gp_translation_sets_by_project_id_and_locale_and_slug[ $current_permission_value ] : false;
 
 									if ( ! $project ) {
 										?>
@@ -312,7 +331,7 @@ foreach ( $gp_permissions as $gp_permission ) {
 													sprintf(
 														/* translators: %d ID number. */
 														esc_html__( 'ID #%d', 'gp-toolbox' ),
-														esc_html( $set_project_id )
+														esc_html( $translation_set_project_id )
 													)
 												);
 												?>
@@ -346,8 +365,8 @@ foreach ( $gp_permissions as $gp_permission ) {
 														esc_html__( 'Unknown translation set (%s)', 'gp-toolbox' ),
 														sprintf(
 															'%s/%s',
-															esc_html( $set_locale ),
-															esc_html( $set_slug )
+															esc_html( $translation_set_locale ),
+															esc_html( $translation_set_slug )
 														)
 													);
 													?>
