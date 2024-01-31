@@ -11,16 +11,17 @@ namespace GP_Toolbox;
 
 use GP;
 
-// Get page title.
-gp_title( __( 'Glossaries &lt; Tools &lt; GlotPress', 'gp-toolbox' ) );
-
-// Load GlotPress breadcrumbs.
-gp_breadcrumb(
-	array(
-		gp_link_get( gp_url( '/tools/' ), esc_html__( 'Tools', 'gp-toolbox' ) ),
-		gp_link_get( gp_url( '/tools/glossaries/' ), esc_html__( 'Glossaries', 'gp-toolbox' ) ),
-	)
+// Set the page breadcrumbs.
+$breadcrumbs = array(
+	'/tools/'            => esc_html__( 'Tools', 'gp-toolbox' ),
+	'/tools/glossaries/' => esc_html__( 'Glossaries', 'gp-toolbox' ),
 );
+
+// Get GlotPress page title.
+Toolbox::page_title( $breadcrumbs );
+
+// Get GlotPress breadcrumbs.
+Toolbox::page_breadcrumbs( $breadcrumbs );
 
 // Load GlotPress Header template.
 gp_tmpl_header();
