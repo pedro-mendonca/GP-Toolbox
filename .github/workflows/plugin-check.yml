@@ -28,7 +28,7 @@ jobs:
     - name: Set up PHP
       uses: shivammathur/setup-php@2.29.0
       with:
-        php-version: '7.4' # Results are the same across all versions, check only in the last stable version.
+        php-version: '7.4'
         coverage: none
       env:
         fail-fast: false
@@ -38,6 +38,8 @@ jobs:
 
     - name: Install Composer dependencies
       uses: ramsey/composer-install@v2
+      with:
+        composer-options: "--no-dev"
 
     - name: Run plugin check
       uses: swissspidy/wp-plugin-check-action@v1
