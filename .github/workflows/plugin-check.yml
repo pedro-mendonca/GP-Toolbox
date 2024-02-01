@@ -42,4 +42,4 @@ jobs:
         composer-options: "--no-dev"
 
     - name: Run plugin check
-      uses: swissspidy/wp-plugin-check-action@v1
+      uses: swissspidy/wp-plugin-check-action@v1.0.3
