@@ -1,0 +1,43 @@
+name: WP Plugin Check
+on: # rebuild any PRs and main branch changes
+  pull_request:
+  push:
+    branches:
+    - main
+    - dev
+    - 'releases/*'
+  # Allows you to run this workflow manually from the Actions tab.
+  workflow_dispatch:
+
+jobs:
+  # Runs the WP Plugin Check.
+  #
+  # Performs the following steps:
+  # - Checks out the repository.
+  # - Sets up PHP.
+  # - Installs Composer dependencies.
+  # - Runs the Plugin Check.
+  plugin-check:
+    name: Plugin Check
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up PHP
+      uses: shivammathur/setup-php@2.29.0
+      with:
+        php-version: '7.4' # Results are the same across all versions, check only in the last stable version.
+        coverage: none
+      env:
+        fail-fast: false
+
+    - name: Validate composer.json and composer.lock
+      run: composer validate --strict
+
+    - name: Install Composer dependencies
+      uses: ramsey/composer-install@v2
+
+    - name: Run plugin check
+      uses: swissspidy/wp-plugin-check-action@v1
