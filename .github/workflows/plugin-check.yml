@@ -12,6 +12,11 @@ on: # rebuild any PRs and main branch changes
 jobs:
   # Runs the WP Plugin Check.
   #
+  # Checks from the Plugin Review Team.
+  #
+  # For the detailed list of checks:
+  # - https://wordpress.org/plugins/plugin-check/
+  #
   # Performs the following steps:
   # - Checks out the repository.
   # - Sets up PHP.
@@ -41,5 +46,10 @@ jobs:
       with:
         composer-options: "--no-dev"
 
+    - name: Copy the plugin files to the plugin check folder, excluding the files on .distignore.
+      run: rsync -rc --exclude-from="$GITHUB_WORKSPACE/.distignore" "$GITHUB_WORKSPACE/" gp-toolbox/ --delete --delete-excluded
+
     - name: Run plugin check
       uses: swissspidy/wp-plugin-check-action@v1.0.3
+      with:
+        build-dir: 'gp-toolbox'
