@@ -16,6 +16,7 @@ Set of tools to help you manage your GlotPress.
 
 [![Coding Standards](https://github.com/pedro-mendonca/GP-Toolbox/actions/workflows/coding-standards.yml/badge.svg)](https://github.com/pedro-mendonca/GP-Toolbox/actions/workflows/coding-standards.yml)
 [![Static Analysis](https://github.com/pedro-mendonca/GP-Toolbox/actions/workflows/static-analysis.yml/badge.svg)](https://github.com/pedro-mendonca/GP-Toolbox/actions/workflows/static-analysis.yml)
+[![WP Plugin Check](https://github.com/pedro-mendonca/GP-Toolbox/actions/workflows/plugin-check.yml/badge.svg)](https://github.com/pedro-mendonca/GP-Toolbox/actions/workflows/plugin-check.yml)
 
 ## Description
 

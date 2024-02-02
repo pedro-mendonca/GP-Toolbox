@@ -56,7 +56,8 @@ foreach ( GP::$glossary->all() as $glossary ) {
 }
 
 // Get GlotPress glossary entries.
-$gp_glossary_entries = array();
+$gp_glossary_entries             = array();
+$gp_glossary_entries_by_glossary = array();
 foreach ( GP::$glossary_entry->all() as $glossary_entry ) {
 	$gp_glossary_entries[ $glossary_entry->id ] = $glossary_entry;
 
@@ -64,6 +65,9 @@ foreach ( GP::$glossary_entry->all() as $glossary_entry ) {
 	if ( ! isset( $gp_glossaries[ $glossary_entry->glossary_id ] ) ) {
 		$orphaned_glossary_entries[ $glossary_entry->glossary_id ][ $glossary_entry->id ] = $glossary_entry;
 	}
+
+	// Set glossary entries by glossary.
+	$gp_glossary_entries_by_glossary[ $glossary_entry->glossary_id ][ $glossary_entry->id ] = $glossary_entry;
 }
 
 // Get GlotPress translation sets.
@@ -94,9 +98,9 @@ foreach ( GP::$project->all() as $project ) {
 		<p id="glossaries-type-filters">
 			<?php
 
-			$global_glossaries_count      = 0;
-			$project_glossaries_count     = 0;
-			$unkown_type_glossaries_count = 0;
+			$global_glossaries_count       = 0;
+			$project_glossaries_count      = 0;
+			$unknown_type_glossaries_count = 0;
 
 			foreach ( $gp_glossaries as $glossary ) {
 				// Try to get glossary translation set.
@@ -108,19 +112,19 @@ foreach ( GP::$project->all() as $project ) {
 				} elseif ( $translation_set && $translation_set->project_id !== 0 ) {
 					++$project_glossaries_count;
 				} else {
-					++$unkown_type_glossaries_count;
+					++$unknown_type_glossaries_count;
 				}
 			}
 
 			// Glossaries: All {total} originals. {global} global glossaries. {project} project glossaries.
 			echo wp_kses_post(
 				sprintf(
-					/* translators: 1: Glossaries total. 2: Global glossaries. 3: Project glossaries. 4: Unkown type glossaries. 5: Unkown glossaries with orphaned entries. */
+					/* translators: 1: Glossaries total. 2: Global glossaries. 3: Project glossaries. 4: Unknown type glossaries. 5: Unknown glossaries with orphaned entries. */
 					__( 'Glossaries: %1$s %2$s %3$s %4$s %5$s', 'gp-toolbox' ),
 					'<a id="glossaries-type-all" class="glossaries-type" href="#glossaries">' . sprintf(
 						/* translators: %s: Number of Glossaries. */
-						_n( '%s glossary.', 'All %s glossaries.', $global_glossaries_count + $project_glossaries_count + $unkown_type_glossaries_count + count( $orphaned_glossary_entries ), 'gp-toolbox' ),
-						'<strong class="glossaries-label glossaries-label-all">' . esc_html( number_format_i18n( $global_glossaries_count + $project_glossaries_count + $unkown_type_glossaries_count + count( $orphaned_glossary_entries ) ) ) . '</strong>'
+						_n( '%s glossary.', 'All %s glossaries.', $global_glossaries_count + $project_glossaries_count + $unknown_type_glossaries_count + count( $orphaned_glossary_entries ), 'gp-toolbox' ),
+						'<strong class="glossaries-label glossaries-label-all">' . esc_html( number_format_i18n( $global_glossaries_count + $project_glossaries_count + $unknown_type_glossaries_count + count( $orphaned_glossary_entries ) ) ) . '</strong>'
 					) . '</a>',
 					'<a id="glossaries-type-global" class="glossaries-type" href="#glossaries">' . sprintf(
 						/* translators: %s: Number of Glossaries. */
@@ -134,8 +138,8 @@ foreach ( GP::$project->all() as $project ) {
 					) . '</a>',
 					'<a id="glossaries-set-unknown" class="glossaries-type" href="#glossaries">' . sprintf(
 						/* translators: %s: Number of Glossaries. */
-						_n( '%s Glossary of unknown translation set.', '%s Glossaries of unknown translation set.', $unkown_type_glossaries_count, 'gp-toolbox' ),
-						'<strong class="glossaries-label glossaries-label-project">' . esc_html( number_format_i18n( $unkown_type_glossaries_count ) ) . '</strong>'
+						_n( '%s Glossary of unknown translation set.', '%s Glossaries of unknown translation set.', $unknown_type_glossaries_count, 'gp-toolbox' ),
+						'<strong class="glossaries-label glossaries-label-project">' . esc_html( number_format_i18n( $unknown_type_glossaries_count ) ) . '</strong>'
 					) . '</a>',
 					count( $orphaned_glossary_entries ) > 0 ? '<a id="glossaries-unknown-orphaned-entries" class="glossaries-type" href="#glossaries">' . sprintf(
 						/* translators: %s: Number of Glossaries. */
@@ -209,7 +213,8 @@ foreach ( GP::$project->all() as $project ) {
 
 							<td class="entries">
 								<?php
-								echo esc_html( number_format_i18n( count( $glossary->get_entries() ) ) );
+								$count = isset( $gp_glossary_entries_by_glossary[ $glossary->id ] ) ? count( $gp_glossary_entries_by_glossary[ $glossary->id ] ) : 0;
+								echo esc_html( number_format_i18n( $count ) );
 								?>
 							</td>
 							<?php
@@ -217,6 +222,8 @@ foreach ( GP::$project->all() as $project ) {
 						} elseif ( $glossary_type === 'global' ) {
 							// Known translation set.
 							// Global glossary.
+
+							$global_glossary_path = gp_url_join( gp_url( '/languages' ), $translation_set->locale, $translation_set->slug, 'glossary' );
 
 							?>
 							<td class="type global" data-text="global">
@@ -226,15 +233,16 @@ foreach ( GP::$project->all() as $project ) {
 								?>
 							</td>
 
-							<td class="translation-set" data-text="<?php echo esc_attr( $translation_set->name_with_locale() ); ?>" colspan="2">
+							<td class="translation-set" data-text="<?php echo esc_attr( $translation_set->name ); ?>" colspan="2">
 								<?php
-								gp_link( $glossary->path(), $translation_set->name_with_locale() );
+								gp_link( $global_glossary_path, $translation_set->name );
 								?>
 							</td>
 
 							<td class="entries">
 								<?php
-								gp_link( $glossary->path(), number_format_i18n( count( $glossary->get_entries() ) ) );
+								$count = isset( $gp_glossary_entries_by_glossary[ $glossary->id ] ) ? count( $gp_glossary_entries_by_glossary[ $glossary->id ] ) : 0;
+								gp_link( $global_glossary_path, number_format_i18n( $count ) );
 								?>
 							</td>
 							<?php
@@ -251,15 +259,15 @@ foreach ( GP::$project->all() as $project ) {
 							</td>
 							<?php
 
-							$project = $gp_translation_sets[ $translation_set->project_id ] ?? false;
+							$project = $gp_projects[ $translation_set->project_id ] ?? false;
 
 							if ( ! $project ) {
 								// Unknown project.
 
 								?>
-								<td class="translation-set" data-text="<?php echo esc_attr( $translation_set->name_with_locale() ); ?>">
+								<td class="translation-set" data-text="<?php echo esc_attr( $translation_set->name ); ?>">
 									<?php
-									echo esc_html( $translation_set->name_with_locale() );
+									echo esc_html( $translation_set->name );
 									?>
 								</td>
 
@@ -281,7 +289,8 @@ foreach ( GP::$project->all() as $project ) {
 
 								<td class="entries">
 									<?php
-									echo esc_html( number_format_i18n( count( $glossary->get_entries() ) ) );
+									$count = isset( $gp_glossary_entries_by_glossary[ $glossary->id ] ) ? count( $gp_glossary_entries_by_glossary[ $glossary->id ] ) : 0;
+									echo esc_html( number_format_i18n( $count ) );
 									?>
 								</td>
 								<?php
@@ -289,10 +298,12 @@ foreach ( GP::$project->all() as $project ) {
 							} else {
 								// Known project.
 
+								$project_glossary_path = gp_url_join( gp_url_project_locale( $project->path, $translation_set->locale, $translation_set->slug ), 'glossary' );
+
 								?>
-								<td class="translation-set" data-text="<?php echo esc_attr( $translation_set->name_with_locale() ); ?>">
+								<td class="translation-set" data-text="<?php echo esc_attr( $translation_set->name ); ?>">
 									<?php
-									gp_link( $glossary->path(), $translation_set->name_with_locale() );
+									gp_link( $project_glossary_path, $translation_set->name );
 									?>
 								</td>
 
@@ -304,7 +315,8 @@ foreach ( GP::$project->all() as $project ) {
 
 								<td class="entries">
 									<?php
-									gp_link( $glossary->path(), number_format_i18n( count( $glossary->get_entries() ) ) );
+									$count = isset( $gp_glossary_entries_by_glossary[ $glossary->id ] ) ? count( $gp_glossary_entries_by_glossary[ $glossary->id ] ) : 0;
+									gp_link( $project_glossary_path, number_format_i18n( $count ) );
 									?>
 								</td>
 								<?php
