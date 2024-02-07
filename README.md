@@ -17,6 +17,12 @@ This set of tools extends the functionality of GlotPress, bringing to light any 
 
 ## Features
 
+* WordPress dashboard:
+  * Admin menu link to GlotPress menu item.
+  * Admin menu link to the Tools page.
+* GlotPress menu:
+  * Menu item for GlotPress Tools.
+  * Menu item for WordPress dashboard.
 * GlotPress project page:
   * Adds 'Old' and 'Rejected' columns to the project table of Translation Sets.
   * Button to quickly and permanently delete 'Old' and 'Rejected' translations.
@@ -49,3 +55,5 @@ Sure! You are welcome to report any issues or add feature suggestions on the [Gi
 * Originals tools page.
 * Glossary tools page.
 * Translation Sets tools page.
+* WordPress dashboard menu items.
+* GlotPress menu items.
