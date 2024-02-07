@@ -60,7 +60,8 @@
     "i18n:json": "wp i18n make-json languages --no-purge",
     "build": [
       "@lint",
-      "@compile"
+      "@compile",
+      "@i18n"
     ],
     "build:css": "npm run build:css",
     "compat:php": "phpcs -v --standard=phpcompat.xml.dist",
