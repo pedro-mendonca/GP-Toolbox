@@ -8,7 +8,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-02-07 09:46+0000\n"
+"PO-Revision-Date: 2024-02-07 16:11+0000\n"
 "Language: pt_PT\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.0.4\n"
@@ -22,12 +22,12 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-0: node_modules\n"
 "X-Poedit-SearchPathExcluded-1: vendor\n"
 
-#: includes/class-toolbox.php:472
+#: includes/class-toolbox.php:550
 #: assets/js/project.js:38
 msgid "Old"
 msgstr "Antigas"
 
-#: includes/class-toolbox.php:473
+#: includes/class-toolbox.php:551
 #: assets/js/project.js:44
 msgid "Rejected"
 msgstr "Rejeitadas"
@@ -70,13 +70,14 @@ msgstr "Erro: %s"
 #: gp-templates/gptoolbox-tools.php:14
 #: gp-templates/gptoolbox-tools.php:27
 #: gp-templates/gptoolbox-translation-sets.php:17
-#: gp-templates/gptoolbox-translations.php:16
-#: includes/class-toolbox.php:90
+#: includes/class-toolbox.php:128
+#: includes/class-toolbox.php:129
+#: includes/class-toolbox.php:157
 msgid "Tools"
 msgstr "Ferramentas"
 
 #: gp-templates/gptoolbox-about.php:15
-#: includes/class-toolbox.php:596
+#: includes/class-toolbox.php:676
 msgid "About"
 msgstr "Sobre"
 
@@ -120,14 +121,14 @@ msgid "Do you like %1$s? Support its development by becoming a %2$sSponsor%3$s!"
 msgstr "Gosta do %1$s? Apoie o seu desenvolvimento tornando-se %2$sPatrocinador%3$s!"
 
 #: gp-templates/gptoolbox-about.php:87
-#: includes/class-toolbox.php:181
+#: includes/class-toolbox.php:254
 msgctxt "Plugin name"
 msgid "GP Toolbox"
 msgstr "GP Toolbox"
 
 #: gp-templates/gptoolbox-glossaries.php:17
 #: gp-templates/gptoolbox-glossaries.php:30
-#: includes/class-toolbox.php:576
+#: includes/class-toolbox.php:656
 msgid "Glossaries"
 msgstr "Glossários"
 
@@ -199,8 +200,6 @@ msgstr[1] "Registos de %s glossários desconhecidos."
 #: gp-templates/gptoolbox-permissions.php:131
 #: gp-templates/gptoolbox-permissions.php:242
 #: gp-templates/gptoolbox-translation-sets.php:89
-#: gp-templates/gptoolbox-translations.php:104
-#: gp-templates/gptoolbox-translations.php:287
 msgid "Filter:"
 msgstr "Filtrar:"
 
@@ -209,8 +208,6 @@ msgstr "Filtrar:"
 #: gp-templates/gptoolbox-permissions.php:131
 #: gp-templates/gptoolbox-permissions.php:242
 #: gp-templates/gptoolbox-translation-sets.php:89
-#: gp-templates/gptoolbox-translations.php:104
-#: gp-templates/gptoolbox-translations.php:287
 msgid "Search"
 msgstr "Pesquisar"
 
@@ -219,7 +216,6 @@ msgstr "Pesquisar"
 #: gp-templates/gptoolbox-permissions.php:132
 #: gp-templates/gptoolbox-permissions.php:243
 #: gp-templates/gptoolbox-translation-sets.php:90
-#: gp-templates/gptoolbox-translations.php:105
 msgid "Clear search filter."
 msgstr "Limpar filtro de pesquisa."
 
@@ -228,7 +224,6 @@ msgstr "Limpar filtro de pesquisa."
 #: gp-templates/gptoolbox-permissions.php:132
 #: gp-templates/gptoolbox-permissions.php:243
 #: gp-templates/gptoolbox-translation-sets.php:90
-#: gp-templates/gptoolbox-translations.php:105
 msgid "Clear"
 msgstr "Limpar"
 
@@ -253,7 +248,6 @@ msgstr "Locale"
 #: gp-templates/gptoolbox-originals.php:169
 #: gp-templates/gptoolbox-permissions.php:251
 #: gp-templates/gptoolbox-translation-sets.php:99
-#: gp-templates/gptoolbox-translations.php:112
 msgid "Project"
 msgstr "Projecto"
 
@@ -277,7 +271,6 @@ msgstr "Conjunto de tradução desconhecido (%s)"
 #: gp-templates/gptoolbox-permissions.php:302
 #: gp-templates/gptoolbox-permissions.php:334
 #: gp-templates/gptoolbox-translation-sets.php:136
-#: gp-templates/gptoolbox-translations.php:151
 #, php-format
 msgid "ID #%d"
 msgstr "ID #%d"
@@ -291,7 +284,6 @@ msgstr "Global"
 #: gp-templates/gptoolbox-originals.php:194
 #: gp-templates/gptoolbox-permissions.php:331
 #: gp-templates/gptoolbox-translation-sets.php:133
-#: gp-templates/gptoolbox-translations.php:148
 #, php-format
 msgid "Unknown project (%s)"
 msgstr "Projecto desconhecido (%s)"
@@ -312,7 +304,7 @@ msgstr "<strong>Atenção:</strong> Antes de limpar quaisquer dados, primeiro ce
 
 #: gp-templates/gptoolbox-originals.php:17
 #: gp-templates/gptoolbox-originals.php:30
-#: includes/class-toolbox.php:558
+#: includes/class-toolbox.php:636
 msgid "Originals"
 msgstr "Originais"
 
@@ -393,7 +385,7 @@ msgstr[1] "Originais de %s projectos desconhecidos."
 
 #: gp-templates/gptoolbox-permissions.php:17
 #: gp-templates/gptoolbox-permissions.php:30
-#: includes/class-toolbox.php:544
+#: includes/class-toolbox.php:622
 msgid "Permissions"
 msgstr "Permissões"
 
@@ -447,8 +439,6 @@ msgid "Unknown user (%s)"
 msgstr "Utilizador desconhecido (%s)"
 
 #: gp-templates/gptoolbox-permissions.php:252
-#: gp-templates/gptoolbox-translations.php:111
-#: gp-templates/gptoolbox-translations.php:315
 msgid "Translation Set"
 msgstr "Conjunto de tradução"
 
@@ -509,7 +499,7 @@ msgstr ""
 
 #: gp-templates/gptoolbox-translation-sets.php:18
 #: gp-templates/gptoolbox-translation-sets.php:31
-#: includes/class-toolbox.php:564
+#: includes/class-toolbox.php:642
 msgid "Translation Sets"
 msgstr "Conjuntos de tradução"
 
@@ -529,59 +519,6 @@ msgstr "Nome"
 msgid "Slug"
 msgstr "Slug"
 
-#: gp-templates/gptoolbox-translations.php:17
-#: gp-templates/gptoolbox-translations.php:30
-#: gp-templates/gptoolbox-translations.php:115
-#: gp-templates/gptoolbox-translations.php:322
-#: includes/class-toolbox.php:570
-msgid "Translations"
-msgstr "Traduções"
-
-#: gp-templates/gptoolbox-translations.php:40
-msgid "Overview of all Translations."
-msgstr "Visão geral de todas as traduções."
-
-#: gp-templates/gptoolbox-translations.php:45
-msgid "Each Translation has a parent <code>original_id</code>. If there is no parent Original in the database with the same ID, then the Translation is orphaned."
-msgstr "Cada Tradução tem um <code>original_id</code>. Se não existir nenhum Original com o mesmo ID na base de dados, então a Tradução é órfã."
-
-#: gp-templates/gptoolbox-translations.php:49
-msgid "Each Translation has a parent <code>translation_set_id</code>. If there is no parent Translation Set in the database with the same ID, then the Translation is orphaned."
-msgstr "Cada Tradução tem um <code>translation_set_id</code>. Se não existir nenhum Conjunto de tradução com o mesmo ID na base de dados, então a Tradução é órfã."
-
-#. translators: %l: List of translation statuses.
-#: gp-templates/gptoolbox-translations.php:64
-msgid "The Translations can have one of the following statuses: %l."
-msgstr ""
-
-#: gp-templates/gptoolbox-translations.php:95
-msgid "No translations found."
-msgstr "Nenhuma tradução encontrada."
-
-#: gp-templates/gptoolbox-translations.php:113
-msgid "Known Originals"
-msgstr "Originais conhecidos"
-
-#: gp-templates/gptoolbox-translations.php:114
-msgid "Unknown Originals"
-msgstr "Originais desconhecidos"
-
-#. translators: 1: Active status; 2: Obsolete status.
-#: gp-templates/gptoolbox-translations.php:228
-#, php-format
-msgid "Translations can be from a known Original (%1$s or %2$s), or from an Original that don't exist anymore in the database."
-msgstr ""
-
-#: gp-templates/gptoolbox-translations.php:320
-msgid "Original"
-msgstr "Original"
-
-#. translators: Known identifier data.
-#: gp-templates/gptoolbox-translations.php:389
-#, php-format
-msgid "Unknown (ID #%d)"
-msgstr "Desconhecido (ID #%d)"
-
 #: includes/class-rest-api.php:179
 msgid "Permission not found."
 msgstr "Permissão não encontrada."
@@ -595,28 +532,30 @@ msgid "Failed to delete permission."
 msgstr "Falha ao eliminar permissão."
 
 #. translators: 1: Plugin name. 2: Error message.
-#: includes/class-toolbox.php:180
+#: includes/class-toolbox.php:253
 #, php-format
 msgid "%1$s: %2$s"
 msgstr "%1$s: %2$s"
 
-#: includes/class-toolbox.php:182
+#: includes/class-toolbox.php:255
 msgid "GlotPress not found. Please install and activate it."
 msgstr "GlotPress não encontrado. Por favor, instale-o e active-o."
 
-#: includes/class-toolbox.php:469
+#: includes/class-toolbox.php:547
 msgid "Current"
 msgstr "Actual"
 
-#: includes/class-toolbox.php:470
+#: includes/class-toolbox.php:548
 msgid "Fuzzy"
 msgstr "Imprecisa"
 
-#: includes/class-toolbox.php:471
+#: includes/class-toolbox.php:549
 msgid "Waiting"
 msgstr "Pendentes"
 
-#: includes/class-toolbox.php:629
+#: includes/class-toolbox.php:116
+#: includes/class-toolbox.php:117
+#: includes/class-toolbox.php:709
 msgid "GlotPress"
 msgstr "GlotPress"
 
@@ -635,3 +574,7 @@ msgstr "Pedro Mendonça"
 #. Author URI of the plugin
 msgid "https://profiles.wordpress.org/pedromendonca/"
 msgstr "https://profiles.wordpress.org/pedromendonca/"
+
+#: includes/class-toolbox.php:162
+msgid "Dashboard"
+msgstr "Painel"
