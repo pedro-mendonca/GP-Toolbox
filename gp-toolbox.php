@@ -1,6 +1,6 @@
 <?php
 /**
- * Toolbox for GlotPress
+ * GP Toolbox
  *
  * @package           GP_Toolbox
  * @link              https://github.com/pedro-mendonca/GP_Toolbox
