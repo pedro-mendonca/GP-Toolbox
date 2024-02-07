@@ -50,6 +50,14 @@
     "optimize-autoloader": true
   },
   "scripts": {
+    "i18n": [
+      "@i18n:pot",
+      "@i18n:po",
+      "@i18n:json"
+    ],
+    "i18n:pot": "wp i18n make-pot . languages/gp-toolbox.pot",
+    "i18n:po": "wp i18n update-po languages/gp-toolbox.pot languages",
+    "i18n:json": "wp i18n make-json languages --no-purge",
     "build": [
       "@lint",
       "@compile"
