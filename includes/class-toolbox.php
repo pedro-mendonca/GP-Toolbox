@@ -178,7 +178,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 					printf(
 						/* translators: 1: Plugin name. 2: Error message. */
 						esc_html__( '%1$s: %2$s', 'gp-toolbox' ),
-						'<b>' . esc_html_x( 'Toolbox for GlotPress', 'Plugin name', 'gp-toolbox' ) . '</b>',
+						'<b>' . esc_html_x( 'GP Toolbox', 'Plugin name', 'gp-toolbox' ) . '</b>',
 						esc_html__( 'GlotPress not found. Please install and activate it.', 'gp-toolbox' )
 					);
 					?>

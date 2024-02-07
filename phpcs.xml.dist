@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
-<ruleset name="Toolbox for GlotPress">
-	<description>A custom set of PHPCS rules for Toolbox for GlotPress.</description>
+<ruleset name="GP Toolbox">
+	<description>A custom set of PHPCS rules for GP Toolbox.</description>
 
 	<!-- Files to check. -->
 	<file>.</file>

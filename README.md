@@ -1,4 +1,4 @@
-# Toolbox for GlotPress
+# GP Toolbox
 
 Set of tools to help you manage your GlotPress.
 
