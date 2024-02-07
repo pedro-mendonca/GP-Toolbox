@@ -642,14 +642,12 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 					'title'         => esc_html__( 'Translation Sets', 'gp-toolbox' ),
 					'tools_section' => 'gptoolbox-tools-translation-sets',
 				),
-				/* phpcs:ignore.
 				// GP Translations tools.
-				'tools_translations' => array(
+				'tools_translations'     => array(
 					'url'           => '/tools/translations/',
 					'title'         => esc_html__( 'Translations', 'gp-toolbox' ),
 					'tools_section' => 'gptoolbox-tools-translations',
 				),
-				*/
 				// GP Glossaries tools.
 				'tools_glossaries'       => array(
 					'url'           => '/tools/glossaries/',
