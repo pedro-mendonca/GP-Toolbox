@@ -135,7 +135,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 
 
 		/**
-		 * Add Tools menu item.
+		 * Add Tools and Dashboard items do side menu.
 		 *
 		 * @since 1.0.0
 		 *
@@ -155,6 +155,12 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 				if ( self::current_user_is_glotpress_admin() ) {
 					// Add Tools item to admin bar side menu.
 					$new_item[ strval( gp_url( '/tools/' ) ) ] = esc_html__( 'Tools', 'gp-toolbox' );
+
+					// Check if exist a link to Dashboard from another plugin.
+					if ( ! isset( $new_item[ admin_url() ] ) ) {
+						// Add link to WP Dashboard.
+						$new_item[ admin_url() ] = esc_html__( 'Dashboard', 'gp-toolbox' );
+					}
 				}
 			}
 
@@ -411,7 +417,12 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 				GP_TOOLBOX_VERSION
 			);
 
-			gp_enqueue_styles( array( 'gp-toolbox', 'dashicons' ) );
+			gp_enqueue_styles(
+				array(
+					'gp-toolbox',
+					'dashicons',
+				)
+			);
 		}
 
 
