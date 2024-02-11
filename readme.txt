@@ -46,7 +46,7 @@ Sure! You are welcome to report any issues or add feature suggestions on the [Gi
 
 == Changelog ==
 
-= Unreleased =
+= 1.0.0 =
 *   Initial release.
 *   Add columns for Old and Rejected translations in GlotPress Project page.
 *   Tools overview page.
