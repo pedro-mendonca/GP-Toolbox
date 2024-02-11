@@ -27,37 +27,20 @@ Toolbox::page_breadcrumbs( $breadcrumbs );
 gp_tmpl_header();
 
 $args = array(
-	'title' => esc_html__( 'Translations', 'gp-toolbox' ), // Page title.
+	'title'       => esc_html__( 'Translations', 'gp-toolbox' ), // Page title.
+	'description' => esc_html__( 'Overview of all Translations, for each Translation Set.', 'gp-toolbox' ), // Page description.
 );
 
 // Load GP-Toolbox header template.
 gp_tmpl_load( 'gptoolbox-header', $args );
 
 ?>
-<div class="clear"></div>
-
-<p class="gptoolbox-description">
-	<?php esc_html_e( 'Overview of all Translations.', 'gp-toolbox' ); ?>
-</p>
-
 <p class="gptoolbox-description">
 	<?php
-	echo wp_kses_post( __( 'Each Translation has a parent <code>original_id</code>. If there is no parent Original in the database with the same ID, then the Translation is orphaned.', 'gp-toolbox' ) );
-	?>
-	<br>
-	<?php
-	echo wp_kses_post( __( 'Each Translation has a parent <code>translation_set_id</code>. If there is no parent Translation Set in the database with the same ID, then the Translation is orphaned.', 'gp-toolbox' ) );
-	?>
-</p>
-
-<p class="gptoolbox-description">
-	<?php
-
 	$statuses_list = array();
 	foreach ( Toolbox::supported_translation_statuses() as $key => $translation_status ) {
 		$statuses_list[] = '<span class="translation-status ' . esc_attr( $key ) . '">' . esc_html( $translation_status ) . '</span>';
 	}
-
 	echo wp_kses_post(
 		wp_sprintf(
 			/* translators: %l: List of translation statuses. */
@@ -66,8 +49,58 @@ gp_tmpl_load( 'gptoolbox-header', $args );
 		)
 	);
 	?>
-</p>
+	<br>
+	<?php
+	echo wp_kses_post( __( 'Each Translation has a parent <code>translation_set_id</code>. If there is no parent Translation Set in the database with the same ID, then the Translation is orphaned.', 'gp-toolbox' ) );
+	?>
+	<br>
+	<?php
+	echo wp_kses_post( __( 'Each Translation has a parent <code>original_id</code>. If there is no parent Original in the database with the same ID, then the Translation is orphaned.', 'gp-toolbox' ) );
+	?>
+	<br>
+	<?php
+	echo wp_kses_post( __( 'The original of each translation can be <code>Active</code>, <code>Obsolete</code> or <code>Unknown</code>:', 'gp-toolbox' ) );
+	?>
+	<ul>
+		<li>
+			<?php
+			echo wp_kses_post(
+				sprintf(
+					/* translators: 1: List item title. 2: List item description. */
+					esc_html__( '%1$s - %2$s', 'gp-toolbox' ),
+					'<strong>' . esc_html__( 'Translations (Active Originals)', 'gp-toolbox' ) . '</strong>',
+					esc_html__( 'Translations related to the originals currently used in the translation project.', 'gp-toolbox' )
+				)
+			);
+			?>
+		</li>
+		<li>
+			<?php
+			echo wp_kses_post(
+				sprintf(
+					/* translators: 1: List item title. 2: List item description. */
+					esc_html__( '%1$s - %2$s', 'gp-toolbox' ),
+					'<strong>' . esc_html__( 'Translations (Obsolete Originals)', 'gp-toolbox' ) . '</strong>',
+					esc_html__( 'Translations related to originals that aren\'t currently used in the translation project, but remain in the database for possible later use.', 'gp-toolbox' )
+				)
+			);
+			?>
+		</li>
+		<li>
+			<?php
+			echo wp_kses_post(
+				sprintf(
+					/* translators: 1: List item title. 2: List item description. */
+					esc_html__( '%1$s - %2$s', 'gp-toolbox' ),
+					'<strong>' . esc_html__( 'Translations (Unknown Originals)', 'gp-toolbox' ) . '</strong>',
+					esc_html__( 'Translations related to originals that no longer exist in the database, making them orphaned.', 'gp-toolbox' )
+				)
+			);
+			?>
+		</li>
+	</ul>
 
+</p>
 <?php
 
 // Get GlotPress translations.

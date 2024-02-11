@@ -231,3 +231,14 @@ table.gp-table tbody th {
 .gptoolbox-description code {
 	background-color: var(--gp-color-primary-50);
 }
+
+ul.gptoolbox-description {
+	list-style: none;
+	padding-left: 0.5rem;
+}
+
+ul.gptoolbox-description li::before {
+	font-family: dashicons;
+	content: "\f147";
+	color: var(--gp-color-accent-fg);
+}

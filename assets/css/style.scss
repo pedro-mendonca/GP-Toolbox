@@ -306,3 +306,19 @@ table.gp-table tbody th {
 	}
 
 }
+
+ul.gptoolbox-description {
+	list-style: none;
+	padding-left: 0.5rem;
+
+	li {
+
+		&::before {
+			font-family: dashicons;
+			content: "\f147";
+			color: var(--gp-color-accent-fg);
+		}
+
+	}
+
+}
