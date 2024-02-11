@@ -157,6 +157,14 @@ div.gp-heading div.gp-toolbox-tools a.gp-toolbox-tool-link {
 	font-weight: 600;
 }
 
+div.gp-heading div.gp-toolbox-tools a.gp-toolbox-tool-link.current {
+	text-decoration: underline;
+}
+
+div.gp-heading div.gp-toolbox-tools a.gp-toolbox-tool-link.current:hover {
+	text-decoration-thickness: 0.125rem;
+}
+
 .tablesorter-glotpress .tablesorter-header:not(.sorter-false) {
 	padding-right: 2.5em;
 	padding-left: 1em;

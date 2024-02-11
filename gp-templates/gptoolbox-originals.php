@@ -27,19 +27,14 @@ Toolbox::page_breadcrumbs( $breadcrumbs );
 gp_tmpl_header();
 
 $args = array(
-	'title' => esc_html__( 'Originals', 'gp-toolbox' ), // Page title.
+	'title'       => esc_html__( 'Originals', 'gp-toolbox' ), // Page title.
+	'description' => esc_html__( 'Overview of all Originals for each Project.', 'gp-toolbox' ), // Page description.
 );
 
 // Load GP-Toolbox header template.
 gp_tmpl_load( 'gptoolbox-header', $args );
 
 ?>
-<div class="clear"></div>
-
-<p class="gptoolbox-description">
-	<?php esc_html_e( 'Overview of all Originals for each Project.', 'gp-toolbox' ); ?>
-</p>
-
 <p class="gptoolbox-description">
 	<?php echo wp_kses_post( __( 'Each Original has a parent <code>project_id</code>. If there is no parent Project in the database with the same ID, then the Original is orphaned.', 'gp-toolbox' ) ); ?>
 	<br>

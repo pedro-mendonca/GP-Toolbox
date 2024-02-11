@@ -11,7 +11,8 @@ namespace GP_Toolbox;
 
 $defined_vars = get_defined_vars();
 
-$page_title = isset( $defined_vars['args']['title'] ) ? $defined_vars['args']['title'] : '';
+$page_title       = $defined_vars['args']['title'] ?? '';
+$page_description = $defined_vars['args']['description'] ?? '';
 
 $tools_pages = Toolbox::tools_pages();
 
@@ -26,6 +27,8 @@ $tools_pages = Toolbox::tools_pages();
 
 	<div class="gp-toolbox-tools">
 		<?php
+		$current_uri = str_replace( untrailingslashit( gp_url_public_root() ), '', trailingslashit( gp_url_current() ) );
+
 		$i = 0;
 		foreach ( $tools_pages as $tools_page ) {
 
@@ -35,8 +38,13 @@ $tools_pages = Toolbox::tools_pages();
 				<?php
 			}
 
+			$class = 'gp-toolbox-tool-link';
+
+			// Add class 'current' to current page link.
+			$class .= gp_startswith( $current_uri, $tools_page['url'] ) ? ' current' : '';
+
 			?>
-			<a class="gp-toolbox-tool-link" href="<?php echo esc_url( gp_url( $tools_page['url'] ) ); ?>"><?php echo esc_html( $tools_page['title'] ); ?></a>
+			<a class="<?php echo esc_attr( $class ); ?>" href="<?php echo esc_url( gp_url( $tools_page['url'] ) ); ?>"><?php echo esc_html( $tools_page['title'] ); ?></a>
 			<?php
 
 			++$i;
@@ -46,6 +54,13 @@ $tools_pages = Toolbox::tools_pages();
 	</div>
 
 </div>
+
+<p>
+	<?php
+	// Page description.
+	echo esc_html( $page_description );
+	?>
+</p>
 
 <div class="notice notice-info">
 	<?php
@@ -59,3 +74,5 @@ $tools_pages = Toolbox::tools_pages();
 	);
 	?>
 </div>
+
+<div class="clear"></div>

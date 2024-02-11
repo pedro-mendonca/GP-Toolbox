@@ -27,7 +27,8 @@ Toolbox::page_breadcrumbs( $breadcrumbs );
 gp_tmpl_header();
 
 $args = array(
-	'title' => esc_html__( 'Permissions', 'gp-toolbox' ), // Page title.
+	'title'       => esc_html__( 'Permissions', 'gp-toolbox' ), // Page title.
+	'description' => esc_html__( 'Overview of all Administrators and Validators for each Project and Translation Set.', 'gp-toolbox' ), // Page description.
 );
 
 // Load GP-Toolbox header template.
@@ -37,8 +38,6 @@ gp_tmpl_load( 'gptoolbox-header', $args );
 <div class="clear"></div>
 
 <p class="gptoolbox-description">
-	<?php esc_html_e( 'Overview of all Administrators and Validators for each Project and Translation Set.', 'gp-toolbox' ); ?>
-	<br>
 	<?php echo wp_kses_post( __( 'The Permissions can be either <code>Admin</code> or <code>Validator</code>. Admins can administer GlotPress, and Validators can create, edit and approve translations for the specified Translation Sets.', 'gp-toolbox' ) ); ?>
 	<br>
 	<?php echo wp_kses_post( __( 'Each Permission belongs to a User, identified by <code>user_id</code>. If there is no User in the WordPress database with the same ID, then the Permission is orphaned.', 'gp-toolbox' ) ); ?>

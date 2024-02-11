@@ -24,17 +24,13 @@ Toolbox::page_breadcrumbs( $breadcrumbs );
 gp_tmpl_header();
 
 $args = array(
-	'title' => esc_html__( 'Tools', 'gp-toolbox' ), // Page title.
+	'title'       => esc_html__( 'Tools', 'gp-toolbox' ), // Page title.
+	'description' => esc_html__( 'Set of tools to manage the object types and relations in the GlotPress database.', 'gp-toolbox' ), // Page description.
 );
 
 // Load GP-Toolbox header template.
 gp_tmpl_load( 'gptoolbox-header', $args );
 
-?>
-
-<div class="clear"></div>
-
-<?php
 $tools_pages = Toolbox::tools_pages();
 
 // Load Tools sections.

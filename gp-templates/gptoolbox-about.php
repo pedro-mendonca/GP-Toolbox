@@ -25,19 +25,14 @@ Toolbox::page_breadcrumbs( $breadcrumbs );
 gp_tmpl_header();
 
 $args = array(
-	'title' => esc_html__( 'About GP Toolbox', 'gp-toolbox' ), // Page title.
+	'title'       => esc_html__( 'About GP Toolbox', 'gp-toolbox' ), // Page title.
+	'description' => esc_html__( 'This set of tools extends the functionality of GlotPress, bringing to light any potential problems hidden under the hood, keeping it clean, fast and trouble-free.', 'gp-toolbox' ), // Page description.
 );
 
 // Load GP-Toolbox header template.
 gp_tmpl_load( 'gptoolbox-header', $args );
 
 ?>
-<div class="clear"></div>
-
-<p>
-	<?php esc_html_e( 'This set of tools extends the functionality of GlotPress, bringing to light any potential problems hidden under the hood, keeping it clean, fast and trouble-free.', 'gp-toolbox' ); ?>
-</p>
-
 <section class="gp-toolbox support">
 	<h3>
 		<?php esc_html_e( 'Support', 'gp-toolbox' ); ?>

@@ -214,6 +214,16 @@ div.gp-heading div.gp-toolbox-tools {
 		&.gp-toolbox-tool-link {
 			font-size: 1.125rem;
 			font-weight: 600;
+
+			&.current {
+				text-decoration: underline;
+
+				&:hover {
+					text-decoration-thickness: 0.125rem;
+				}
+
+			}
+
 		}
 
 	}

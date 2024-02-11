@@ -28,25 +28,19 @@ Toolbox::page_breadcrumbs( $breadcrumbs );
 gp_tmpl_header();
 
 $args = array(
-	'title' => esc_html__( 'Translation Sets', 'gp-toolbox' ), // Page title.
+	'title'       => esc_html__( 'Translation Sets', 'gp-toolbox' ), // Page title.
+	'description' => esc_html__( 'Overview of all Translation Sets.', 'gp-toolbox' ), // Page description.
 );
 
 // Load GP-Toolbox header template.
 gp_tmpl_load( 'gptoolbox-header', $args );
 
 ?>
-<div class="clear"></div>
-
-<p class="gptoolbox-description">
-	<?php esc_html_e( 'Overview of all Translation Sets.', 'gp-toolbox' ); ?>
-</p>
-
 <p class="gptoolbox-description">
 	<?php
 	echo wp_kses_post( __( 'Each Translation Set has a parent <code>project_id</code>. If there is no parent Project in the database with the same ID, then the Translation Set is orphaned.', 'gp-toolbox' ) );
 	?>
 </p>
-
 <?php
 
 // Get GlotPress translation sets.
