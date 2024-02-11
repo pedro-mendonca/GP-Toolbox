@@ -373,6 +373,27 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 					}
 				);
 			}
+
+			if ( $template === 'gptoolbox-translations' ) {
+
+				$template_args = null;
+
+				// Register and enqueue GP-Toolbox Translation Sets template scripts.
+				add_action(
+					'wp_enqueue_scripts',
+					function () use ( $template_args ) {
+						self::register_plugin_scripts(
+							'tools-translations',
+							$template_args,
+							array(
+								'tablesorter',
+								'wp-i18n',
+								'wp-api',
+							)
+						);
+					}
+				);
+			}
 		}
 
 
