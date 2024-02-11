@@ -52,6 +52,7 @@ table {
 		&.gp-toolbox.tools-permission-other,
 		&.gp-toolbox.tools-originals,
 		&.gp-toolbox.tools-translation-sets,
+		&.gp-toolbox.tools-translations,
 		&.gp-toolbox.tools-glossaries {
 			width: auto;
 		}
@@ -213,6 +214,16 @@ div.gp-heading div.gp-toolbox-tools {
 		&.gp-toolbox-tool-link {
 			font-size: 1.125rem;
 			font-weight: 600;
+
+			&.current {
+				text-decoration: underline;
+
+				&:hover {
+					text-decoration-thickness: 0.125rem;
+				}
+
+			}
+
 		}
 
 	}
@@ -292,6 +303,22 @@ table.gp-table tbody th {
 
 	code {
 		background-color: var(--gp-color-primary-50);
+	}
+
+}
+
+ul.gptoolbox-description {
+	list-style: none;
+	padding-left: 0.5rem;
+
+	li {
+
+		&::before {
+			font-family: dashicons;
+			content: "\f147";
+			color: var(--gp-color-accent-fg);
+		}
+
 	}
 
 }

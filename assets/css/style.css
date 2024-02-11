@@ -42,6 +42,7 @@ table.gp-table.gp-toolbox.tools-permission-validator,
 table.gp-table.gp-toolbox.tools-permission-other,
 table.gp-table.gp-toolbox.tools-originals,
 table.gp-table.gp-toolbox.tools-translation-sets,
+table.gp-table.gp-toolbox.tools-translations,
 table.gp-table.gp-toolbox.tools-glossaries {
 	width: auto;
 }
@@ -156,6 +157,14 @@ div.gp-heading div.gp-toolbox-tools a.gp-toolbox-tool-link {
 	font-weight: 600;
 }
 
+div.gp-heading div.gp-toolbox-tools a.gp-toolbox-tool-link.current {
+	text-decoration: underline;
+}
+
+div.gp-heading div.gp-toolbox-tools a.gp-toolbox-tool-link.current:hover {
+	text-decoration-thickness: 0.125rem;
+}
+
 .tablesorter-glotpress .tablesorter-header:not(.sorter-false) {
 	padding-right: 2.5em;
 	padding-left: 1em;
@@ -221,4 +230,15 @@ table.gp-table tbody th {
 
 .gptoolbox-description code {
 	background-color: var(--gp-color-primary-50);
+}
+
+ul.gptoolbox-description {
+	list-style: none;
+	padding-left: 0.5rem;
+}
+
+ul.gptoolbox-description li::before {
+	font-family: dashicons;
+	content: "\f147";
+	color: var(--gp-color-accent-fg);
 }

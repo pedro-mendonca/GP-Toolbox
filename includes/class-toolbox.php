@@ -373,6 +373,27 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 					}
 				);
 			}
+
+			if ( $template === 'gptoolbox-translations' ) {
+
+				$template_args = null;
+
+				// Register and enqueue GP-Toolbox Translation Sets template scripts.
+				add_action(
+					'wp_enqueue_scripts',
+					function () use ( $template_args ) {
+						self::register_plugin_scripts(
+							'tools-translations',
+							$template_args,
+							array(
+								'tablesorter',
+								'wp-i18n',
+								'wp-api',
+							)
+						);
+					}
+				);
+			}
 		}
 
 
@@ -641,14 +662,12 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 					'title'         => esc_html__( 'Translation Sets', 'gp-toolbox' ),
 					'tools_section' => 'gptoolbox-tools-translation-sets',
 				),
-				/* phpcs:ignore.
 				// GP Translations tools.
-				'tools_translations' => array(
+				'tools_translations'     => array(
 					'url'           => '/tools/translations/',
 					'title'         => esc_html__( 'Translations', 'gp-toolbox' ),
 					'tools_section' => 'gptoolbox-tools-translations',
 				),
-				*/
 				// GP Glossaries tools.
 				'tools_glossaries'       => array(
 					'url'           => '/tools/glossaries/',

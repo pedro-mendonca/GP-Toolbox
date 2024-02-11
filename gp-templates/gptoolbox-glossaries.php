@@ -27,19 +27,14 @@ Toolbox::page_breadcrumbs( $breadcrumbs );
 gp_tmpl_header();
 
 $args = array(
-	'title' => esc_html__( 'Glossaries', 'gp-toolbox' ), // Page title.
+	'title'       => esc_html__( 'Glossaries', 'gp-toolbox' ), // Page title.
+	'description' => esc_html__( 'Overview of all Global and Project Glossaries.', 'gp-toolbox' ), // Page description.
 );
 
 // Load GP-Toolbox header template.
 gp_tmpl_load( 'gptoolbox-header', $args );
 
 ?>
-<div class="clear"></div>
-
-<p class="gptoolbox-description">
-	<?php esc_html_e( 'Overview of all Global and Project Glossaries.', 'gp-toolbox' ); ?>
-</p>
-
 <p class="gptoolbox-description">
 	<?php echo wp_kses_post( __( 'The type of Glossaries can be <code>global</code> or <code>project</code>.', 'gp-toolbox' ) ); ?>
 	<br>

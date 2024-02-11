@@ -38,6 +38,7 @@ This set of tools extends the functionality of GlotPress, bringing to light any 
   * Originals - Overview of all Originals for each Project.
   * Glossaries - Overview of Global Glossaries, Project Glossaries and Glossary entries.
   * Translation Sets - Overview of all Translation Sets.
+  * Translations - Overview of all Translations, for each Translation Set.
 
 ## Requirements
 
@@ -62,5 +63,6 @@ Sure! You are welcome to report any issues or add feature suggestions on the [Gi
 * Originals tools page.
 * Glossary tools page.
 * Translation Sets tools page.
+* Translations tools page.
 * WordPress dashboard menu items.
 * GlotPress menu items.

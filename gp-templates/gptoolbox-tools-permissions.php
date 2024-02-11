@@ -10,12 +10,10 @@
 namespace GP_Toolbox;
 
 ?>
-<p class="descrtiption">
+<p class="gptoolbox-description">
 	<?php esc_html_e( 'Overview of all Administrators and Validators for each Project and Translation Set.', 'gp-toolbox' ); ?>
-	<br>
-	<?php esc_html_e( 'Manage all permissions in one place.', 'gp-toolbox' ); ?>
 </p>
-<ul>
+<ul class="gptoolbox-description">
 	<li><?php esc_html_e( 'Find and delete obsolete Permissions for unknown users, Projects or Translation Sets. (e.g. Related user, Project or Translation Set were deleted)', 'gp-toolbox' ); ?></li>
 	<li><?php esc_html_e( 'Find and delete Permission duplicates.', 'gp-toolbox' ); ?></li>
 	<li><?php esc_html_e( 'Find and delete Permissions of unknown types.', 'gp-toolbox' ); ?></li>
