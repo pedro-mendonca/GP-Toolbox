@@ -44,6 +44,14 @@ Sure! You are welcome to report any issues or add feature suggestions on the [Gi
 
 == Screenshots ==
 
+1. Project page with added 'Old' and 'Rejected' columns, with delete buttons
+2. Tools
+3. Tools > Permissions
+4. Tools > Originals
+5. Tools > Translation Sets
+6. Tools > Translations
+7. Tools > Glossaries
+
 == Changelog ==
 
 = 1.0.0 =

@@ -52,6 +52,34 @@ Sure! You are welcome to report any issues or add feature suggestions on the [Gi
 
 ## Screenshots
 
+1. Project page with added 'Old' and 'Rejected' columns, with delete buttons
+
+   ![screenshot-1](./.wordpress-org/screenshot-1.png)
+
+2. Tools
+
+   ![screenshot-2](./.wordpress-org/screenshot-2.png)
+
+3. Tools > Permissions
+
+   ![screenshot-3](./.wordpress-org/screenshot-3.png)
+
+4. Tools > Originals
+
+   ![screenshot-4](./.wordpress-org/screenshot-4.png)
+
+5. Tools > Translation Set
+
+   ![screenshot-2](./.wordpress-org/screenshot-5.png)
+
+6. Tools > Translations
+
+   ![screenshot-3](./.wordpress-org/screenshot-6.png)
+
+7. Tools > Glossaries
+
+   ![screenshot-4](./.wordpress-org/screenshot-7.png)
+
 ## Changelog
 
 ### 1.0.0
