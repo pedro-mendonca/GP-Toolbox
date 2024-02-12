@@ -121,21 +121,21 @@ foreach ( GP::$project->all() as $project ) {
 						_n( '%s glossary.', 'All %s glossaries.', $global_glossaries_count + $project_glossaries_count + $unknown_type_glossaries_count + count( $orphaned_glossary_entries ), 'gp-toolbox' ),
 						'<strong class="glossaries-label glossaries-label-all">' . esc_html( number_format_i18n( $global_glossaries_count + $project_glossaries_count + $unknown_type_glossaries_count + count( $orphaned_glossary_entries ) ) ) . '</strong>'
 					) . '</a>',
-					'<a id="glossaries-type-global" class="glossaries-type" href="#glossaries">' . sprintf(
+					$global_glossaries_count > 0 ? '<a id="glossaries-type-global" class="glossaries-type" href="#glossaries">' . sprintf(
 						/* translators: %s: Number of Glossaries. */
 						_n( '%s Global glossary.', '%s Global glossaries.', $global_glossaries_count, 'gp-toolbox' ),
 						'<strong class="glossaries-label glossaries-label-global">' . esc_html( number_format_i18n( $global_glossaries_count ) ) . '</strong>'
-					) . '</a>',
-					'<a id="glossaries-type-project" class="glossaries-type" href="#glossaries">' . sprintf(
+					) . '</a>' : '',
+					$project_glossaries_count > 0 ? '<a id="glossaries-type-project" class="glossaries-type" href="#glossaries">' . sprintf(
 						/* translators: %s: Number of Glossaries. */
 						_n( '%s Project glossary.', '%s Project glossaries.', $project_glossaries_count, 'gp-toolbox' ),
 						'<strong class="glossaries-label glossaries-label-project">' . esc_html( number_format_i18n( $project_glossaries_count ) ) . '</strong>'
-					) . '</a>',
-					'<a id="glossaries-set-unknown" class="glossaries-type" href="#glossaries">' . sprintf(
+					) . '</a>' : '',
+					$unknown_type_glossaries_count > 0 ? '<a id="glossaries-set-unknown" class="glossaries-type" href="#glossaries">' . sprintf(
 						/* translators: %s: Number of Glossaries. */
 						_n( '%s Glossary of unknown translation set.', '%s Glossaries of unknown translation set.', $unknown_type_glossaries_count, 'gp-toolbox' ),
 						'<strong class="glossaries-label glossaries-label-project">' . esc_html( number_format_i18n( $unknown_type_glossaries_count ) ) . '</strong>'
-					) . '</a>',
+					) . '</a>' : '',
 					count( $orphaned_glossary_entries ) > 0 ? '<a id="glossaries-unknown-orphaned-entries" class="glossaries-type" href="#glossaries">' . sprintf(
 						/* translators: %s: Number of Glossaries. */
 						_n( 'Entries from %s unknown glossary.', 'Entries from %s unknown glossaries.', count( $orphaned_glossary_entries ), 'gp-toolbox' ),
@@ -228,11 +228,13 @@ foreach ( GP::$project->all() as $project ) {
 								?>
 							</td>
 
-							<td class="translation-set" data-text="<?php echo esc_attr( $translation_set->name ); ?>" colspan="2">
+							<td class="translation-set" data-text="<?php echo esc_attr( $translation_set->name ); ?>">
 								<?php
 								gp_link( $global_glossary_path, $translation_set->name );
 								?>
 							</td>
+
+							<td class="project" data-text=""></td>
 
 							<td class="entries">
 								<?php
