@@ -46,6 +46,10 @@ gp_tmpl_load( 'gptoolbox-header', $args );
 // Get GlotPress translation sets.
 $gp_translation_sets = array();
 foreach ( GP::$translation_set->all() as $translation_set ) {
+	// Don't show Locale Glossary virtual projects with ID '0'.
+	if ( $translation_set->project_id === 0 ) {
+		continue;
+	}
 	$gp_translation_sets[ $translation_set->id ] = $translation_set;
 }
 
@@ -98,11 +102,6 @@ foreach ( $gp_translation_sets as $translation_set ) {
 				<?php
 
 				foreach ( $gp_translation_sets as $translation_set ) {
-
-					if ( $translation_set->project_id === 0 ) {
-						// Don't show Locale Glossary virtual projects with ID '0'.
-						continue;
-					}
 
 					?>
 					<tr gptoolboxdata-translation-set="<?php echo esc_attr( strval( $translation_set->id ) ); ?>">

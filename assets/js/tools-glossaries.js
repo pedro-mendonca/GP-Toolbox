@@ -60,44 +60,24 @@ jQuery( document ).ready( function( $ ) {
 			if ( glossaryType === 'glossaries-type-all' ) {
 				// Show all rows.
 				$( gpToolboxTable ).find( 'tbody tr' ).show();
-				// Shrink Locale header column.
-				$( gpToolboxTable ).find( 'thead th.gp-column-locale' ).attr( 'colspan', 1 );
-				// Show Project header column.
-				$( gpToolboxTable ).find( 'thead th' ).show();
 			} else if ( glossaryType === 'glossaries-type-global' ) {
 				// Hide all rows.
 				$( gpToolboxTable ).find( 'tbody tr' ).hide();
-				// Enlarge Locale header column.
-				$( gpToolboxTable ).find( 'thead th.gp-column-locale' ).attr( 'colspan', 2 );
-				// Hide Project header column.
-				$( gpToolboxTable ).find( 'thead th.gp-column-translation-set' ).hide();
 				// Show the specified status rows.
 				$( gpToolboxTable ).find( 'tbody tr td.type.global' ).parent().show();
 			} else if ( glossaryType === 'glossaries-type-project' ) {
 				// Hide all rows.
 				$( gpToolboxTable ).find( 'tbody tr' ).hide();
-				// Shrink Locale header column.
-				$( gpToolboxTable ).find( 'thead th.gp-column-locale' ).attr( 'colspan', 1 );
-				// Show Project header column.
-				$( gpToolboxTable ).find( 'thead th.gp-column-translation-set' ).show();
 				// Show the specified status rows.
 				$( gpToolboxTable ).find( 'tbody tr td.type.project' ).parent().show();
 			} else if ( glossaryType === 'glossaries-set-unknown' ) {
 				// Hide all rows.
 				$( gpToolboxTable ).find( 'tbody tr' ).hide();
-				// Shrink Locale header column.
-				$( gpToolboxTable ).find( 'thead th.gp-column-locale' ).attr( 'colspan', 1 );
-				// Show Project header column.
-				$( gpToolboxTable ).find( 'thead th.gp-column-translation-set' ).show();
 				// Show the specified status rows.
 				$( gpToolboxTable ).find( 'tbody tr td.translation-set.unknown' ).parent().show();
 			} else if ( glossaryType === 'glossaries-unknown-orphaned-entries' ) {
 				// Hide all rows.
 				$( gpToolboxTable ).find( 'tbody tr' ).hide();
-				// Shrink Locale header column.
-				$( gpToolboxTable ).find( 'thead th.gp-column-locale' ).attr( 'colspan', 1 );
-				// Show Project header column.
-				$( gpToolboxTable ).find( 'thead th.gp-column-translation-set' ).show();
 				// Show the specified status rows.
 				$( gpToolboxTable ).find( 'tbody tr td.id.unknown' ).parent().show();
 			}
