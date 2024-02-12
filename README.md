@@ -82,6 +82,11 @@ Sure! You are welcome to report any issues or add feature suggestions on the [Gi
 
 ## Changelog
 
+### 1.0.1
+
+* Fix Glossaries tools sorting and improve filtering.
+* Improve Glossaries tools filters.
+
 ### 1.0.0
 
 * Initial release.
