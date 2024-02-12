@@ -82,6 +82,10 @@ Sure! You are welcome to report any issues or add feature suggestions on the [Gi
 
 ## Changelog
 
+### 1.0.2
+
+* Add confirmation before delete items.
+
 ### 1.0.1
 
 * Fix Glossaries tools sorting and improve filtering.
