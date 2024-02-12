@@ -1,4 +1,4 @@
-/* global document, gpToolbox, Intl, wp, sprintf, wpApiSettings */
+/* global confirm, document, gpToolbox, Intl, wp, sprintf, wpApiSettings */
 
 jQuery( document ).ready( function( $ ) {
 	// Get User login (username).

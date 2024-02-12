@@ -1,4 +1,4 @@
-/* global document, Intl, gpToolbox, wp, wpApiSettings */
+/* global confirm, document, Intl, gpToolbox, wp, wpApiSettings */
 
 jQuery( document ).ready( function( $ ) {
 	// Get User Locale.
@@ -140,7 +140,6 @@ jQuery( document ).ready( function( $ ) {
 						if ( confirm( wp.i18n.__( "You are about to permanently delete these translations.\nThis action cannot be undone.\n'Cancel' to stop, 'OK' to delete.", 'gp-toolbox' ) ) ) {
 							translationsBulkDelete( translationSet.locale, translationSet.slug, 'old' );
 						}
-
 					} );
 					$( rejected ).find( 'button.delete' ).on( 'click', function() {
 						// Confirmation before delete.
