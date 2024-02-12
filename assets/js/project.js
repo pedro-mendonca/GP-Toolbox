@@ -136,10 +136,17 @@ jQuery( document ).ready( function( $ ) {
 
 					// Delete Old and Rejected translations.
 					$( old ).find( 'button.delete' ).on( 'click', function() {
-						translationsBulkDelete( translationSet.locale, translationSet.slug, 'old' );
+						// Confirmation before delete.
+						if ( confirm( wp.i18n.__( "You are about to permanently delete these translations.\nThis action cannot be undone.\n'Cancel' to stop, 'OK' to delete.", 'gp-toolbox' ) ) ) {
+							translationsBulkDelete( translationSet.locale, translationSet.slug, 'old' );
+						}
+
 					} );
 					$( rejected ).find( 'button.delete' ).on( 'click', function() {
-						translationsBulkDelete( translationSet.locale, translationSet.slug, 'rejected' );
+						// Confirmation before delete.
+						if ( confirm( wp.i18n.__( "You are about to permanently delete these translations.\nThis action cannot be undone.\n'Cancel' to stop, 'OK' to delete.", 'gp-toolbox' ) ) ) {
+							translationsBulkDelete( translationSet.locale, translationSet.slug, 'rejected' );
+						}
 					} );
 				}
 			}

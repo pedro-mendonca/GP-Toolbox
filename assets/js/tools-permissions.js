@@ -39,7 +39,10 @@ jQuery( document ).ready( function( $ ) {
 					} else {
 						// Delete permission.
 						$( this ).find( 'td.action button.delete' ).on( 'click', function() {
-							permissionDelete( 'admin', permissionID );
+							// Confirmation before delete.
+							if ( confirm( wp.i18n.__( "You are about to permanently delete these permission.\nThis action cannot be undone.\n'Cancel' to stop, 'OK' to delete.", 'gp-toolbox' ) ) ) {
+								permissionDelete( 'admin', permissionID );
+							}
 						} );
 					}
 				}
@@ -58,7 +61,10 @@ jQuery( document ).ready( function( $ ) {
 				if ( glotpressAdmin ) {
 					// Delete permission.
 					$( this ).find( 'td.action button.delete' ).on( 'click', function() {
-						permissionDelete( 'validator', permissionID );
+						// Confirmation before delete.
+						if ( confirm( wp.i18n.__( "You are about to permanently delete these permission.\nThis action cannot be undone.\n'Cancel' to stop, 'OK' to delete.", 'gp-toolbox' ) ) ) {
+							permissionDelete( 'validator', permissionID );
+						}
 					} );
 				}
 			}
