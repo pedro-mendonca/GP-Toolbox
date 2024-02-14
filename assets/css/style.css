@@ -240,5 +240,6 @@ ul.gptoolbox-description {
 ul.gptoolbox-description li::before {
 	font-family: dashicons;
 	content: "\f147";
-	color: var(--gp-color-accent-fg);
+	color: var(--gp-color-primary);
+	vertical-align: middle;
 }
