@@ -312,7 +312,27 @@ foreach ( $gp_translations as $translation_id => $translation ) {
 						?>
 						<td class="stats originals-active" data-text="<?php echo esc_attr( strval( $originals_active_count ) ); ?>">
 							<?php
-							echo esc_html( number_format_i18n( $originals_active_count ) );
+
+							if ( $translation_set && isset( $gp_projects[ $translation_set->project_id ] ) ) {
+
+								$url = add_query_arg(
+									'filters[status]',
+									'current_or_waiting_or_fuzzy_or_rejected_or_old',
+									gp_url_project_locale(
+										$gp_projects[ $translation_set->project_id ],
+										$translation_set->locale,
+										$translation_set->slug
+									)
+								);
+								echo wp_kses_post(
+									gp_link_get(
+										$url,
+										esc_html( number_format_i18n( $originals_active_count ) )
+									)
+								);
+							} else {
+								echo esc_html( number_format_i18n( $originals_active_count ) );
+							}
 							?>
 						</td>
 
