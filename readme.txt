@@ -54,6 +54,10 @@ Sure! You are welcome to report any issues or add feature suggestions on the [Gi
 
 == Changelog ==
 
+= Unreleased =
+*   Remove link in current breadcrumb item.
+*   CSS fixes.
+
 = 1.0.2 =
 *   Add confirmation before delete items.
 
