@@ -39,7 +39,7 @@ gp_tmpl_load( 'gptoolbox-header', $args );
 	<?php
 	$statuses_list = array();
 	foreach ( Toolbox::supported_translation_statuses() as $key => $translation_status ) {
-		$statuses_list[] = '<span class="translation-status ' . esc_attr( $key ) . '">' . esc_html( $translation_status ) . '</span>';
+		$statuses_list[ $key ] = '<span class="translation-status ' . esc_attr( $key ) . '">' . esc_html( $translation_status ) . '</span>';
 	}
 	echo wp_kses_post(
 		wp_sprintf(
@@ -315,9 +315,12 @@ foreach ( $gp_translations as $translation_id => $translation ) {
 
 							if ( $translation_set && isset( $gp_projects[ $translation_set->project_id ] ) ) {
 
+								// Filter by all supported statuses.
+								$status_filter = implode( '_or_', array_keys( $statuses_list ) );
+
 								$url = add_query_arg(
 									'filters[status]',
-									'current_or_waiting_or_fuzzy_or_rejected_or_old',
+									$status_filter,
 									gp_url_project_locale(
 										$gp_projects[ $translation_set->project_id ],
 										$translation_set->locale,
