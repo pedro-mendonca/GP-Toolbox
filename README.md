@@ -86,6 +86,7 @@ Sure! You are welcome to report any issues or add feature suggestions on the [Gi
 
 * Remove link in current breadcrumb item.
 * Link translations with active originals.
+* Filter translations by unknown translation sets.
 * CSS fixes.
 
 ### 1.0.2
