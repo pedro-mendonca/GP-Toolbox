@@ -131,10 +131,10 @@ foreach ( GP::$original->all() as $original ) {
 $translations_by_translation_set = array();
 
 // Set general translation counts.
-$translations_with_active_original_count   = 0;
-$translations_with_obsolete_original_count = 0;
-$translations_with_unknown_original_count  = 0;
-$unknown_translation_sets                  = 0;
+$translations_with_active_original_count    = 0;
+$translations_with_obsolete_original_count  = 0;
+$translations_with_unknown_original_count   = 0;
+$translations_from_unknown_translation_sets = 0;
 
 foreach ( $gp_translations as $translation_id => $translation ) {
 	$translations_by_translation_set[ $translation->translation_set_id ][ $translation_id ] = $translation;
@@ -152,7 +152,7 @@ foreach ( $gp_translations as $translation_id => $translation ) {
 
 foreach ( $translations_by_translation_set as $translation_set_id => $translations ) {
 	if ( ! isset( $gp_translation_sets[ $translation_set_id ] ) ) {
-		++$unknown_translation_sets;
+		$translations_from_unknown_translation_sets += count( $translations_by_translation_set[ $translation_set_id ] );
 	}
 }
 
@@ -198,10 +198,10 @@ foreach ( $translations_by_translation_set as $translation_set_id => $translatio
 						_n( '%s translation with unknown original.', '%s translations with unknown originals.', $translations_with_unknown_original_count, 'gp-toolbox' ),
 						'<strong class="translations-label translations-label-unknown">' . esc_html( number_format_i18n( $translations_with_unknown_original_count ) ) . '</strong>'
 					) . '</a>' : '',
-					$unknown_translation_sets > 0 ? '<a id="translations-unknown-translation-set" class="translations" href="#translations">' . sprintf(
-						/* translators: %s: Number of Translation Sets. */
-						_n( 'Translations from %s unknown translation set.', 'Translations from %s unknown translation sets.', $unknown_translation_sets, 'gp-toolbox' ),
-						'<strong class="translations-label translations-label-unknown">' . esc_html( number_format_i18n( $unknown_translation_sets ) ) . '</strong>'
+					$translations_from_unknown_translation_sets > 0 ? '<a id="translations-unknown-translation-set" class="translations" href="#translations">' . sprintf(
+						/* translators: %s: Number of Translations. */
+						_n( '%s translation from unknown translation set.', '%s translations from unknown translation sets.', $translations_from_unknown_translation_sets, 'gp-toolbox' ),
+						'<strong class="translations-label translations-label-unknown">' . esc_html( number_format_i18n( $translations_from_unknown_translation_sets ) ) . '</strong>'
 					) . '</a>' : ''
 				)
 			);
