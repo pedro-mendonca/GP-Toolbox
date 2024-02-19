@@ -225,6 +225,27 @@ foreach ( $translations_by_translation_set as $translation_set_id => $translatio
 				</tr>
 			</thead>
 			<tbody>
+				<style media="screen">
+					table.gp-toolbox.tools-translations td.stats span.stats {
+						padding: 0 1rem;
+						width: 100%;
+						float: left;
+					}
+					table.gp-toolbox.tools-translations td.stats button.delete {
+						position: absolute;
+						translate: -1rem;
+					}
+					table.gp-toolbox.tools-translations td.translation-set span.unknown {
+						padding: 0 1rem 0 0;
+						width: 100%;
+						float: left;
+						text-align: left;
+					}
+					table.gp-toolbox.tools-translations td.translation-set button.delete {
+						position: absolute;
+						translate: -1rem;
+					}
+				</style>
 				<?php
 
 				foreach ( $translations_by_translation_set as $translation_set_id => $translations ) {
@@ -292,6 +313,8 @@ foreach ( $translations_by_translation_set as $translation_set_id => $translatio
 									);
 									?>
 								</span>
+								<div class="progress-notice" style="display: none;"></div>
+								<button class="delete"><span class="dashicons dashicons-trash"></span></button>
 							</td>
 							<td class="project" data-text="">
 								<span class="unknown">
@@ -358,8 +381,18 @@ foreach ( $translations_by_translation_set as $translation_set_id => $translatio
 						</td>
 
 						<td class="stats originals-unknown" data-text="<?php echo esc_attr( strval( $originals_unknown_count ) ); ?>">
+							<span class="stats">
+								<?php
+								echo esc_html( number_format_i18n( $originals_unknown_count ) );
+								?>
+							</span>
 							<?php
-							echo esc_html( number_format_i18n( $originals_unknown_count ) );
+							if ( $originals_unknown_count > 0 ) {
+								?>
+								<div class="progress-notice" style="display: none;"></div>
+								<button class="delete"><span class="dashicons dashicons-trash"></span></button>
+								<?php
+							}
 							?>
 						</td>
 					</tr>
