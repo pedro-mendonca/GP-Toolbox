@@ -50,6 +50,6 @@ jobs:
       run: rsync -rc --exclude-from="$GITHUB_WORKSPACE/.distignore" "$GITHUB_WORKSPACE/" gp-toolbox/ --delete --delete-excluded
 
     - name: Run plugin check
-      uses: swissspidy/wp-plugin-check-action@v1.0.3
+      uses: swissspidy/wp-plugin-check-action@main
       with:
         build-dir: 'gp-toolbox'
