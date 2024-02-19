@@ -219,9 +219,9 @@ foreach ( $translations_by_translation_set as $translation_set_id => $translatio
 				<tr>
 					<th class="gp-column-translation-set"><?php esc_html_e( 'Translation Set', 'gp-toolbox' ); ?></th>
 					<th class="gp-column-project"><?php esc_html_e( 'Project', 'gp-toolbox' ); ?></th>
-					<th class="gp-column-originals-active"><?php esc_html_e( 'Translations (Active Originals)', 'gp-toolbox' ); ?></th>
-					<th class="gp-column-originals-obsolete"><?php esc_html_e( 'Translations (Obsolete Originals)', 'gp-toolbox' ); ?></th>
-					<th class="gp-column-originals-unknown"><?php esc_html_e( 'Translations (Unknown Originals)', 'gp-toolbox' ); ?></th>
+					<th class="gp-column-originals-active"><?php esc_html_e( 'Active Originals', 'gp-toolbox' ); ?></th>
+					<th class="gp-column-originals-obsolete"><?php esc_html_e( 'Obsolete Originals', 'gp-toolbox' ); ?></th>
+					<th class="gp-column-originals-unknown"><?php esc_html_e( 'Unknown Originals', 'gp-toolbox' ); ?></th>
 				</tr>
 			</thead>
 			<tbody>
