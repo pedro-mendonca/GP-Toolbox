@@ -39,7 +39,7 @@ gp_tmpl_load( 'gptoolbox-header', $args );
 	<?php
 	$statuses_list = array();
 	foreach ( Toolbox::supported_translation_statuses() as $key => $translation_status ) {
-		$statuses_list[] = '<span class="translation-status ' . esc_attr( $key ) . '">' . esc_html( $translation_status ) . '</span>';
+		$statuses_list[ $key ] = '<span class="translation-status ' . esc_attr( $key ) . '">' . esc_html( $translation_status ) . '</span>';
 	}
 	echo wp_kses_post(
 		wp_sprintf(
@@ -131,9 +131,10 @@ foreach ( GP::$original->all() as $original ) {
 $translations_by_translation_set = array();
 
 // Set general translation counts.
-$translations_with_active_original_count   = 0;
-$translations_with_obsolete_original_count = 0;
-$translations_with_unknown_original_count  = 0;
+$translations_with_active_original_count    = 0;
+$translations_with_obsolete_original_count  = 0;
+$translations_with_unknown_original_count   = 0;
+$translations_from_unknown_translation_sets = 0;
 
 foreach ( $gp_translations as $translation_id => $translation ) {
 	$translations_by_translation_set[ $translation->translation_set_id ][ $translation_id ] = $translation;
@@ -146,6 +147,12 @@ foreach ( $gp_translations as $translation_id => $translation ) {
 		}
 	} else {
 		++$translations_with_unknown_original_count;
+	}
+}
+
+foreach ( $translations_by_translation_set as $translation_set_id => $translations ) {
+	if ( ! isset( $gp_translation_sets[ $translation_set_id ] ) ) {
+		$translations_from_unknown_translation_sets += count( $translations_by_translation_set[ $translation_set_id ] );
 	}
 }
 
@@ -169,8 +176,8 @@ foreach ( $gp_translations as $translation_id => $translation ) {
 			// Translations: All {total} translations. {active} translations with active originals. {obsolete} translations with obsolete originals. {unknown} translations with unknown originals.
 			echo wp_kses_post(
 				sprintf(
-					/* translators: 1: Translations total. 2: With Active originals. 3: With Obsolete originals. 4: With Unknown originals. */
-					__( 'Translations: %1$s %2$s %3$s %4$s', 'gp-toolbox' ),
+					/* translators: 1: Translations total. 2: With Active originals. 3: With Obsolete originals. 4: With Unknown originals. 5: Unknown translation set. */
+					__( 'Translations: %1$s %2$s %3$s %4$s %5$s', 'gp-toolbox' ),
 					'<a id="translations-all" class="translations" href="#translations">' . sprintf(
 						/* translators: %s: Number of Translations. */
 						_n( '%s translation.', 'All %s translations.', count( $gp_translations ), 'gp-toolbox' ),
@@ -190,6 +197,11 @@ foreach ( $gp_translations as $translation_id => $translation ) {
 						/* translators: %s: Number of Translations. */
 						_n( '%s translation with unknown original.', '%s translations with unknown originals.', $translations_with_unknown_original_count, 'gp-toolbox' ),
 						'<strong class="translations-label translations-label-unknown">' . esc_html( number_format_i18n( $translations_with_unknown_original_count ) ) . '</strong>'
+					) . '</a>' : '',
+					$translations_from_unknown_translation_sets > 0 ? '<a id="translations-unknown-translation-set" class="translations" href="#translations">' . sprintf(
+						/* translators: %s: Number of Translations. */
+						_n( '%s translation from unknown translation set.', '%s translations from unknown translation sets.', $translations_from_unknown_translation_sets, 'gp-toolbox' ),
+						'<strong class="translations-label translations-label-unknown">' . esc_html( number_format_i18n( $translations_from_unknown_translation_sets ) ) . '</strong>'
 					) . '</a>' : ''
 				)
 			);
@@ -207,9 +219,9 @@ foreach ( $gp_translations as $translation_id => $translation ) {
 				<tr>
 					<th class="gp-column-translation-set"><?php esc_html_e( 'Translation Set', 'gp-toolbox' ); ?></th>
 					<th class="gp-column-project"><?php esc_html_e( 'Project', 'gp-toolbox' ); ?></th>
-					<th class="gp-column-originals-active"><?php esc_html_e( 'Translations (Active Originals)', 'gp-toolbox' ); ?></th>
-					<th class="gp-column-originals-obsolete"><?php esc_html_e( 'Translations (Obsolete Originals)', 'gp-toolbox' ); ?></th>
-					<th class="gp-column-originals-unknown"><?php esc_html_e( 'Translations (Unknown Originals)', 'gp-toolbox' ); ?></th>
+					<th class="gp-column-originals-active"><?php esc_html_e( 'Active Originals', 'gp-toolbox' ); ?></th>
+					<th class="gp-column-originals-obsolete"><?php esc_html_e( 'Obsolete Originals', 'gp-toolbox' ); ?></th>
+					<th class="gp-column-originals-unknown"><?php esc_html_e( 'Unknown Originals', 'gp-toolbox' ); ?></th>
 				</tr>
 			</thead>
 			<tbody>
@@ -270,7 +282,7 @@ foreach ( $gp_translations as $translation_id => $translation ) {
 							}
 						} else {
 							?>
-							<td class="translation-set" data-text="">
+							<td class="translation-set unknown" data-text="">
 								<span class="unknown">
 									<?php
 									printf(
@@ -312,7 +324,30 @@ foreach ( $gp_translations as $translation_id => $translation ) {
 						?>
 						<td class="stats originals-active" data-text="<?php echo esc_attr( strval( $originals_active_count ) ); ?>">
 							<?php
-							echo esc_html( number_format_i18n( $originals_active_count ) );
+
+							if ( $translation_set && isset( $gp_projects[ $translation_set->project_id ] ) ) {
+
+								// Filter by all supported statuses.
+								$status_filter = implode( '_or_', array_keys( $statuses_list ) );
+
+								$url = add_query_arg(
+									'filters[status]',
+									$status_filter,
+									gp_url_project_locale(
+										$gp_projects[ $translation_set->project_id ],
+										$translation_set->locale,
+										$translation_set->slug
+									)
+								);
+								echo wp_kses_post(
+									gp_link_get(
+										$url,
+										esc_html( number_format_i18n( $originals_active_count ) )
+									)
+								);
+							} else {
+								echo esc_html( number_format_i18n( $originals_active_count ) );
+							}
 							?>
 						</td>
 

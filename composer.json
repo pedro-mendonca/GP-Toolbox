@@ -21,7 +21,7 @@
   },
   "require-dev": {
     "dealerdirect/phpcodesniffer-composer-installer": "^1.0.0",
-    "ergebnis/composer-normalize": "^2.28.3",
+    "ergebnis/composer-normalize": "^2.42.0",
     "pedro-mendonca/glotpress-stubs": "4.0.0-beta.2",
     "phpcompatibility/phpcompatibility-wp": "^2.1.4",
     "phpmd/phpmd": "^2.15.0",
@@ -50,14 +50,6 @@
     "optimize-autoloader": true
   },
   "scripts": {
-    "i18n": [
-      "@i18n:pot",
-      "@i18n:po",
-      "@i18n:json"
-    ],
-    "i18n:pot": "wp i18n make-pot . languages/gp-toolbox.pot",
-    "i18n:po": "wp i18n update-po languages/gp-toolbox.pot languages",
-    "i18n:json": "wp i18n make-json languages --no-purge",
     "build": [
       "@lint",
       "@compile",
@@ -71,6 +63,14 @@
     ],
     "compile:js": "npm run compile:js",
     "format:php": "phpcbf -v --standard=phpcs.xml.dist",
+    "i18n": [
+      "@i18n:pot",
+      "@i18n:po",
+      "@i18n:json"
+    ],
+    "i18n:json": "wp i18n make-json languages --no-purge",
+    "i18n:po": "wp i18n update-po languages/gp-toolbox.pot languages",
+    "i18n:pot": "wp i18n make-pot . languages/gp-toolbox.pot",
     "lint": [
       "@lint:php",
       "@compat:php",

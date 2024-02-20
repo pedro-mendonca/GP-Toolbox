@@ -74,6 +74,11 @@ jQuery( document ).ready( function( $ ) {
 				$( gpToolboxTable ).find( 'tbody tr' ).hide();
 				// Show the specified status rows.
 				$( gpToolboxTable ).find( 'tbody tr td.stats.originals-unknown:not([data-text="0"])' ).parent().show();
+			} else if ( originalsStatus === 'translations-unknown-translation-set' ) {
+				// Hide all rows.
+				$( gpToolboxTable ).find( 'tbody tr' ).hide();
+				// Show the specified status rows.
+				$( gpToolboxTable ).find( 'tbody tr td.translation-set.unknown' ).parent().show();
 			}
 		}
 	} );

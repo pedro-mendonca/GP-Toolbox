@@ -749,7 +749,11 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 			$result = array();
 
 			foreach ( $breadcrumbs as $url => $title ) {
-				$result[] = gp_link_get( gp_url( $url ), esc_html( $title ) );
+				if ( array_key_last( $breadcrumbs ) === $url ) {
+					$result[] = esc_html( $title );
+				} else {
+					$result[] = gp_link_get( gp_url( $url ), esc_html( $title ) );
+				}
 			}
 
 			return gp_breadcrumb( $result );
