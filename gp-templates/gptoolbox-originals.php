@@ -125,28 +125,31 @@ foreach ( $gp_originals as $original ) {
 			// Originals: All {total} originals. {active} active originals. {obsolete} obsolete originals.
 			echo wp_kses_post(
 				sprintf(
-					/* translators: 1: Originals total. 2: Active originals. 3: Obsolete originals. 4: Unknown projects with originals. */
-					__( 'Originals: %1$s %2$s %3$s %4$s', 'gp-toolbox' ),
-					'<a id="originals-status-all" class="originals-status" href="#originals">' . sprintf(
-						/* translators: %s: Number of Originals. */
-						_n( '%s original.', 'All %s originals.', count( $gp_originals_by_status['+active'] ) + count( $gp_originals_by_status['-obsolete'] ), 'gp-toolbox' ),
-						'<strong class="originals-label originals-label-all">' . esc_html( number_format_i18n( count( $gp_originals_by_status['+active'] ) + count( $gp_originals_by_status['-obsolete'] ) ) ) . '</strong>'
-					) . '</a>',
-					count( $gp_originals_by_status['+active'] ) > 0 ? '<a id="originals-status-active" class="originals-status" href="#originals">' . sprintf(
-						/* translators: %s: Number of Originals. */
-						_n( '%s active original.', '%s active originals.', count( $gp_originals_by_status['+active'] ), 'gp-toolbox' ),
-						'<strong class="originals-label originals-label-active">' . esc_html( number_format_i18n( count( $gp_originals_by_status['+active'] ) ) ) . '</strong>'
-					) . '</a>' : '',
-					count( $gp_originals_by_status['-obsolete'] ) > 0 ? '<a id="originals-status-obsolete" class="originals-status" href="#originals">' . sprintf(
-						/* translators: %s: Number of Originals. */
-						_n( '%s obsolete original.', '%s obsolete originals.', count( $gp_originals_by_status['-obsolete'] ), 'gp-toolbox' ),
-						'<strong class="originals-label originals-label-obsolete">' . esc_html( number_format_i18n( count( $gp_originals_by_status['-obsolete'] ) ) ) . '</strong>'
-					) . '</a>' : '',
-					count( $orphaned_originals ) > 0 ? '<a id="originals-orphaned" class="originals-status" href="#originals">' . sprintf(
-						/* translators: %s: Number of Projects. */
-						_n( 'Originals from %s unknown project.', 'Originals from %s unknown projects.', count( $orphaned_originals ), 'gp-toolbox' ),
-						'<strong class="originals-label originals-label-orphaned">' . esc_html( number_format_i18n( count( $orphaned_originals ) ) ) . '</strong>'
-					) . '</a>' : ''
+					/* translators: %s: Links to filter the table. */
+					__( 'Originals: %s', 'gp-toolbox' ),
+					sprintf(
+						'%1$s %2$s %3$s %4$s',
+						'<a id="originals-status-all" class="originals-status" href="#originals">' . sprintf(
+							/* translators: %s: Number of Originals. */
+							_n( '%s original.', 'All %s originals.', count( $gp_originals_by_status['+active'] ) + count( $gp_originals_by_status['-obsolete'] ), 'gp-toolbox' ),
+							'<strong class="originals-label originals-label-all">' . esc_html( number_format_i18n( count( $gp_originals_by_status['+active'] ) + count( $gp_originals_by_status['-obsolete'] ) ) ) . '</strong>'
+						) . '</a>',
+						count( $gp_originals_by_status['+active'] ) > 0 ? '<a id="originals-status-active" class="originals-status" href="#originals">' . sprintf(
+							/* translators: %s: Number of Originals. */
+							_n( '%s active original.', '%s active originals.', count( $gp_originals_by_status['+active'] ), 'gp-toolbox' ),
+							'<strong class="originals-label originals-label-active">' . esc_html( number_format_i18n( count( $gp_originals_by_status['+active'] ) ) ) . '</strong>'
+						) . '</a>' : '',
+						count( $gp_originals_by_status['-obsolete'] ) > 0 ? '<a id="originals-status-obsolete" class="originals-status" href="#originals">' . sprintf(
+							/* translators: %s: Number of Originals. */
+							_n( '%s obsolete original.', '%s obsolete originals.', count( $gp_originals_by_status['-obsolete'] ), 'gp-toolbox' ),
+							'<strong class="originals-label originals-label-obsolete">' . esc_html( number_format_i18n( count( $gp_originals_by_status['-obsolete'] ) ) ) . '</strong>'
+						) . '</a>' : '',
+						count( $orphaned_originals ) > 0 ? '<a id="originals-orphaned" class="originals-status" href="#originals">' . sprintf(
+							/* translators: %s: Number of Projects. */
+							_n( 'Originals from %s unknown project.', 'Originals from %s unknown projects.', count( $orphaned_originals ), 'gp-toolbox' ),
+							'<strong class="originals-label originals-label-orphaned">' . esc_html( number_format_i18n( count( $orphaned_originals ) ) ) . '</strong>'
+						) . '</a>' : ''
+					)
 				)
 			);
 
