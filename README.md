@@ -82,7 +82,7 @@ Sure! You are welcome to report any issues or add feature suggestions on the [Gi
 
 ## Changelog
 
-### Unreleased
+### 1.0.4
 
 * Tested up to WordPress 6.5
 * Tested up to GlotPress 4.0.0-rc.1
