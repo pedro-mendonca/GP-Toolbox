@@ -180,27 +180,27 @@ foreach ( $translations_by_translation_set as $translation_set_id => $translatio
 					__( 'Translations: %s', 'gp-toolbox' ),
 					sprintf(
 						'%1$s %2$s %3$s %4$s %5$s',
-						'<a id="translations-all" class="translations" href="#translations">' . sprintf(
+						'<a id="translations-all" class="translations" href="#translations-filters">' . sprintf(
 							/* translators: %s: Number of Translations. */
 							_n( '%s translation.', 'All %s translations.', count( $gp_translations ), 'gp-toolbox' ),
 							'<strong class="translations-label translations-label-all">' . esc_html( number_format_i18n( count( $gp_translations ) ) ) . '</strong>'
 						) . '</a>',
-						$translations_with_active_original_count > 0 ? '<a id="translations-active-original" class="translations" href="#translations">' . sprintf(
+						$translations_with_active_original_count > 0 ? '<a id="translations-active-original" class="translations" href="#translations-filters">' . sprintf(
 							/* translators: %s: Number of Translations. */
 							_n( '%s translation witn active original.', '%s translations with active originals.', $translations_with_active_original_count, 'gp-toolbox' ),
 							'<strong class="translations-label translations-label-active">' . esc_html( number_format_i18n( $translations_with_active_original_count ) ) . '</strong>'
 						) . '</a>' : '',
-						$translations_with_obsolete_original_count > 0 ? '<a id="translations-obsolete-original" class="translations" href="#translations">' . sprintf(
+						$translations_with_obsolete_original_count > 0 ? '<a id="translations-obsolete-original" class="translations" href="#translations-filters">' . sprintf(
 							/* translators: %s: Number of Translations. */
 							_n( '%s translation with obsolete original.', '%s translations with obsolete originals.', $translations_with_obsolete_original_count, 'gp-toolbox' ),
 							'<strong class="translations-label translations-label-obsolete">' . esc_html( number_format_i18n( $translations_with_obsolete_original_count ) ) . '</strong>'
 						) . '</a>' : '',
-						$translations_with_unknown_original_count > 0 ? '<a id="translations-unknown-original" class="translations" href="#translations">' . sprintf(
+						$translations_with_unknown_original_count > 0 ? '<a id="translations-unknown-original" class="translations" href="#translations-filters">' . sprintf(
 							/* translators: %s: Number of Translations. */
 							_n( '%s translation with unknown original.', '%s translations with unknown originals.', $translations_with_unknown_original_count, 'gp-toolbox' ),
 							'<strong class="translations-label translations-label-unknown">' . esc_html( number_format_i18n( $translations_with_unknown_original_count ) ) . '</strong>'
 						) . '</a>' : '',
-						$translations_from_unknown_translation_sets > 0 ? '<a id="translations-unknown-translation-set" class="translations" href="#translations">' . sprintf(
+						$translations_from_unknown_translation_sets > 0 ? '<a id="translations-unknown-translation-set" class="translations" href="#translations-filters">' . sprintf(
 							/* translators: %s: Number of Translations. */
 							_n( '%s translation from unknown translation set.', '%s translations from unknown translation sets.', $translations_from_unknown_translation_sets, 'gp-toolbox' ),
 							'<strong class="translations-label translations-label-unknown">' . esc_html( number_format_i18n( $translations_from_unknown_translation_sets ) ) . '</strong>'
