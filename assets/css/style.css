@@ -28,6 +28,7 @@ table.gp-table button.delete span.dashicons {
 table.gp-table div.progress-notice {
 	font-size: 0.75em;
 	font-style: italic;
+	white-space: nowrap;
 }
 
 table.gp-table td span.unknown {
@@ -88,6 +89,7 @@ table.gp-table.translation-sets tbody tr td.stats.rejected div.progress-notice,
 table.gp-table.translation-sets tbody tr td.stats.changesrequested div.progress-notice {
 	font-size: 0.75em;
 	font-style: italic;
+	white-space: nowrap;
 }
 
 table.gp-table.translation-sets tbody tr td.stats.old a,

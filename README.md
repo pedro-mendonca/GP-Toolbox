@@ -82,6 +82,10 @@ Sure! You are welcome to report any issues or add feature suggestions on the [Gi
 
 ## Changelog
 
+### Unreleased
+
+* CSS fixes.
+
 ### 1.0.4
 
 * Tested up to WordPress 6.5
