@@ -12,7 +12,7 @@ Set of tools to help you manage your GlotPress.
 [![WordPress Plugin: Tested WP Version](https://img.shields.io/wordpress/plugin/tested/gp-toolbox.svg?label=WordPress%20Tested&logo=wordpress)](https://wordpress.org/plugins/gp-toolbox/)
 
 [![GlotPress Plugin: Required GP Version](https://img.shields.io/badge/GlotPress%20Required-v3.0.0-826eb4.svg)](https://wordpress.org/plugins/glotpress/)
-[![GlotPress Plugin: Tested GP Version](https://img.shields.io/badge/GlotPress%20Tested-v4.0.0%20beta.2-826eb4.svg)](https://github.com/GlotPress/GlotPress/releases/tag/4.0.0-beta.2)
+[![GlotPress Plugin: Tested GP Version](https://img.shields.io/badge/GlotPress%20Tested-v4.0.0%20rc.1-826eb4.svg)](https://github.com/GlotPress/GlotPress/releases/tag/4.0.0-rc.1)
 
 [![Coding Standards](https://github.com/pedro-mendonca/GP-Toolbox/actions/workflows/coding-standards.yml/badge.svg)](https://github.com/pedro-mendonca/GP-Toolbox/actions/workflows/coding-standards.yml)
 [![Static Analysis](https://github.com/pedro-mendonca/GP-Toolbox/actions/workflows/static-analysis.yml/badge.svg)](https://github.com/pedro-mendonca/GP-Toolbox/actions/workflows/static-analysis.yml)
@@ -84,9 +84,10 @@ Sure! You are welcome to report any issues or add feature suggestions on the [Gi
 
 ### Unreleased
 
-* Tested up to WP 6.5.
-* Improve tables filter links.
-* Set dependency header for GlotPress according WP 6.5.
+* Tested up to WordPress 6.5
+* Tested up to GlotPress 4.0.0-rc.1
+* Improve tables filter links
+* Set dependency header for GlotPress according WP 6.5
 
 ### 1.0.3
 
