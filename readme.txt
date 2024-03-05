@@ -5,6 +5,7 @@ Tags: glotpress, translation, toolbox, i18n
 Requires at least: 5.3
 Tested up to: 6.5
 Requires PHP: 7.4
+Requires Plugins: glotpress
 Stable tag: 1.0.3
 License: GPLv2
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
