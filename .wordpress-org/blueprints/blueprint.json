@@ -3,7 +3,7 @@
   "landingPage": "/glotpress/tools",
   "preferredVersions": {
     "php": "7.4",
-    "wp": "6.5"
+    "wp": "latest"
   },
   "phpExtensionBundles": ["kitchen-sink"],
   "steps": [
@@ -11,6 +11,12 @@
       "step": "login",
       "username": "admin",
       "password": "password"
+    },
+    {
+      "step": "setSiteOptions",
+      "options": {
+        "permalink_structure": "/%year%/%monthnum%/%day%/%postname%/"
+      }
     },
     {
       "step": "installPlugin",
