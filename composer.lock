@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0a27efd08e5e7451ee620ddf0e32b2c9",
+    "content-hash": "e930b3cbb67a5280b8255a14236155d7",
     "packages": [],
     "packages-dev": [
         {
@@ -826,22 +826,22 @@
         },
         {
             "name": "pedro-mendonca/glotpress-stubs",
-            "version": "4.0.0-beta.2",
+            "version": "4.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/pedro-mendonca/glotpress-stubs.git",
-                "reference": "e6d9cb802f1ff5423cc65a3d9f58f5034971aa3a"
+                "reference": "00ee2c21b8b6b7b0d55e510921feb2019f3508f3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pedro-mendonca/glotpress-stubs/zipball/e6d9cb802f1ff5423cc65a3d9f58f5034971aa3a",
-                "reference": "e6d9cb802f1ff5423cc65a3d9f58f5034971aa3a",
+                "url": "https://api.github.com/repos/pedro-mendonca/glotpress-stubs/zipball/00ee2c21b8b6b7b0d55e510921feb2019f3508f3",
+                "reference": "00ee2c21b8b6b7b0d55e510921feb2019f3508f3",
                 "shasum": ""
             },
             "require-dev": {
                 "php": "^7.2",
                 "php-stubs/generator": "^0.8.4",
-                "php-stubs/wordpress-stubs": "^6.3.2"
+                "php-stubs/wordpress-stubs": "^6.4.3"
             },
             "type": "library",
             "notification-url": "https://packagist.org/downloads/",
@@ -858,7 +858,7 @@
             ],
             "support": {
                 "issues": "https://github.com/pedro-mendonca/glotpress-stubs/issues",
-                "source": "https://github.com/pedro-mendonca/glotpress-stubs/tree/4.0.0-beta.2"
+                "source": "https://github.com/pedro-mendonca/glotpress-stubs/tree/4.0.0"
             },
             "funding": [
                 {
@@ -866,7 +866,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-01-26T11:38:57+00:00"
+            "time": "2024-03-07T08:43:08+00:00"
         },
         {
             "name": "php-stubs/wordpress-stubs",
@@ -2584,9 +2584,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "pedro-mendonca/glotpress-stubs": 10
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
