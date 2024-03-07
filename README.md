@@ -16,8 +16,8 @@ Set of tools to help you manage your GlotPress.
 
 [![Coding Standards](https://github.com/pedro-mendonca/GP-Toolbox/actions/workflows/coding-standards.yml/badge.svg)](https://github.com/pedro-mendonca/GP-Toolbox/actions/workflows/coding-standards.yml)
 [![Static Analysis](https://github.com/pedro-mendonca/GP-Toolbox/actions/workflows/static-analysis.yml/badge.svg)](https://github.com/pedro-mendonca/GP-Toolbox/actions/workflows/static-analysis.yml)
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/3539ffa2702a4e1a9b7ac7fcfd506169)](https://app.codacy.com/gh/pedro-mendonca/GP-Toolbox/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
 [![WP Plugin Check](https://github.com/pedro-mendonca/GP-Toolbox/actions/workflows/plugin-check.yml/badge.svg)](https://github.com/pedro-mendonca/GP-Toolbox/actions/workflows/plugin-check.yml)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/3539ffa2702a4e1a9b7ac7fcfd506169)](https://app.codacy.com/gh/pedro-mendonca/GP-Toolbox/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
 
 ## Description
 
