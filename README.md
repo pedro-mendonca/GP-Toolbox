@@ -87,6 +87,10 @@ Sure! You are welcome to report any issues or add feature suggestions on the [Gi
 
 * CSS fixes.
 
+### Unreleased
+
+* Tested up to GlotPress 4.0.0
+
 ### 1.0.4
 
 * Tested up to WordPress 6.5
