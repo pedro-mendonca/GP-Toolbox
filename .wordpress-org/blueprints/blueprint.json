@@ -21,8 +21,18 @@
     {
       "step": "installPlugin",
       "pluginZipFile": {
-        "resource": "wordpress.org\/plugins",
+        "resource": "wordpress.org/plugins",
         "slug": "glotpress"
+      },
+      "options": {
+        "activate": true
+      }
+    },
+    {
+      "step": "installPlugin",
+      "pluginZipFile": {
+        "resource": "wordpress.org/plugins",
+        "slug": "gp-toolbox"
       },
       "options": {
         "activate": true
