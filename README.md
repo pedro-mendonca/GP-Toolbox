@@ -85,11 +85,8 @@ Sure! You are welcome to report any issues or add feature suggestions on the [Gi
 
 ### Unreleased
 
-* CSS fixes.
-
-### Unreleased
-
 * Tested up to GlotPress 4.0.0
+* CSS fixes.
 
 ### 1.0.4
 
