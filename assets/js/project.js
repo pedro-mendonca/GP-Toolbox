@@ -50,6 +50,9 @@ jQuery( document ).ready( function( $ ) {
 			$( tableTranslationSets ).children( 'thead' ).children( 'tr' ).find( 'th:last' ).after( '<th class="gptoolbox-column-changesrequested">' + wp.i18n.__( 'Changes requested', 'gp-toolbox' ) + '</td>' );
 		}
 
+		// Add 'warnings' column header to header row.
+		$( tableTranslationSets ).children( 'thead' ).children( 'tr' ).find( 'th:last' ).after( '<th class="gptoolbox-column-warnings">' + wp.i18n.__( 'Warnings', 'gp-toolbox' ) + '</td>' );
+
 		// Customize translation sets rows.
 		$( tableTranslationSets ).children( 'tbody' ).children( 'tr' ).each(
 			function() {
@@ -68,6 +71,9 @@ jQuery( document ).ready( function( $ ) {
 					// Add cell to row.
 					$( this ).find( 'td:last' ).after( '<td class="stats changesrequested"></td>' );
 				}
+
+				// Add 'warnings' cell to row.
+				$( this ).find( 'td:last' ).after( '<td class="stats warnings"></td>' );
 
 				// Add attributes 'gptoolboxdata-' to each row.
 				$( this ).children( 'td:first-child' ).find( 'a' ).each( function() {
@@ -89,7 +95,7 @@ jQuery( document ).ready( function( $ ) {
 			}
 		);
 
-		// Add Old, Rejected and Changes requested translations to translation set.
+		// Add Old, Rejected, Changes requested and With Warnings translations to translation set.
 		$( tableTranslationSets ).children( 'tbody' ).children( 'tr' ).each(
 			function() {
 				var locale = $( this ).attr( 'gptoolboxdata-locale' );
@@ -119,6 +125,8 @@ jQuery( document ).ready( function( $ ) {
 					// Add value to cell.
 					$( this ).find( 'td.stats.changesrequested' ).attr( 'data-text', translationSet.changesrequested_count ).html( '<a class="count" href="' + url + '?filters[status]=changesrequested">' + new Intl.NumberFormat( userLocale.slug ).format( translationSet.changesrequested_count ) + '</a>' );
 				}
+				// Add 'warnings' value to cell.
+				$( this ).find( 'td.stats.warnings' ).attr( 'data-text', translationSet.warnings_count ).html( '<div class="progress-notice" style="display: none;"></div><a class="count" href="' + url + '?filters[warnings]=yes">' + new Intl.NumberFormat( userLocale.slug ).format( translationSet.warnings_count ) + '</a>' );
 
 				// Check if user has GlotPress administrator previleges.
 				if ( glotpressAdmin ) {

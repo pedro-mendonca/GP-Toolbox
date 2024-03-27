@@ -84,6 +84,10 @@ table.gp-table.translation-sets tbody tr td.stats:not(.percent).highlight.change
 	background-color: var(--gp-color-status-changesrequested-subtle);
 }
 
+table.gp-table.translation-sets tbody tr td.stats:not(.percent).highlight.warnings {
+	background-color: inherit;
+}
+
 table.gp-table.translation-sets tbody tr td.stats.old div.progress-notice,
 table.gp-table.translation-sets tbody tr td.stats.rejected div.progress-notice,
 table.gp-table.translation-sets tbody tr td.stats.changesrequested div.progress-notice {
