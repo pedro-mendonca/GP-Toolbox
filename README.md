@@ -83,12 +83,12 @@ Sure! You are welcome to report any issues or add feature suggestions on the [Gi
 
 ## Changelog
 
-### Unreleased
+### 1.0.5
 
-* New: Warnings column.
+* New: Warnings column on project page.
 * New: Hook to updateHighlight of project page table cells from other plugins.
+* Fix: CSS issues.
 * Tested up to GlotPress 4.0.0
-* CSS fixes.
 
 ### 1.0.4
 
