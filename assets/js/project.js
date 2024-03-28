@@ -159,11 +159,27 @@ jQuery( document ).ready( function( $ ) {
 			}
 		);
 
+		// Update highlight on page load.
 		updateHighlight();
+
+		/**
+		 * Hook to force update highlights.
+		 *
+		 * @since 1.0.5
+		 *
+		 * @param {Object} element : HTML element to update.
+		 */
+		wp.hooks.addAction( 'gpToolboxUpdateHighlight', 'update_highlight_action', function( element ) {
+			console.log( 'Updating highlight of:', element );
+
+			// Update element highlight.
+			updateHighlight( element );
+		} );
 	}
 
 	/**
 	 * Update count highlight status.
+	 * If an element is used, will try to find an <a> with a stats number. If the stats is not 0, add the class 'highlight' to the element.
 	 *
 	 * @param {Object} element : HTML element to update.
 	 */
