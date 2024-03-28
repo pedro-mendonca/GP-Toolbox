@@ -25,7 +25,7 @@ This set of tools extends the functionality of GlotPress, bringing to light any 
   * Menu item for GlotPress Tools.
   * Menu item for WordPress dashboard.
 *   GlotPress project page:
-  * Adds 'Old' and 'Rejected' columns to the project table of Translation Sets.
+  * Adds 'Old', 'Rejected' and 'Warnings' columns to the project table of Translation Sets.
   * Button to quickly and permanently delete 'Old' and 'Rejected' translations.
 *   Tools:
   * Permissions - Overview of Admins and Validators, quick delete, duplicates check.
