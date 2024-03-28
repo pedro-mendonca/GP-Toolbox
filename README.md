@@ -85,6 +85,8 @@ Sure! You are welcome to report any issues or add feature suggestions on the [Gi
 
 ### Unreleased
 
+* New: Warnings column.
+* New: Hook to updateHighlight of project page table cells from other plugins.
 * Tested up to GlotPress 4.0.0
 * CSS fixes.
 

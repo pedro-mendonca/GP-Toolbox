@@ -212,6 +212,8 @@ jQuery( document ).ready( function( $ ) {
 					if ( count === '0' ) {
 						// Remove highlight.
 						$( this ).removeClass( 'highlight' );
+						// Hide and disable button.
+						$( this ).find( 'button.delete' ).hide().attr( 'disabled', true );
 					} else {
 						// Add highlight.
 						$( this ).addClass( 'highlight' );
