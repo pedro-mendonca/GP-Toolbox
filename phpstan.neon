@@ -1,7 +1,6 @@
 parameters:
 	level: 9
 	inferPrivatePropertyTypeFromConstructor: true
-	checkGenericClassInNonGenericObjectType: false
 	scanFiles:
 		# GlotPress Stubs
 		- %rootDir%/../../pedro-mendonca/glotpress-stubs/glotpress-stubs.php
@@ -12,3 +11,5 @@ parameters:
 	bootstrapFiles:
 		# PHPStan bootstrap file.
 		- tests/phpstan/bootstrap.php
+	ignoreErrors:
+	- identifier: missingType.generics
