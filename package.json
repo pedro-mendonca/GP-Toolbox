@@ -25,7 +25,7 @@
 		"@wordpress/scripts": "^28.4.0",
 		"node-sass": "^9.0.0",
 		"postcss-cli": "^11.0.0",
-		"uglify-js": "^3.19.0"
+		"uglify-js": "^3.19.1"
 	},
 	"scripts": {
 		"build": "npm run compile:js & npm run compile:css & npm run build:css",
