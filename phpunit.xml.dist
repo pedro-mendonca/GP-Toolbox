@@ -21,5 +21,8 @@
 			<directory suffix=".php">./includes</directory>
 			<file>gp-toolbox.php</file>
 		</include>
+		<exclude>
+			<directory suffix=".php">./gp-templates</directory>
+		</exclude>
 	</coverage>
 </phpunit>

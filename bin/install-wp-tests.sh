@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 if [ $# -lt 3 ]; then
-	echo "usage: $0 <db-name> <db-user> <db-pass> [db-host] [wp-version] [skip-database-creation]"
+	echo "usage: $0 <db-name> <db-user> <db-pass> [db-host] [wp-version] [gp-version] [skip-database-creation]"
 	exit 1
 fi
 
@@ -10,12 +10,14 @@ DB_USER=$2
 DB_PASS=$3
 DB_HOST=${4-localhost}
 WP_VERSION=${5-latest}
-SKIP_DB_CREATE=${6-false}
+GP_VERSION=${6-latest}
+SKIP_DB_CREATE=${7-false}
 
 TMPDIR=${TMPDIR-/tmp}
 TMPDIR=$(echo $TMPDIR | sed -e "s/\/$//")
 WP_TESTS_DIR=${WP_TESTS_DIR-$TMPDIR/wordpress-tests-lib}
 WP_CORE_DIR=${WP_CORE_DIR-$TMPDIR/wordpress}
+GP_TESTS_DIR="$WP_CORE_DIR/wp-content/plugins/glotpress/tests/phpunit"
 
 download() {
     if [ `which curl` ]; then
@@ -51,6 +53,7 @@ else
 	fi
 	WP_TESTS_TAG="tags/$LATEST_VERSION"
 fi
+
 set -ex
 
 install_wp() {
@@ -176,6 +179,21 @@ install_db() {
 	fi
 }
 
+install_gp() {
+	if [[ $GP_VERSION == 'nightly' || $GP_VERSION == 'develop' || $GP_VERSION == 'trunk' ]]; then
+		local BRANCH_NAME='develop'
+	elif [[ $GP_VERSION == 'latest' ]]; then
+		local BRANCH_NAME='stable'
+	else
+		local BRANCH_NAME="$GP_VERSION"
+	fi
+
+	# Set up GlotPress
+	git clone --branch "$BRANCH_NAME" --single-branch -q https://github.com/GlotPress/GlotPress.git "$WP_CORE_DIR/wp-content/plugins/glotpress"
+}
+
+
 install_wp
 install_test_suite
 install_db
+install_gp
