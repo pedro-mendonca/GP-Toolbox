@@ -1,4 +1,4 @@
-<?php
+<?php // phpcs:ignore WordPress.Files.FileName.InvalidClassFileName
 /**
  * Class Toolbox Test.
  *
@@ -8,21 +8,21 @@
 use GP_Toolbox\Toolbox;
 
 
- /**
-  * Toolbox test case.
-  */
- class Test_Toolbox extends GP_UnitTestCase {
+/**
+ * Toolbox test case.
+ */
+class Test_Toolbox extends GP_UnitTestCase {
 
 
- 	/**
- 	 * Test add Tools and Dashboard items do side menu.
- 	 */
- 	public function test_nav_menu_items() {
+	/**
+	 * Test add Tools and Dashboard items do side menu.
+	 */
+	public function test_nav_menu_items() {
 
 		$existent_items = array(
 			'/glotpress/profile/username/' => 'Profile',
 			'/glotpress/settings/'         => 'Settings',
-  			'/wp-login.php?action=logout'  => 'Log out',
+			'/wp-login.php?action=logout'  => 'Log out',
 		);
 
 		$new_nav_menu_items = Toolbox::nav_menu_items( $existent_items, 'main' );
@@ -35,8 +35,8 @@ use GP_Toolbox\Toolbox;
 
 		GP::$administrator_permission->create(
 			array(
-				'user_id'     => 1,
-				'action'      => 'admin',
+				'user_id' => 1,
+				'action'  => 'admin',
 			)
 		);
 
@@ -47,16 +47,13 @@ use GP_Toolbox\Toolbox;
 		// Add menu items for GlotPress administrators.
 		$this->assertSame(
 			array(
-				'/glotpress/tools' => 'Tools',
-				admin_url() => 'Dashboard',
+				'/glotpress/tools'             => 'Tools',
+				admin_url()                    => 'Dashboard',
 				'/glotpress/profile/username/' => 'Profile',
 				'/glotpress/settings/'         => 'Settings',
-	  			'/wp-login.php?action=logout'  => 'Log out',
+				'/wp-login.php?action=logout'  => 'Log out',
 			),
 			$new_nav_menu_items,
-
 		);
-
- 	}
-
- }
+	}
+}
