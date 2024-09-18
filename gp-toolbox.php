@@ -3,7 +3,7 @@
  * GP Toolbox
  *
  * @package           GP_Toolbox
- * @link              https://github.com/pedro-mendonca/GP_Toolbox
+ * @link              https://github.com/pedro-mendonca/GP-Toolbox
  * @author            Pedro Mendonça
  * @copyright         2023 Pedro Mendonça
  * @license           GPL-2.0-or-later
