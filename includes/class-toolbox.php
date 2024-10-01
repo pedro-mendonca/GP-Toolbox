@@ -487,14 +487,14 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 				$script_id,
 				'gpToolbox',
 				array(
-					'admin'              => self::current_user_is_glotpress_admin(),                                   // GlotPress Admin with manage options capability.
-					'gp_url'             => gp_url(),                                                                  // GlotPress base URL. Defaults to /glotpress/.
-					'gp_url_project'     => gp_url_project(),                                                          // GlotPress projects base URL. Defaults to /glotpress/projects/.
-					'nonce'              => wp_create_nonce( 'wp_rest' ),                                              // Authenticate in the Rest API.
-					'args'               => ! is_null( $args ) ? self::{'template_args_' . $template}( $args ) : null, // Template arguments.
-					'supported_statuses' => self::supported_translation_statuses(),                                    // Supported translation statuses.
-					'user_locale'        => GP_locales::by_field( 'wp_locale', get_user_locale() ),                    // Current user Locale.
-					'user_login'         => wp_get_current_user()->user_login,                                         // Current user login (username).
+					'admin'              => self::current_user_is_glotpress_admin(),                             // GlotPress Admin with manage options capability.
+					'gp_url'             => gp_url(),                                                            // GlotPress base URL. Defaults to /glotpress/.
+					'gp_url_project'     => gp_url_project(),                                                    // GlotPress projects base URL. Defaults to /glotpress/projects/.
+					'nonce'              => wp_create_nonce( 'wp_rest' ),                                        // Authenticate in the Rest API.
+					'args'               => ! is_null( $args ) ? self::template_args( $template, $args ) : null, // Template arguments.
+					'supported_statuses' => self::supported_translation_statuses(),                              // Supported translation statuses.
+					'user_locale'        => GP_locales::by_field( 'wp_locale', get_user_locale() ),              // Current user Locale.
+					'user_login'         => wp_get_current_user()->user_login,                                   // Current user login (username).
 					/**
 					 * Filters wether to color highlight or not the translation stats counts of the translation sets on the project page.
 					 *
@@ -505,6 +505,31 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 					'highlight_counts'   => apply_filters( 'gp_toolbox_highlight_counts', $highlight_counts = true ),  // Wether or not to highlight the translation sets table.
 				)
 			);
+		}
+
+
+		/**
+		 * Get template arguments.
+		 *
+		 * @since 1.0.6
+		 *
+		 * @param string               $template   The template name.
+		 * @param array<string, mixed> $args       GlotPress template arguments.
+		 *
+		 * @return array<string, mixed>   Array of template arguments.
+		 */
+		public static function template_args( $template, array $args ) {
+
+			switch ( $template ) {
+				// Project template.
+				case 'project':
+					// Customize template arguments for Project.
+					return self::template_args_project( $args );
+
+				default:
+					// Return the arguments unchanged.
+					return $args;
+			}
 		}
 
 
@@ -530,23 +555,6 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 			}
 
 			// Return Project and Translation Sets.
-			return $result;
-		}
-
-
-		/**
-		 * Tools template arguments.
-		 *
-		 * @since 1.0.0
-		 *
-		 * @param array<string, mixed> $args   GlotPress template arguments.
-		 *
-		 * @return array<string, mixed>   Array of template arguments.
-		 */
-		public static function template_args_tools( array $args ) {
-
-			$result = $args;
-
 			return $result;
 		}
 
