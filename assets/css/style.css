@@ -1,251 +1,200 @@
 /* CSS for GP-Toolbox. */
 table.gp-table button {
-	display: inline-block;
+  display: inline-block;
 }
-
 table.gp-table button.hidden {
-	display: none;
+  display: none;
 }
-
 table.gp-table button.delete {
-	padding: 0;
-	border: none;
-	background: none;
-	cursor: pointer;
-	color: var(--gp-color-primary-500);
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: var(--gp-color-primary-500);
 }
-
 table.gp-table button.delete:disabled {
-	color: var(--gp-color-btn-disabled-text);
-	cursor: default;
+  color: var(--gp-color-btn-disabled-text);
+  cursor: default;
 }
-
 table.gp-table button.delete span.dashicons {
-	font-size: 1rem;
-	vertical-align: middle;
+  font-size: 1rem;
+  vertical-align: middle;
 }
-
 table.gp-table div.progress-notice {
-	font-size: 0.75em;
-	font-style: italic;
-	white-space: nowrap;
+  font-size: 0.75em;
+  font-style: italic;
+  white-space: nowrap;
 }
-
 table.gp-table td span.unknown {
-	text-align: center;
-	vertical-align: middle;
-	color: var(--gp-color-fg-muted);
-	font-style: italic;
+  text-align: center;
+  vertical-align: middle;
+  color: var(--gp-color-fg-muted);
+  font-style: italic;
 }
-
-table.gp-table.gp-toolbox.tools-permission-admin,
-table.gp-table.gp-toolbox.tools-permission-validator,
-table.gp-table.gp-toolbox.tools-permission-other,
-table.gp-table.gp-toolbox.tools-originals,
-table.gp-table.gp-toolbox.tools-translation-sets,
-table.gp-table.gp-toolbox.tools-translations,
-table.gp-table.gp-toolbox.tools-glossaries {
-	width: auto;
+table.gp-table.gp-toolbox.tools-permission-admin, table.gp-table.gp-toolbox.tools-permission-validator, table.gp-table.gp-toolbox.tools-permission-other, table.gp-table.gp-toolbox.tools-originals, table.gp-table.gp-toolbox.tools-translation-sets, table.gp-table.gp-toolbox.tools-translations, table.gp-table.gp-toolbox.tools-glossaries {
+  width: auto;
 }
-
 table.gp-table.translation-sets tbody tr td.stats:not(.percent) {
-	background-color: var(--gp-color-secondary-100);
+  background-color: var(--gp-color-secondary-100);
 }
-
 table.gp-table.translation-sets tbody tr td.stats:not(.percent).highlight a {
-	opacity: 1;
+  opacity: 1;
 }
-
 table.gp-table.translation-sets tbody tr td.stats:not(.percent).highlight.translated {
-	background-color: var(--gp-color-status-current-subtle);
+  background-color: var(--gp-color-status-current-subtle);
 }
-
 table.gp-table.translation-sets tbody tr td.stats:not(.percent).highlight.fuzzy {
-	background-color: var(--gp-color-status-fuzzy-subtle);
+  background-color: var(--gp-color-status-fuzzy-subtle);
 }
-
 table.gp-table.translation-sets tbody tr td.stats:not(.percent).highlight.untranslated {
-	background-color: inherit;
+  background-color: inherit;
 }
-
 table.gp-table.translation-sets tbody tr td.stats:not(.percent).highlight.waiting {
-	background-color: var(--gp-color-status-waiting-subtle);
+  background-color: var(--gp-color-status-waiting-subtle);
 }
-
 table.gp-table.translation-sets tbody tr td.stats:not(.percent).highlight.old {
-	background-color: var(--gp-color-status-old-subtle);
+  background-color: var(--gp-color-status-old-subtle);
 }
-
 table.gp-table.translation-sets tbody tr td.stats:not(.percent).highlight.rejected {
-	background-color: var(--gp-color-status-rejected-subtle);
+  background-color: var(--gp-color-status-rejected-subtle);
 }
-
 table.gp-table.translation-sets tbody tr td.stats:not(.percent).highlight.changesrequested {
-	background-color: var(--gp-color-status-changesrequested-subtle);
+  background-color: var(--gp-color-status-changesrequested-subtle);
 }
-
 table.gp-table.translation-sets tbody tr td.stats:not(.percent).highlight.warnings {
-	background-color: inherit;
+  background-color: inherit;
 }
-
-table.gp-table.translation-sets tbody tr td.stats.old div.progress-notice,
-table.gp-table.translation-sets tbody tr td.stats.rejected div.progress-notice,
-table.gp-table.translation-sets tbody tr td.stats.changesrequested div.progress-notice {
-	font-size: 0.75em;
-	font-style: italic;
-	white-space: nowrap;
+table.gp-table.translation-sets tbody tr td.stats.old div.progress-notice, table.gp-table.translation-sets tbody tr td.stats.rejected div.progress-notice, table.gp-table.translation-sets tbody tr td.stats.changesrequested div.progress-notice {
+  font-size: 0.75em;
+  font-style: italic;
+  white-space: nowrap;
 }
-
 table.gp-table.translation-sets tbody tr td.stats.old a,
-table.gp-table.translation-sets tbody tr td.stats.old button,
-table.gp-table.translation-sets tbody tr td.stats.rejected a,
-table.gp-table.translation-sets tbody tr td.stats.rejected button,
-table.gp-table.translation-sets tbody tr td.stats.changesrequested a,
+table.gp-table.translation-sets tbody tr td.stats.old button, table.gp-table.translation-sets tbody tr td.stats.rejected a,
+table.gp-table.translation-sets tbody tr td.stats.rejected button, table.gp-table.translation-sets tbody tr td.stats.changesrequested a,
 table.gp-table.translation-sets tbody tr td.stats.changesrequested button {
-	display: inline-block;
+  display: inline-block;
 }
-
 table.gp-table.translation-sets tbody tr td.stats.old a.hidden,
-table.gp-table.translation-sets tbody tr td.stats.old button.hidden,
-table.gp-table.translation-sets tbody tr td.stats.rejected a.hidden,
-table.gp-table.translation-sets tbody tr td.stats.rejected button.hidden,
-table.gp-table.translation-sets tbody tr td.stats.changesrequested a.hidden,
+table.gp-table.translation-sets tbody tr td.stats.old button.hidden, table.gp-table.translation-sets tbody tr td.stats.rejected a.hidden,
+table.gp-table.translation-sets tbody tr td.stats.rejected button.hidden, table.gp-table.translation-sets tbody tr td.stats.changesrequested a.hidden,
 table.gp-table.translation-sets tbody tr td.stats.changesrequested button.hidden {
-	display: none;
+  display: none;
 }
-
-table.gp-table.translation-sets tbody tr td.stats.old a,
-table.gp-table.translation-sets tbody tr td.stats.rejected a,
-table.gp-table.translation-sets tbody tr td.stats.changesrequested a {
-	padding: 0 1rem;
-	width: 100%;
+table.gp-table.translation-sets tbody tr td.stats.old a, table.gp-table.translation-sets tbody tr td.stats.rejected a, table.gp-table.translation-sets tbody tr td.stats.changesrequested a {
+  padding: 0 1rem;
+  width: 100%;
 }
-
-table.gp-table.translation-sets tbody tr td.stats.old button.delete,
-table.gp-table.translation-sets tbody tr td.stats.rejected button.delete,
-table.gp-table.translation-sets tbody tr td.stats.changesrequested button.delete {
-	position: absolute;
-	translate: -1rem;
+table.gp-table.translation-sets tbody tr td.stats.old button.delete, table.gp-table.translation-sets tbody tr td.stats.rejected button.delete, table.gp-table.translation-sets tbody tr td.stats.changesrequested button.delete {
+  position: absolute;
+  translate: -1rem;
 }
-
 table.gp-table.tools-permission-validator tr.duplicate {
-	background-color: var(--gp-color-attention-emphasis);
+  background-color: var(--gp-color-attention-emphasis);
 }
-
 table.gp-table.tools-permission-validator tr.duplicate td.action span.duplicate {
-	color: var(--gp-color-bubble-inactive-project-text);
-	padding: 0.2em 0.5em;
-	border: 1px solid var(--gp-color-bubble-inactive-project-text);
-	border-radius: 1em;
-	text-decoration: none;
-	text-align: center;
-	text-shadow: none;
-	margin-left: 0.2rem;
-	font-weight: 500;
-	font-size: 80%;
-	background-color: #fff;
+  color: var(--gp-color-bubble-inactive-project-text);
+  padding: 0.2em 0.5em;
+  border: 1px solid var(--gp-color-bubble-inactive-project-text);
+  border-radius: 1em;
+  text-decoration: none;
+  text-align: center;
+  text-shadow: none;
+  margin-left: 0.2rem;
+  font-weight: 500;
+  font-size: 80%;
+  background-color: #fff;
 }
 
 section.gp-toolbox {
-	margin-top: 2rem;
+  margin-top: 2rem;
 }
 
 .notice.notice-info {
-	background-color: var(--gp-color-primary-50);
+  background-color: var(--gp-color-primary-50);
 }
 
 div.gp-heading div.gp-toolbox-tools {
-	margin-left: auto;
+  margin-left: auto;
 }
-
 div.gp-heading div.gp-toolbox-tools a.gp-toolbox-tool-link {
-	font-size: 1.125rem;
-	font-weight: 600;
+  font-size: 1.125rem;
+  font-weight: 600;
 }
-
 div.gp-heading div.gp-toolbox-tools a.gp-toolbox-tool-link.current {
-	text-decoration: underline;
+  text-decoration: underline;
 }
-
 div.gp-heading div.gp-toolbox-tools a.gp-toolbox-tool-link.current:hover {
-	text-decoration-thickness: 0.125rem;
+  text-decoration-thickness: 0.125rem;
 }
 
 .tablesorter-glotpress .tablesorter-header:not(.sorter-false) {
-	padding-right: 2.5em;
-	padding-left: 1em;
+  padding-right: 2.5em;
+  padding-left: 1em;
 }
 
 td.stats {
-	text-align: center;
+  text-align: center;
 }
 
 table.gp-toolbox.tools-glossaries td.id:not(.unknown),
 table.gp-toolbox.tools-glossaries td.entries {
-	text-align: center;
+  text-align: center;
 }
 
 table.gp-toolbox.tools-glossaries td.entries a {
-	text-decoration: none;
-	color: var(--gp-color-fg-default);
-	font-weight: 600;
-	display: block;
+  text-decoration: none;
+  color: var(--gp-color-fg-default);
+  font-weight: 600;
+  display: block;
 }
-
-table.gp-toolbox.tools-glossaries td.entries a:hover,
-table.gp-toolbox.tools-glossaries td.entries a:focus {
-	text-decoration: underline;
-	text-underline-offset: 0.1em;
-	text-underline-position: under;
-	text-decoration-thickness: 0.125rem;
+table.gp-toolbox.tools-glossaries td.entries a:hover, table.gp-toolbox.tools-glossaries td.entries a:focus {
+  text-decoration: underline;
+  text-underline-offset: 0.1em;
+  text-underline-position: under;
+  text-decoration-thickness: 0.125rem;
 }
 
 table.gp-table tbody td,
 table.gp-table tbody th {
-	padding: 0.5em 2em;
+  padding: 0.5em 2em;
 }
 
 .gptoolbox-description span.translation-status,
 .gptoolbox-description code {
-	padding: 0 4px;
+  padding: 0 4px;
 }
-
 .gptoolbox-description span.translation-status.current {
-	background-color: var(--gp-color-status-current-subtle);
+  background-color: var(--gp-color-status-current-subtle);
 }
-
 .gptoolbox-description span.translation-status.fuzzy {
-	background-color: var(--gp-color-status-fuzzy-subtle);
+  background-color: var(--gp-color-status-fuzzy-subtle);
 }
-
 .gptoolbox-description span.translation-status.waiting {
-	background-color: var(--gp-color-status-waiting-subtle);
+  background-color: var(--gp-color-status-waiting-subtle);
 }
-
 .gptoolbox-description span.translation-status.old {
-	background-color: var(--gp-color-status-old-subtle);
+  background-color: var(--gp-color-status-old-subtle);
 }
-
 .gptoolbox-description span.translation-status.rejected {
-	background-color: var(--gp-color-status-rejected-subtle);
+  background-color: var(--gp-color-status-rejected-subtle);
 }
-
 .gptoolbox-description span.translation-status.changesrequested {
-	background-color: var(--gp-color-status-changesrequested-subtle);
+  background-color: var(--gp-color-status-changesrequested-subtle);
 }
-
 .gptoolbox-description code {
-	background-color: var(--gp-color-primary-50);
+  background-color: var(--gp-color-primary-50);
 }
 
 ul.gptoolbox-description {
-	list-style: none;
-	padding-left: 0.5rem;
+  list-style: none;
+  padding-left: 0.5rem;
+}
+ul.gptoolbox-description li::before {
+  font-family: dashicons;
+  content: "\f147";
+  color: var(--gp-color-primary);
+  vertical-align: middle;
 }
 
-ul.gptoolbox-description li::before {
-	font-family: dashicons;
-	content: "\f147";
-	color: var(--gp-color-primary);
-	vertical-align: middle;
-}
+/*# sourceMappingURL=style.css.map */
