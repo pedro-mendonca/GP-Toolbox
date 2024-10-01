@@ -53,16 +53,13 @@
   "scripts": {
     "build": [
       "@lint",
-      "@compile",
+      "@build:css",
+      "@build:js",
       "@i18n"
     ],
     "build:css": "npm run build:css",
+    "build:js": "npm run build:js",
     "compat:php": "phpcs -v --standard=phpcompat.xml.dist",
-    "compile": [
-      "@compile:js",
-      "@build:css"
-    ],
-    "compile:js": "npm run compile:js",
     "format:php": "phpcbf -v --standard=phpcs.xml.dist",
     "i18n": [
       "@i18n:pot",
@@ -97,10 +94,10 @@
     ]
   },
   "scripts-descriptions": {
-    "build": "Compile all CSS with npm run build",
+    "build": "Build all CSS and JS.",
+    "build:css": "Compile SCSS to CSS and build minified CSS.",
+    "build:js": "Run npm UglifyJS to build minified JS.",
     "compat:php": "Runs the PHPCompatibilityWP code sniffer.",
-    "compile": "Compile all JavaScript",
-    "compile:js": "Run npm UglifyJS to compile minified JS.",
     "format:php": "Runs the PHP code sniffer and automatically fix errors.",
     "lint": "Runs all available code linting (PHP_CodeSniffer, JS and MD lint).",
     "lint:css": "Run npm CSS linter.",
