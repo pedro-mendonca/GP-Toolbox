@@ -54,8 +54,7 @@
     "build": [
       "@lint",
       "@build:css",
-      "@build:js",
-      "@i18n"
+      "@build:js"
     ],
     "build:css": "npm run build:css",
     "build:js": "npm run build:js",
