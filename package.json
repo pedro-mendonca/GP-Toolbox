@@ -39,7 +39,7 @@
 		"build:js:tools-permissions": "uglifyjs assets/js/tools-permissions.js --compress drop_console=true -o assets/js/tools-permissions.min.js",
 		"build:js:tools-translation-sets": "uglifyjs assets/js/tools-translation-sets.js --compress drop_console=true -o assets/js/tools-translation-sets.min.js",
 		"build:js:tools-translations": "uglifyjs assets/js/tools-translations.js --compress drop_console=true -o assets/js/tools-translations.min.js",
-		"lint:css": "wp-scripts lint-style",
+		"lint:css": "wp-scripts lint-style --fix",
 		"lint:js": "wp-scripts lint-js",
 		"lint:md:docs": "wp-scripts lint-md-docs",
 		"lint:pkg-json": "wp-scripts lint-pkg-json"
