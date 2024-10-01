@@ -645,16 +645,16 @@
         },
         {
             "name": "johnbillion/wp-compat",
-            "version": "0.2.2",
+            "version": "0.2.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/johnbillion/wp-compat.git",
-                "reference": "e692d3d26b5df1fa6956a2b50c3d61c5e152608b"
+                "reference": "5ef45a68b3fe61c33bfd599cfc62e88bc48543c5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/johnbillion/wp-compat/zipball/e692d3d26b5df1fa6956a2b50c3d61c5e152608b",
-                "reference": "e692d3d26b5df1fa6956a2b50c3d61c5e152608b",
+                "url": "https://api.github.com/repos/johnbillion/wp-compat/zipball/5ef45a68b3fe61c33bfd599cfc62e88bc48543c5",
+                "reference": "5ef45a68b3fe61c33bfd599cfc62e88bc48543c5",
                 "shasum": ""
             },
             "require": {
@@ -717,7 +717,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-09-27T15:50:05+00:00"
+            "time": "2024-10-01T15:42:28+00:00"
         },
         {
             "name": "justinrainbow/json-schema",
