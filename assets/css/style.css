@@ -31,7 +31,7 @@ table.gp-table td span.unknown {
   color: var(--gp-color-fg-muted);
   font-style: italic;
 }
-table.gp-table.gp-toolbox.tools-permission-admin, table.gp-table.gp-toolbox.tools-permission-validator, table.gp-table.gp-toolbox.tools-permission-other, table.gp-table.gp-toolbox.tools-originals, table.gp-table.gp-toolbox.tools-translation-sets, table.gp-table.gp-toolbox.tools-translations, table.gp-table.gp-toolbox.tools-glossaries {
+table.gp-table.gp-toolbox.tools-permission-admin, table.gp-table.gp-toolbox.tools-permission-validator, table.gp-table.gp-toolbox.tools-permission-other, table.gp-table.gp-toolbox.tools-originals, table.gp-table.gp-toolbox.tools-translation-sets, table.gp-table.gp-toolbox.tools-translations, table.gp-table.gp-toolbox.tools-glossaries, table.gp-table.gp-toolbox.tools-meta {
   width: auto;
 }
 table.gp-table.translation-sets tbody tr td.stats:not(.percent) {
