@@ -43,12 +43,10 @@ gp_tmpl_load( 'gptoolbox-header', $args );
 </p>
 <?php
 
-$gp_meta = GP::$meta->all();
-
 // Get GlotPress Meta entries.
 $gp_meta = array();
 foreach ( GP::$meta->all() as $meta ) {
-	$gp_meta[ $meta->meta_id ] = $meta;
+	$gp_meta[ $meta->id ] = $meta;
 }
 
 // Get GlotPress glossaries.
@@ -97,7 +95,7 @@ foreach ( GP::$original->all() as $original ) {
 $orphaned_meta = array();
 foreach ( $gp_meta as $meta ) {
 	if ( ! isset( $gp_projects[ $meta->project_id ] ) ) {
-		$orphaned_meta[ $meta->project_id ][ $meta->meta_id ] = $meta;
+		$orphaned_meta[ $meta->project_id ][ $meta->id ] = $meta;
 	}
 }
 */
@@ -140,8 +138,8 @@ foreach ( $gp_meta as $meta ) {
 				foreach ( $gp_meta as $meta ) {
 
 					?>
-					<tr gptoolboxdata-meta="<?php echo esc_attr( strval( $meta->meta_id ) ); ?>">
-						<td class="meta-id"><?php echo esc_html( strval( $meta->meta_id ) ); ?></td>
+					<tr gptoolboxdata-meta="<?php echo esc_attr( strval( $meta->id ) ); ?>">
+						<td class="id"><?php echo esc_html( strval( $meta->id ) ); ?></td>
 						<td class="object-type"><?php echo esc_html( strval( $meta->object_type ) ); ?></td>
 						<td class="object-id"><?php echo esc_html( strval( $meta->object_id ) ); ?></td>
 						<td class="object-meta-key"><?php echo esc_html( strval( $meta->meta_key ) ); ?></td>
