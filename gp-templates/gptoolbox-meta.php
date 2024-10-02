@@ -100,6 +100,31 @@ foreach ( $gp_meta as $meta ) {
 }
 */
 
+/*
+// GP::$meta->all()
+// Test the speed of the exampleFunction with arguments 5 and 10 over 10000 iterations
+$averageTime = Toolbox::test_function_speed(
+	function() {
+		return gp_get_meta( 'project', '41', 'project_icon' );
+	},
+	array(),
+	1000
+);
+var_dump( gp_get_meta( 'project', '41', 'project_icon' ) );
+echo "Old gp_get_meta() average execution time: " . $averageTime . " seconds<br>";
+
+$averageTime = Toolbox::test_function_speed(
+	function() {
+		return GP::$meta->by_object_type_object_id_and_meta_key( 'project', '41', 'project_icon' );
+	},
+	array(),
+	1000
+);
+
+var_dump( GP::$meta->by_object_type_object_id_and_meta_key( 'project', '41', 'project_icon' )->meta_value );
+echo 'New GP::$meta->get() average execution time: ' . $averageTime . " seconds<br>";
+*/
+
 // TODO: Allow delete Meta entries.
 
 ?>
@@ -126,7 +151,7 @@ foreach ( $gp_meta as $meta ) {
 			<thead>
 				<tr>
 					<th class="gp-column-id"><?php esc_html_e( 'ID', 'gp-toolbox' ); ?></th>
-					<th class="gp-column-object-type"><?php esc_html_e( 'Object', 'gp-toolbox' ); ?></th>
+					<th class="gp-column-object-type"><?php esc_html_e( 'Object Type', 'gp-toolbox' ); ?></th>
 					<th class="gp-column-object-id"><?php esc_html_e( 'Object ID', 'gp-toolbox' ); ?></th>
 					<th class="gp-column-meta-key"><?php esc_html_e( 'Meta Key', 'gp-toolbox' ); ?></th>
 					<th class="gp-column-meta-value"><?php esc_html_e( 'Meta Value', 'gp-toolbox' ); ?></th>
@@ -140,7 +165,7 @@ foreach ( $gp_meta as $meta ) {
 					?>
 					<tr gptoolboxdata-meta="<?php echo esc_attr( strval( $meta->id ) ); ?>">
 						<td class="id"><?php echo esc_html( strval( $meta->id ) ); ?></td>
-						<td class="object-type"><?php echo esc_html( strval( $meta->object_type ) ); ?></td>
+						<td class="object-type"><?php echo esc_html( $meta->object_types[ $meta->object_type ] ); ?></td>
 						<td class="object-id"><?php echo esc_html( strval( $meta->object_id ) ); ?></td>
 						<td class="object-meta-key"><?php echo esc_html( strval( $meta->meta_key ) ); ?></td>
 						<td class="object-meta-value"><?php echo esc_html( strval( $meta->meta_value ) ); ?></td>
