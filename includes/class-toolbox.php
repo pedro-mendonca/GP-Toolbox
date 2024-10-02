@@ -182,6 +182,7 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 			GP::$router->prepend( '/tools/permissions', array( __NAMESPACE__ . '\Routes\Permissions', 'get_route' ) );
 			GP::$router->prepend( '/tools/translations', array( __NAMESPACE__ . '\Routes\Translations', 'get_route' ) );
 			GP::$router->prepend( '/tools/translation-sets', array( __NAMESPACE__ . '\Routes\Translation_Sets', 'get_route' ) );
+			GP::$router->prepend( '/tools/meta', array( __NAMESPACE__ . '\Routes\Meta', 'get_route' ) );
 			GP::$router->prepend( '/tools/about', array( __NAMESPACE__ . '\Routes\About', 'get_route' ) );
 		}
 
@@ -682,13 +683,13 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 					'title'         => esc_html__( 'Glossaries', 'gp-toolbox' ),
 					'tools_section' => 'gptoolbox-tools-glossaries',
 				),
-				/* phpcs:ignore
 				// GP Meta tools.
 				'tools_meta' => array(
 					'url'           => '/tools/meta/',
 					'title'         => esc_html__( 'Meta', 'gp-toolbox' ),
 					'tools_section' => 'gptoolbox-tools-meta',
 				),
+				/* phpcs:ignore
 				// GP Locales tools.
 				'tools_locales' => array(
 					'url'           => '/tools/locales/',
