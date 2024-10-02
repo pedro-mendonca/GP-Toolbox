@@ -767,5 +767,47 @@ if ( ! class_exists( __NAMESPACE__ . '\Toolbox' ) ) {
 
 			return gp_breadcrumb( $result );
 		}
+
+
+		/**
+		 * Function to measure the execution time of a given callback.
+		 *
+		 * @param callable $function The function to test.
+		 * @param array $args Optional. Arguments to pass to the function.
+		 * @param int $iterations Optional. Number of iterations to run the function. Default is 1.
+		 *
+		 * @return float The average execution time in seconds.
+		 */
+		public static function test_function_speed( callable $function, array $args = array(), int $iterations = 1 ) {
+
+			/* phpcs:ignore
+			Usage:
+			// Test the speed of the exampleFunction with arguments 5 and 10 over 10000 iterations
+			$averageTime = Toolbox::test_function_speed(
+				function() {
+					return gp_get_meta( 'project', '41', 'project_icon' );
+				},
+				array(),
+				1000
+			);
+			var_dump( gp_get_meta( 'project', '41', 'project_icon' ) );
+			echo "Old gp_get_meta() average execution time: " . $averageTime . " seconds<br>";
+			*/
+
+			$startTime = microtime( true );
+
+			// Run the function for the given number of iterations
+			for ( $i = 0; $i < $iterations; $i++ ) {
+				call_user_func_array( $function, $args );
+			}
+
+			$endTime = microtime( true );
+
+			// Calculate total time taken and average per iteration
+			$totalTime   = $endTime - $startTime;
+			$averageTime = $totalTime / $iterations;
+
+			return $averageTime;
+		}
 	}
 }
