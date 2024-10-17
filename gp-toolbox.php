@@ -11,8 +11,6 @@
  * @wordpress-plugin
  * Plugin Name:       GP Toolbox
  * Plugin URI:        https://wordpress.org/plugins/gp-toolbox/
- * GitHub Plugin URI: https://github.com/pedro-mendonca/GP-Toolbox
- * Primary Branch:    main
  * Description:       This set of tools extends the functionality of GlotPress, bringing to light any potential problems hidden under the hood, keeping it clean, fast and trouble-free.
  * Version:           1.0.5
  * Requires at least: 5.3
