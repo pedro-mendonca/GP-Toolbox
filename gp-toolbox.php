@@ -12,7 +12,7 @@
  * Plugin Name:       GP Toolbox
  * Plugin URI:        https://wordpress.org/plugins/gp-toolbox/
  * Description:       This set of tools extends the functionality of GlotPress, bringing to light any potential problems hidden under the hood, keeping it clean, fast and trouble-free.
- * Version:           1.0.5
+ * Version:           1.0.6
  * Requires at least: 5.3
  * Tested up to:      6.7
  * Requires PHP:      7.4

@@ -83,7 +83,7 @@ Sure! You are welcome to report any issues or add feature suggestions on the [Gi
 
 ## Changelog
 
-### Unreleased
+### 1.0.6
 
 * Improve template argument loading and static analysis.
 * Tested up to WordPress 6.7
