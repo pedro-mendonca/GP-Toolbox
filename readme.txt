@@ -60,6 +60,7 @@ Sure! You are welcome to report any issues or add feature suggestions on the [Gi
 *   Tested up to WordPress 6.7
 *   Tested up to GlotPress 4.0.1
 *   Include minified assets maps
+*   Remove plugin header for Git Updater, forbiden by the .org Plugin Team.
 
 = 1.0.5 =
 *   New: Warnings column on project page.
