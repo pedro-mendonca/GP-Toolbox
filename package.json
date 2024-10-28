@@ -24,24 +24,31 @@
 	"devDependencies": {
 		"@wordpress/scripts": "^30.3.0",
 		"postcss-cli": "^11.0.0",
+		"postcss-preset-env": "^10.0.7",
 		"sass": "^1.80.4",
 		"uglify-js": "^3.19.3"
 	},
 	"scripts": {
 		"build": "npm run build:js & npm run build:css",
-		"build:css": "npm run compile:css && npm run build:css:style",
-		"compile:css": "sass assets/css/ -c",
-		"build:css:style": "postcss assets/css/style.css > assets/css/style.min.css",
+		"build:css": "npm run compile:css && npm run lint:css:fix && npm run build:css:prefix && npm run build:css:minify",
+		"compile:css": "sass assets/css/ --color --no-source-map --verbose",
+		"build:css:prefix": "postcss assets/css/style.css --replace --verbose",
+		"build:css:minify": "postcss assets/css/style.css -o assets/css/style.min.css --map --use cssnano --verbose",
 		"build:js": "npm run build:js:project & npm run build:js:tools-glossaries & npm run build:js:tools-originals & npm run build:js:tools-permissions & npm run build:js:tools-translation-sets & npm run build:js:tools-translations",
-		"build:js:project": "uglifyjs assets/js/project.js --compress drop_console=true -o assets/js/project.min.js",
-		"build:js:tools-glossaries": "uglifyjs assets/js/tools-glossaries.js --compress drop_console=true -o assets/js/tools-glossaries.min.js",
-		"build:js:tools-originals": "uglifyjs assets/js/tools-originals.js --compress drop_console=true -o assets/js/tools-originals.min.js",
-		"build:js:tools-permissions": "uglifyjs assets/js/tools-permissions.js --compress drop_console=true -o assets/js/tools-permissions.min.js",
-		"build:js:tools-translation-sets": "uglifyjs assets/js/tools-translation-sets.js --compress drop_console=true -o assets/js/tools-translation-sets.min.js",
-		"build:js:tools-translations": "uglifyjs assets/js/tools-translations.js --compress drop_console=true -o assets/js/tools-translations.min.js",
-		"lint:css": "wp-scripts lint-style --fix",
+		"build:js:project": "uglifyjs assets/js/project.js -o assets/js/project.min.js --compress drop_console=true --source-map base=assets/js,url=project.min.js.map",
+		"build:js:tools-glossaries": "uglifyjs assets/js/tools-glossaries.js -o assets/js/tools-glossaries.min.js --compress drop_console=true --source-map base=assets/js,url=tools-glossaries.min.js.map",
+		"build:js:tools-originals": "uglifyjs assets/js/tools-originals.js -o assets/js/tools-originals.min.js --compress drop_console=true --source-map base=assets/js,url=tools-originals.min.js.map",
+		"build:js:tools-permissions": "uglifyjs assets/js/tools-permissions.js -o assets/js/tools-permissions.min.js --compress drop_console=true --source-map base=assets/js,url=tools-permissions.min.js.map",
+		"build:js:tools-translation-sets": "uglifyjs assets/js/tools-translation-sets.js -o assets/js/tools-translation-sets.min.js --compress drop_console=true --source-map base=assets/js,url=tools-translation-sets.min.js.map",
+		"build:js:tools-translations": "uglifyjs assets/js/tools-translations.js -o assets/js/tools-translations.min.js --compress drop_console=true --source-map base=assets/js,url=tools-translations.min.js.map",
+		"lint:css": "wp-scripts lint-style",
+		"lint:css:fix": "npm run lint:css -- --fix",
 		"lint:js": "wp-scripts lint-js",
+		"lint:js:fix": "npm run lint:js -- --fix",
 		"lint:md:docs": "wp-scripts lint-md-docs",
 		"lint:pkg-json": "wp-scripts lint-pkg-json"
-	}
+	},
+	"browserslist": [
+		"last 3 versions"
+	]
 }

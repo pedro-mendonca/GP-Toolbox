@@ -2,9 +2,11 @@
 table.gp-table button {
   display: inline-block;
 }
+
 table.gp-table button.hidden {
   display: none;
 }
+
 table.gp-table button.delete {
   padding: 0;
   border: none;
@@ -12,91 +14,114 @@ table.gp-table button.delete {
   cursor: pointer;
   color: var(--gp-color-primary-500);
 }
+
 table.gp-table button.delete:disabled {
   color: var(--gp-color-btn-disabled-text);
   cursor: default;
 }
+
 table.gp-table button.delete span.dashicons {
   font-size: 1rem;
   vertical-align: middle;
 }
+
 table.gp-table div.progress-notice {
   font-size: 0.75em;
   font-style: italic;
   white-space: nowrap;
 }
+
 table.gp-table td span.unknown {
   text-align: center;
   vertical-align: middle;
   color: var(--gp-color-fg-muted);
   font-style: italic;
 }
+
 table.gp-table.gp-toolbox.tools-permission-admin, table.gp-table.gp-toolbox.tools-permission-validator, table.gp-table.gp-toolbox.tools-permission-other, table.gp-table.gp-toolbox.tools-originals, table.gp-table.gp-toolbox.tools-translation-sets, table.gp-table.gp-toolbox.tools-translations, table.gp-table.gp-toolbox.tools-glossaries {
   width: auto;
 }
+
 table.gp-table.translation-sets tbody tr td.stats:not(.percent) {
   background-color: var(--gp-color-secondary-100);
 }
+
 table.gp-table.translation-sets tbody tr td.stats:not(.percent).highlight a {
   opacity: 1;
 }
+
 table.gp-table.translation-sets tbody tr td.stats:not(.percent).highlight.translated {
   background-color: var(--gp-color-status-current-subtle);
 }
+
 table.gp-table.translation-sets tbody tr td.stats:not(.percent).highlight.fuzzy {
   background-color: var(--gp-color-status-fuzzy-subtle);
 }
+
 table.gp-table.translation-sets tbody tr td.stats:not(.percent).highlight.untranslated {
   background-color: inherit;
 }
+
 table.gp-table.translation-sets tbody tr td.stats:not(.percent).highlight.waiting {
   background-color: var(--gp-color-status-waiting-subtle);
 }
+
 table.gp-table.translation-sets tbody tr td.stats:not(.percent).highlight.old {
   background-color: var(--gp-color-status-old-subtle);
 }
+
 table.gp-table.translation-sets tbody tr td.stats:not(.percent).highlight.rejected {
   background-color: var(--gp-color-status-rejected-subtle);
 }
+
 table.gp-table.translation-sets tbody tr td.stats:not(.percent).highlight.changesrequested {
   background-color: var(--gp-color-status-changesrequested-subtle);
 }
+
 table.gp-table.translation-sets tbody tr td.stats:not(.percent).highlight.warnings {
   background-color: inherit;
 }
+
 table.gp-table.translation-sets tbody tr td.stats.old div.progress-notice, table.gp-table.translation-sets tbody tr td.stats.rejected div.progress-notice, table.gp-table.translation-sets tbody tr td.stats.changesrequested div.progress-notice {
   font-size: 0.75em;
   font-style: italic;
   white-space: nowrap;
 }
+
 table.gp-table.translation-sets tbody tr td.stats.old a,
 table.gp-table.translation-sets tbody tr td.stats.old button, table.gp-table.translation-sets tbody tr td.stats.rejected a,
 table.gp-table.translation-sets tbody tr td.stats.rejected button, table.gp-table.translation-sets tbody tr td.stats.changesrequested a,
 table.gp-table.translation-sets tbody tr td.stats.changesrequested button {
   display: inline-block;
 }
+
 table.gp-table.translation-sets tbody tr td.stats.old a.hidden,
 table.gp-table.translation-sets tbody tr td.stats.old button.hidden, table.gp-table.translation-sets tbody tr td.stats.rejected a.hidden,
 table.gp-table.translation-sets tbody tr td.stats.rejected button.hidden, table.gp-table.translation-sets tbody tr td.stats.changesrequested a.hidden,
 table.gp-table.translation-sets tbody tr td.stats.changesrequested button.hidden {
   display: none;
 }
+
 table.gp-table.translation-sets tbody tr td.stats.old a, table.gp-table.translation-sets tbody tr td.stats.rejected a, table.gp-table.translation-sets tbody tr td.stats.changesrequested a {
   padding: 0 1rem;
   width: 100%;
 }
+
 table.gp-table.translation-sets tbody tr td.stats.old button.delete, table.gp-table.translation-sets tbody tr td.stats.rejected button.delete, table.gp-table.translation-sets tbody tr td.stats.changesrequested button.delete {
   position: absolute;
   translate: -1rem;
 }
+
 table.gp-table.tools-permission-validator tr.duplicate {
   background-color: var(--gp-color-attention-emphasis);
 }
+
 table.gp-table.tools-permission-validator tr.duplicate td.action span.duplicate {
   color: var(--gp-color-bubble-inactive-project-text);
   padding: 0.2em 0.5em;
   border: 1px solid var(--gp-color-bubble-inactive-project-text);
   border-radius: 1em;
+  -webkit-text-decoration: none;
   text-decoration: none;
   text-align: center;
   text-shadow: none;
@@ -117,13 +142,17 @@ section.gp-toolbox {
 div.gp-heading div.gp-toolbox-tools {
   margin-left: auto;
 }
+
 div.gp-heading div.gp-toolbox-tools a.gp-toolbox-tool-link {
   font-size: 1.125rem;
   font-weight: 600;
 }
+
 div.gp-heading div.gp-toolbox-tools a.gp-toolbox-tool-link.current {
+  -webkit-text-decoration: underline;
   text-decoration: underline;
 }
+
 div.gp-heading div.gp-toolbox-tools a.gp-toolbox-tool-link.current:hover {
   text-decoration-thickness: 0.125rem;
 }
@@ -143,12 +172,15 @@ table.gp-toolbox.tools-glossaries td.entries {
 }
 
 table.gp-toolbox.tools-glossaries td.entries a {
+  -webkit-text-decoration: none;
   text-decoration: none;
   color: var(--gp-color-fg-default);
   font-weight: 600;
   display: block;
 }
+
 table.gp-toolbox.tools-glossaries td.entries a:hover, table.gp-toolbox.tools-glossaries td.entries a:focus {
+  -webkit-text-decoration: underline;
   text-decoration: underline;
   text-underline-offset: 0.1em;
   text-underline-position: under;
@@ -164,24 +196,31 @@ table.gp-table tbody th {
 .gptoolbox-description code {
   padding: 0 4px;
 }
+
 .gptoolbox-description span.translation-status.current {
   background-color: var(--gp-color-status-current-subtle);
 }
+
 .gptoolbox-description span.translation-status.fuzzy {
   background-color: var(--gp-color-status-fuzzy-subtle);
 }
+
 .gptoolbox-description span.translation-status.waiting {
   background-color: var(--gp-color-status-waiting-subtle);
 }
+
 .gptoolbox-description span.translation-status.old {
   background-color: var(--gp-color-status-old-subtle);
 }
+
 .gptoolbox-description span.translation-status.rejected {
   background-color: var(--gp-color-status-rejected-subtle);
 }
+
 .gptoolbox-description span.translation-status.changesrequested {
   background-color: var(--gp-color-status-changesrequested-subtle);
 }
+
 .gptoolbox-description code {
   background-color: var(--gp-color-primary-50);
 }
@@ -190,11 +229,10 @@ ul.gptoolbox-description {
   list-style: none;
   padding-left: 0.5rem;
 }
+
 ul.gptoolbox-description li::before {
   font-family: dashicons;
   content: "\f147";
   color: var(--gp-color-primary);
   vertical-align: middle;
 }
-
-/*# sourceMappingURL=style.css.map */

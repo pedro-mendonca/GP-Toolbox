@@ -9,10 +9,16 @@
 
 namespace GP_Toolbox;
 
-$defined_vars = get_defined_vars();
+$defined_vars  = get_defined_vars();
+$template_args = is_array( $defined_vars['args'] ) ? $defined_vars['args'] : array();
 
-$page_title       = $defined_vars['args']['title'] ?? '';
-$page_description = $defined_vars['args']['description'] ?? '';
+$template_args = wp_parse_args(
+	$template_args,
+	array(
+		'title'       => '',
+		'description' => '',
+	)
+);
 
 $tools_pages = Toolbox::tools_pages();
 
@@ -21,7 +27,7 @@ $tools_pages = Toolbox::tools_pages();
 	<h2>
 		<?php
 		// Page title.
-		echo esc_html( $page_title );
+		echo esc_html( $template_args['title'] );
 		?>
 	</h2>
 
@@ -58,7 +64,7 @@ $tools_pages = Toolbox::tools_pages();
 <p>
 	<?php
 	// Page description.
-	echo esc_html( $page_description );
+	echo esc_html( $template_args['description'] );
 	?>
 </p>
 
