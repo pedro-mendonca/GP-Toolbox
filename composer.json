@@ -22,7 +22,7 @@
 	"require-dev": {
 		"dealerdirect/phpcodesniffer-composer-installer": "^1.0.0",
 		"ergebnis/composer-normalize": "^2.44.0",
-		"johnbillion/wp-compat": "^0.2.3",
+		"johnbillion/wp-compat": "^0.3.0",
 		"pedro-mendonca/glotpress-stubs": "4.0.1",
 		"phpcompatibility/phpcompatibility-wp": "^2.1.5",
 		"phpmd/phpmd": "^2.15.0",
