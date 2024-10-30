@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ad61b55217d45aa2d763dec4482c0c13",
+    "content-hash": "08015a4e772aa59646a57b5efba4e385",
     "packages": [],
     "packages-dev": [
         {
@@ -645,16 +645,16 @@
         },
         {
             "name": "johnbillion/wp-compat",
-            "version": "0.2.3",
+            "version": "0.3.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/johnbillion/wp-compat.git",
-                "reference": "5ef45a68b3fe61c33bfd599cfc62e88bc48543c5"
+                "reference": "a72d20bb98f07088d602d1e412f908cd6901abf9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/johnbillion/wp-compat/zipball/5ef45a68b3fe61c33bfd599cfc62e88bc48543c5",
-                "reference": "5ef45a68b3fe61c33bfd599cfc62e88bc48543c5",
+                "url": "https://api.github.com/repos/johnbillion/wp-compat/zipball/a72d20bb98f07088d602d1e412f908cd6901abf9",
+                "reference": "a72d20bb98f07088d602d1e412f908cd6901abf9",
                 "shasum": ""
             },
             "require": {
@@ -671,7 +671,7 @@
                 "phpstan/phpstan-strict-rules": "1.6.0",
                 "phpunit/phpunit": "^9.0",
                 "roots/wordpress-core-installer": "1.100.0",
-                "roots/wordpress-full": "dev-main",
+                "roots/wordpress-full": "6.7-RC1",
                 "wp-coding-standards/wpcs": "3.1.0"
             },
             "suggest": {
@@ -717,7 +717,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-10-01T15:42:28+00:00"
+            "time": "2024-10-30T16:37:08+00:00"
         },
         {
             "name": "justinrainbow/json-schema",
