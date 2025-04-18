@@ -29,7 +29,7 @@
 		"uglify-js": "^3.19.3"
 	},
 	"scripts": {
-		"build": "npm run build:js & npm run build:css",
+		"build": "npm run build:js && npm run build:css",
 		"build:css": "npm run compile:css && npm run lint:css:fix && npm run build:css:prefix && npm run build:css:minify",
 		"compile:css": "sass assets/css/ --color --no-source-map --verbose",
 		"build:css:prefix": "postcss assets/css/style.css --replace --verbose",
