@@ -3,7 +3,7 @@ Contributors: pedromendonca
 Donate link: https://github.com/sponsors/pedro-mendonca
 Tags: glotpress, translation, toolbox, i18n
 Requires at least: 5.3
-Tested up to: 6.7
+Tested up to: 6.8
 Requires PHP: 7.4
 Requires Plugins: glotpress
 Stable tag: 1.0.6
@@ -54,6 +54,9 @@ Sure! You are welcome to report any issues or add feature suggestions on the [Gi
 7. Tools > Glossaries
 
 == Changelog ==
+
+= Unreleased =
+*   Tested up to WordPress 6.8
 
 = 1.0.6 =
 *   Improve template argument loading and static analysis.

@@ -14,7 +14,7 @@
  * Description:       This set of tools extends the functionality of GlotPress, bringing to light any potential problems hidden under the hood, keeping it clean, fast and trouble-free.
  * Version:           1.0.6
  * Requires at least: 5.3
- * Tested up to:      6.7
+ * Tested up to:      6.8
  * Requires PHP:      7.4
  * Requires Plugins:  glotpress
  * Author:            Pedro Mendonça
