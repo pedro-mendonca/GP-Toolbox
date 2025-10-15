@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "95400d5ad96cc53ba5f9cd17854ce57c",
+    "content-hash": "4dc6b600b243f1ae71eb647c7b46dadc",
     "packages": [],
     "packages-dev": [
         {
@@ -1056,23 +1056,23 @@
         },
         {
             "name": "pedro-mendonca/glotpress-stubs",
-            "version": "4.0.1",
+            "version": "4.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/pedro-mendonca/glotpress-stubs.git",
-                "reference": "139d83bbb39e49d3d662bb0b091d935caba16e4d"
+                "reference": "8762cde489b8e6d8b418c58a99331d2b5a2c367d"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pedro-mendonca/glotpress-stubs/zipball/139d83bbb39e49d3d662bb0b091d935caba16e4d",
-                "reference": "139d83bbb39e49d3d662bb0b091d935caba16e4d",
+                "url": "https://api.github.com/repos/pedro-mendonca/glotpress-stubs/zipball/8762cde489b8e6d8b418c58a99331d2b5a2c367d",
+                "reference": "8762cde489b8e6d8b418c58a99331d2b5a2c367d",
                 "shasum": ""
             },
             "require-dev": {
-                "ergebnis/composer-normalize": "^2.43.0",
-                "php": "^7.2",
-                "php-stubs/generator": "^0.8.4",
-                "php-stubs/wordpress-stubs": "^6.6.0"
+                "ergebnis/composer-normalize": "^2.48.2",
+                "php": "^7.4 || ^8.0",
+                "php-stubs/generator": "^0.8.5",
+                "php-stubs/wordpress-stubs": "^6.8.2"
             },
             "type": "library",
             "notification-url": "https://packagist.org/downloads/",
@@ -1089,7 +1089,7 @@
             ],
             "support": {
                 "issues": "https://github.com/pedro-mendonca/glotpress-stubs/issues",
-                "source": "https://github.com/pedro-mendonca/glotpress-stubs/tree/4.0.1"
+                "source": "https://github.com/pedro-mendonca/glotpress-stubs/tree/4.0.2"
             },
             "funding": [
                 {
@@ -1097,7 +1097,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-09-25T23:59:47+00:00"
+            "time": "2025-10-15T15:45:34+00:00"
         },
         {
             "name": "php-stubs/wordpress-stubs",
