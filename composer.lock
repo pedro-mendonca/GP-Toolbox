@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "4dc6b600b243f1ae71eb647c7b46dadc",
+    "content-hash": "b0cce6ad2aa5fa1d350bcb77bb75c8cd",
     "packages": [],
     "packages-dev": [
         {
@@ -1056,21 +1056,21 @@
         },
         {
             "name": "pedro-mendonca/glotpress-stubs",
-            "version": "4.0.2",
+            "version": "4.0.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/pedro-mendonca/glotpress-stubs.git",
-                "reference": "8762cde489b8e6d8b418c58a99331d2b5a2c367d"
+                "reference": "b08df936bae5561fb1b40911afaa9883fc75bf61"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/pedro-mendonca/glotpress-stubs/zipball/8762cde489b8e6d8b418c58a99331d2b5a2c367d",
-                "reference": "8762cde489b8e6d8b418c58a99331d2b5a2c367d",
+                "url": "https://api.github.com/repos/pedro-mendonca/glotpress-stubs/zipball/b08df936bae5561fb1b40911afaa9883fc75bf61",
+                "reference": "b08df936bae5561fb1b40911afaa9883fc75bf61",
                 "shasum": ""
             },
             "require-dev": {
                 "ergebnis/composer-normalize": "^2.48.2",
-                "php": "^7.4 || ^8.0",
+                "php": "^7.3 || ^8.0",
                 "php-stubs/generator": "^0.8.5",
                 "php-stubs/wordpress-stubs": "^6.8.2"
             },
@@ -1089,7 +1089,7 @@
             ],
             "support": {
                 "issues": "https://github.com/pedro-mendonca/glotpress-stubs/issues",
-                "source": "https://github.com/pedro-mendonca/glotpress-stubs/tree/4.0.2"
+                "source": "https://github.com/pedro-mendonca/glotpress-stubs/tree/4.0.3"
             },
             "funding": [
                 {
@@ -1097,7 +1097,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-10-15T15:45:34+00:00"
+            "time": "2025-10-17T16:22:18+00:00"
         },
         {
             "name": "php-stubs/wordpress-stubs",
