@@ -25,7 +25,7 @@
 		"@wordpress/scripts": "^31.1.0",
 		"postcss-cli": "^11.0.1",
 		"postcss-preset-env": "^10.5.0",
-		"sass": "^1.96.0",
+		"sass": "^1.97.0",
 		"uglify-js": "^3.19.3"
 	},
 	"scripts": {
