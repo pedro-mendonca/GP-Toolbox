@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "efd0cb43de0f88b8147800816aeb2e54",
+    "content-hash": "a9b9171c4b80ae84200d13b105190d2c",
     "packages": [],
     "packages-dev": [
         {
@@ -716,37 +716,36 @@
         },
         {
             "name": "johnbillion/wp-compat",
-            "version": "0.3.1",
+            "version": "2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/johnbillion/wp-compat.git",
-                "reference": "05abaac6bdce14664c99620be18632679a7504c8"
+                "reference": "687656425d016891babe4092dffcbc488470034a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/johnbillion/wp-compat/zipball/05abaac6bdce14664c99620be18632679a7504c8",
-                "reference": "05abaac6bdce14664c99620be18632679a7504c8",
+                "url": "https://api.github.com/repos/johnbillion/wp-compat/zipball/687656425d016891babe4092dffcbc488470034a",
+                "reference": "687656425d016891babe4092dffcbc488470034a",
                 "shasum": ""
             },
             "require": {
-                "php": ">= 7.4",
-                "phpstan/phpstan": "^1.12"
+                "php": ">= 7.2.24",
+                "phpstan/phpstan": "^1.12 || ^2.0",
+                "wp-hooks/wordpress-core": "^1.13"
             },
             "require-dev": {
                 "dealerdirect/phpcodesniffer-composer-installer": "^0.7.0",
-                "johnbillion/plugin-infrastructure": "dev-trunk",
-                "nikic/php-parser": "^5.1",
-                "php-stubs/wordpress-stubs": "^6.6",
-                "phpstan/phpstan-deprecation-rules": "1.2.0",
-                "phpstan/phpstan-phpunit": "1.3.15",
-                "phpstan/phpstan-strict-rules": "1.6.0",
-                "phpunit/phpunit": "^9.0",
-                "roots/wordpress-core-installer": "1.100.0",
-                "roots/wordpress-full": "^6.7.0",
-                "wp-coding-standards/wpcs": "3.1.0"
+                "nikic/php-parser": "^4.18 || ^5.1",
+                "phpstan/phpstan-deprecation-rules": "^1.0 || ^2.0",
+                "phpstan/phpstan-phpunit": "^1.0 || ^2.0",
+                "phpstan/phpstan-strict-rules": "^1.0 || ^2.0",
+                "phpunit/phpunit": "^8.5 || ^9.0",
+                "roots/wordpress": "^7.1",
+                "wp-coding-standards/wpcs": "3.4.1"
             },
             "suggest": {
                 "phpstan/phpstan-deprecation-rules": "PHPStan rules for detecting usage of deprecated symbols",
+                "swissspidy/phpstan-no-private": "PHPStan rules for detecting usage of pseudo-private functions, classes, and methods",
                 "szepeviktor/phpstan-wordpress": "WordPress extensions for PHPStan"
             },
             "type": "phpstan-extension",
@@ -788,7 +787,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-11-27T11:57:17+00:00"
+            "time": "2026-08-24T01:19:53+00:00"
         },
         {
             "name": "justinrainbow/json-schema",
@@ -1673,16 +1672,11 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "1.12.24",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "338b92068f58d9f8035b76aed6cf2b9e5624c025"
-            },
+            "version": "1.12.34",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/338b92068f58d9f8035b76aed6cf2b9e5624c025",
-                "reference": "338b92068f58d9f8035b76aed6cf2b9e5624c025",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/4dd89ca7aa30fdc6760be21550d583bcc32e8476",
+                "reference": "4dd89ca7aa30fdc6760be21550d583bcc32e8476",
                 "shasum": ""
             },
             "require": {
@@ -1727,7 +1721,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2025-04-16T13:01:53+00:00"
+            "time": "2026-07-28T10:04:39+00:00"
         },
         {
             "name": "psr/container",
@@ -2867,6 +2861,89 @@
                 }
             ],
             "time": "2026-07-27T11:53:23+00:00"
+        },
+        {
+            "name": "wp-hooks/wordpress-core",
+            "version": "1.13.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/wp-hooks/wordpress-core-hooks.git",
+                "reference": "6bb3f47ccf1b58415ad8fbcd73ef404cae9cb187"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/wp-hooks/wordpress-core-hooks/zipball/6bb3f47ccf1b58415ad8fbcd73ef404cae9cb187",
+                "reference": "6bb3f47ccf1b58415ad8fbcd73ef404cae9cb187",
+                "shasum": ""
+            },
+            "replace": {
+                "johnbillion/wp-hooks": "*"
+            },
+            "require-dev": {
+                "erusev/parsedown": "1.8.0-beta-7",
+                "oomphinc/composer-installers-extender": "^2",
+                "roots/wordpress-core-installer": "^1.0.0",
+                "roots/wordpress-full": "7.1",
+                "wp-hooks/generator": "1.0.0"
+            },
+            "type": "library",
+            "extra": {
+                "wp-hooks": {
+                    "ignore-files": [
+                        "wp-admin/includes/deprecated.php",
+                        "wp-admin/includes/ms-deprecated.php",
+                        "wp-content/",
+                        "wp-includes/build/pages/",
+                        "wp-includes/deprecated.php",
+                        "wp-includes/ID3/",
+                        "wp-includes/ms-deprecated.php",
+                        "wp-includes/pomo/",
+                        "wp-includes/random_compat/",
+                        "wp-includes/Requests/",
+                        "wp-includes/SimplePie/",
+                        "wp-includes/sodium_compat/",
+                        "wp-includes/Text/"
+                    ],
+                    "ignore-hooks": [
+                        "load-categories.php",
+                        "load-edit-link-categories.php",
+                        "load-edit-tags.php",
+                        "load-page-new.php",
+                        "load-page.php",
+                        "option_enable_xmlrpc",
+                        "edit_post_{$field}",
+                        "pre_post_{$field}",
+                        "post_{$field}",
+                        "pre_option_enable_xmlrpc",
+                        "$page_hook",
+                        "$hook",
+                        "$hook_name"
+                    ]
+                },
+                "wordpress-install-dir": "vendor/wordpress/wordpress"
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "GPL-3.0-or-later"
+            ],
+            "authors": [
+                {
+                    "name": "John Blackbourn",
+                    "homepage": "https://johnblackbourn.com/"
+                }
+            ],
+            "description": "All the actions and filters from WordPress core in machine-readable JSON format.",
+            "support": {
+                "issues": "https://github.com/wp-hooks/wordpress-core-hooks/issues",
+                "source": "https://github.com/wp-hooks/wordpress-core-hooks/tree/1.13.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/sponsors/johnbillion",
+                    "type": "github"
+                }
+            ],
+            "time": "2026-08-20T19:54:29+00:00"
         }
     ],
     "aliases": [],
